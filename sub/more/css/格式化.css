@@ -1,0 +1,32 @@
+.fl {
+    float: left;
+}
+
+.fr {
+    float: right;
+}
+
+
+/* .w {
+    width: 1190px;
+    margin: 0 auto;
+} */
+
+body,
+p {
+    list-style: none;
+    font-size: 14px;
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    text-decoration: none;
+}
+
+img,
+input {
+    vertical-align: middle;
+    border: none;
+    outline-style: none;
+}

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>登录</title>
+    <link rel="icon" href="./icon/favicon.ico">
+    <link rel="stylesheet" href="./css/denglu.css">
+    <link rel="stylesheet" href="./css/base.css">
+    <script src="./js/jquery.min.js"></script>
+    <script>
+        $(function() {
+            $('.dahezi').click(function(e) {
+                $(this).toggleClass('starman');
+
+            })
+
+            $('.congzhi>a').click(function() {
+                $(this).addClass('congzhimima');
+            })
+            $('.denglulan').click(function(e) {
+                e.stopPropagation();
+            });
+            $('.meiguo').click(function(e) {
+                $('.guobiao').fadeToggle(300);
+                e.stopPropagation();
+
+            })
+            $('.guobiao div').click(function() {
+                $('.guobiao').fadeOut(300);
+            })
+            $('.guobiao').click(function(e) {
+                e.stopPropagation();
+            })
+        })
+    </script>
+
+</head>
+
+<body>
+    <div class="dahezi">
+
+        <div class="denglulan">
+
+            <p>
+                <span>登&nbsp;&nbsp;录</span>
+            </p>
+            <!-- 邮箱账号 -->
+            <div class="youxiang">
+                <input type="text" placeholder="电子邮箱">
+            </div>
+            <!-- 密码 -->
+            <div class="mima">
+                <input type="password" placeholder="密码">
+            </div>
+            <!-- 重置密码 -->
+            <div class="congzhi">
+                <a href="cong_zhi_mi_ma.html">重置您的密码</a>
+            </div>
+            <!-- 登录按钮 -->
+            <div class="denglu">
+                <a href="#">登录</a>
+            </div>
+            <!-- 注册 -->
+            <a href="zhuce.html" class="zhuce">创建一个账户</a>
+
+        </div>
+        <img src="./images/xiaotu.jpg" alt="" class="meiguo">
+        <div class="guobiao">
+            <div class="guanbi">X</div>
+            <img src="./images/guobiao.png" alt="">
+        </div>
+
+    </div>
+
+</body>
+
+</html>

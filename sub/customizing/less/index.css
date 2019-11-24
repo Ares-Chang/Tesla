@@ -1,0 +1,359 @@
+.top {
+  height: 76px;
+  border-bottom: 1px solid #ccc;
+  display: flex;
+  cursor: pointer;
+}
+.top .left {
+  flex: 14.28%;
+  text-align: center;
+  line-height: 76px;
+}
+.top .middle {
+  flex: 71.4%;
+}
+.top .middle ul {
+  display: flex;
+  text-align: center;
+  line-height: 72px;
+}
+.top .middle ul li {
+  flex: 20%;
+  color: #ccc;
+}
+.top .middle .active {
+  border-bottom: 4px #007fff solid;
+}
+.top .right {
+  flex: 14.28%;
+  position: relative;
+}
+.top .right img {
+  position: absolute;
+  top: 22px;
+  right: 20px;
+}
+.bigger {
+  width: 67%;
+}
+.content {
+  display: flex;
+}
+.content .big {
+  flex: 68%;
+  border-right: #ccc 1px solid;
+}
+.content .big .title {
+  width: 440px;
+  height: 37px;
+  font-size: 12px;
+  padding-left: 10px;
+  line-height: 37px;
+  background: #f4f4f4;
+  border-radius: 10px;
+  margin-left: 270px;
+  margin-top: 20px;
+}
+.content .big1 {
+  height: 100%;
+}
+.content .big2 {
+  height: 100%;
+}
+.content .big2 img {
+  width: 100%;
+  height: 100%;
+}
+.content .big3 {
+  height: 100%;
+}
+.content .big3 .p {
+  padding: 50px 100px;
+}
+.content .big3 .p #p1 {
+  font-size: 20px;
+  margin-bottom: 30px;
+}
+.content .big3 .p #p2 {
+  color: #666;
+  line-height: 24px;
+}
+.content .big3 img {
+  height: 274px;
+  margin-left: 150px;
+}
+.content .big4 {
+  padding: 40px 135px;
+  width: 922px;
+  border-right: none;
+}
+.content .big4 .user {
+  font-size: 20px;
+  font-weight: 700;
+  height: 100px;
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 30px;
+}
+.content .big4 p {
+  color: #666;
+  font-size: 15px;
+}
+.content .big4 p span {
+  float: right;
+  margin-right: 300px;
+}
+.content .big4 input {
+  width: 200px;
+  border-radius: 40px;
+  border: 1px #b74134 solid;
+  height: 40px;
+  padding: 10px 20px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.content .big4 #in2 {
+  margin-left: 100px;
+}
+.content .small {
+  flex: 32%;
+  /*width: 100%;*/
+  width: 502px;
+  height: 502px;
+  overflow: auto;
+  position: absolute;
+  right: 0;
+}
+.content .small .zong {
+  padding: 50px;
+  /*width: 100%;*/
+}
+.content .small .zong .shang {
+  font-size: 20px;
+  /*width: 100%;*/
+}
+.content .small .zong .zhong {
+  /*width: 100%;*/
+}
+.content .small .zong .zhong .group1 .t1 {
+  height: 32px;
+  margin-top: 22px;
+}
+.content .small .zong .zhong .group1 .t2 {
+  color: #ccc;
+  text-decoration: underline;
+  cursor: pointer;
+  height: 24px;
+  margin-bottom: 5px;
+}
+.content .small .zong .zhong .group1 .t3 {
+  height: 50px;
+  border: 1px solid #ddd;
+  border-radius: 25px;
+  box-shadow: #007fff 0px 0px 0px 2px;
+  border-color: #007fff;
+  padding: 14px 20px;
+  font-family: "Gotham Medium", system, sans-serif;
+  cursor: pointer;
+  margin-bottom: 12px;
+}
+.content .small .zong .zhong .group1 .t3 span {
+  font-family: var(--tds-sans-font_stack--medium);
+  color: #000000;
+  float: right;
+}
+.content .small .zong .zhong .group1 .t4 {
+  color: #666666;
+  height: 48px;
+}
+.content .small .zong .zhong .group2 .p1 {
+  margin-top: 8px;
+  height: 32px;
+}
+.content .small .zong .zhong .group2 .p2 {
+  color: #666666;
+  text-decoration: underline;
+  cursor: pointer;
+  height: 24px;
+  margin-bottom: 5px;
+}
+.content .small .zong .zhong .group2 .p3 {
+  height: 50px;
+  border: 1px solid #ddd;
+  border-radius: 25px;
+  padding: 14px 20px;
+  margin-bottom: 12px;
+}
+.content .small .zong .zhong .group2 .p4 {
+  height: 50px;
+  border: 1px solid #ddd;
+  border-radius: 25px;
+  padding: 14px 20px;
+  margin-bottom: 12px;
+}
+.content .small .zong .xia {
+  width: 100%;
+  margin-top: 15px;
+  color: #666666;
+}
+.content .small1 {
+  padding: 100px 50px;
+  /*width: 100%;*/
+}
+.content .small1 .top1 {
+  display: flex;
+  flex-direction: column;
+  height: 145px;
+  border-bottom: 1px #ccc solid;
+}
+.content .small1 .top1 .wenzi {
+  margin-top: 10px;
+  height: 24px;
+  font-size: 20px;
+}
+.content .small1 .top1 .color {
+  margin-top: 5px;
+  width: 54px;
+  height: 54px;
+}
+.content .small1 .bottom .wenzi {
+  margin-top: 10px;
+  height: 24px;
+  font-size: 20px;
+}
+.content .small1 .bottom .color {
+  margin-top: 5px;
+  width: 54px;
+  height: 54px;
+}
+.content .small1 .bottom .xia span {
+  float: right;
+  color: #666;
+}
+.content .small2 {
+  padding: 50px;
+  /*width: 100%;*/
+}
+.content .small2 .wenzi {
+  font-size: 20px;
+}
+.content .small2 .tupian {
+  margin-top: 5px;
+}
+.content .small2 .wenzi1 {
+  height: 24px;
+}
+.content .small2 .wenzi2 {
+  line-height: 24px;
+  margin: 14px 0;
+}
+.content .small2 ul {
+  text-align: left;
+  padding-left: 18px;
+}
+.content .small2 ul li {
+  list-style-type: disc;
+  color: #666666;
+  margin-bottom: 10px;
+}
+.content .small3 {
+  padding: 50px;
+  /*width: 100%;*/
+}
+.content .small3 p {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 30px;
+}
+.content .small3 li {
+  font-size: 15px;
+  line-height: 24px;
+  list-style-type: disc;
+  color: #666;
+}
+.footer {
+  width: 100%;
+  height: 79px;
+  padding: 10px 0;
+  display: flex;
+  align-items: center;
+  background: #333;
+  position: absolute;
+  bottom: 0;
+}
+.footer .foot1 {
+  flex: 10%;
+  align-items: center;
+  color: #eee;
+  font-size: 13px;
+  cursor: pointer;
+  border-right: 1px solid #555;
+  padding: 20px 60px 20px 40px;
+}
+.footer .foot2 {
+  flex: 33%;
+  align-items: center;
+  display: flex;
+  padding: 0 40px;
+  border-right: 1px solid #555;
+  height: 57px;
+}
+.footer .foot2 .price1 {
+  margin-right: 20px;
+  white-space: normal;
+  min-width: 110px;
+}
+.footer .foot2 .price1 .pi {
+  color: #fff;
+  font-size: 19px;
+  align-self: center;
+}
+.footer .foot2 .price1 .txt {
+  font-size: 13px;
+  color: #fff;
+  cursor: pointer;
+  align-self: center;
+}
+.footer .foot2 .price2 {
+  margin-right: 20px;
+}
+.footer .foot2 .price2 .pi {
+  color: #fff;
+  font-size: 19px;
+  align-self: center;
+}
+.footer .foot2 .price2 .txt {
+  font-size: 13px;
+  color: #fff;
+  cursor: pointer;
+  align-self: center;
+}
+.footer .foot2 .fukuan {
+  color: #fff;
+  cursor: pointer;
+  border-bottom: 1px solid #fff;
+}
+.footer .foot3 {
+  flex: 29.8%;
+  display: flex;
+  align-items: center;
+  color: #fff;
+  padding: 0 40px;
+  justify-content: flex-end;
+}
+.footer .foot4 {
+  flex: 26.9%;
+  padding: 0 40px 0 0;
+  align-items: center;
+  overflow: hidden;
+}
+.footer .foot4 button {
+  color: #fff;
+  width: 100%;
+  height: 40px;
+  padding: 5px 40px;
+  margin: 8px;
+  background: #3457B1;
+  border-radius: 40px;
+  outline-style: none;
+  border: none;
+}

@@ -1,0 +1,147 @@
+var TC = TC || {};
+TC.LOCATION = TC.LOCATION || {};
+
+/**
+ * IP detection to reroute customers to their locale
+ * https://issues.teslamotors.com/browse/WEB-31125
+ *
+ * For new sessions, automatically open the change country dialog if the IP country != locale
+ * Remember (i.e., don’t ask again) for the remainder of the session
+ * Store in cookie and automatically route once for future sessions
+ * Limit to homepage for now, but we may extend it to all pages if it works well
+ */
+$(function() {
+    var parsed_url = Drupal.behaviors.common.parseURL(location.href);
+    if(parsed_url.params.redirect == 'no') {
+        Drupal.behaviors.common.createCookie('ip_lookup_desired_locale', Drupal.settings.tesla.locale, 360, Drupal.settings.SharingCookies.AcrossDomain);
+        Drupal.behaviors.common.createCookie('ip-lookup-have-i-asked', 'Y', .04);
+    }
+    else {
+        IPlookup.init();
+    }
+});
+
+(function(IPlookup, $, TC, undefined) {
+    "use strict";
+
+    IPlookup.init = function() {
+        var desired_locale = Drupal.behaviors.common.readCookie('ip_lookup_desired_locale');
+        var actual_locale = Drupal.settings.tesla.locale;
+
+        if(desired_locale == null && typeof geoip2 !== 'undefined') {
+            geoip2.city(IPlookup.createCookies, IPlookup.onError);
+        }
+
+        // FND-1868: Compare locale names in lowercase, just in case 'en_ca' & 'en_CA' causes redirecting loop issues.
+        if(desired_locale != null && actual_locale.toLowerCase() != desired_locale.toLowerCase()) {
+            IPlookup.rerouteToSavedLocale(desired_locale);
+        }
+        else {
+            if(typeof geoip2 !== 'undefined') {
+                geoip2.city(IPlookup.onSuccess, IPlookup.onError);
+            }
+        }
+
+        IPlookup.checkForLegacyCookie();
+    }
+    IPlookup.checkForLegacyCookie = function() {
+        // Check for existence of isStoreIP flag. If not present, regenerate.
+        var ip_info = Drupal.behaviors.common.readCookie('ip_info');
+        if (typeof geoip2 !== 'undefined' && (ip_info === null || (typeof ip_info === 'object' && !ip_info.hasOwnProperty('isStoreIP')))) {
+            geoip2.city(IPlookup.onSuccess, IPlookup.onError);
+        }
+
+    }
+    IPlookup.createCookies = function(data) {
+        var detected_country = data.country.iso_code;
+        var website_country = Drupal.settings.tesla.country;
+
+        if(detected_country == website_country) {
+            Drupal.behaviors.common.createCookie('ip_lookup_desired_locale', Drupal.settings.tesla.locale, 360, Drupal.settings.SharingCookies.AcrossDomain);
+            Drupal.behaviors.common.createCookie('ip-lookup-have-i-asked', 'Y', .04);
+        }
+    }
+    IPlookup.onSuccess = function(data) {
+
+        var detected_country = data.country.iso_code;
+        var website_country = Drupal.settings.tesla.country;
+        var state = (data.subdivisions) ? data.subdivisions[0].names.en : 'null';
+        var state_code = (data.subdivisions) ? data.subdivisions[0].iso_code : 'null';
+        var is_store_ip = (data.hasOwnProperty('isStoreIP') && data.isStoreIP) ? data.isStoreIP : false;
+        var multilang = ["CA", "LU", "BE", "CH", "MO"].indexOf(detected_country) > -1; 
+
+        // Store Basic Geographic Info In Cookie
+        var ipInfo = {
+            'ip': data.ip,
+            'location': {
+                'latitude': data.location.latitude,
+                'longitude': data.location.longitude
+            },
+            'city': data.city.names.en,
+            'state': state,
+            'state_code': state_code,
+            'postal': (data.hasOwnProperty('postal')) ? data.postal.code : 'null',
+            'country': data.country.names.en,
+            'country_code': detected_country,
+            'isStoreIP': is_store_ip
+        };
+
+        Drupal.behaviors.common.createCookie('ip_info', JSON.stringify(ipInfo), .04);
+
+        // Attach isStoreIP flag to LOCATION.
+        TC.LOCATION.isStoreIP = is_store_ip;
+
+        if (detected_country != website_country) {
+            if(!IPlookup.haveIAlreadyAsked() && !multilang) {
+                IPlookup.toggleLocaleSelector();
+            }
+        }
+    }
+    IPlookup.onError = function(data) {
+        debug.log('could not detect country, do nothing');
+    }
+    IPlookup.toggleLocaleSelector = function() {
+        $("#locale-modal").modal();
+        if ($("#locale-modal").hasClass("in")) {
+            $("#locale-modal").addClass("show");
+        }
+    }
+    IPlookup.haveIAlreadyAsked = function() {
+        var response = false;
+        if(Drupal.behaviors.common.readCookie('ip-lookup-have-i-asked') == 'Y') {
+            response = true;
+        }
+        else {
+            Drupal.behaviors.common.createCookie('ip-lookup-have-i-asked', 'Y', .04);
+        }
+        return response;
+    }
+    IPlookup.rerouteToSavedLocale = function(prefix) {
+        if(prefix == 'en_US') {
+            prefix = '/';
+        }
+        else if(prefix == 'ja_JP') {
+            prefix = '/jp/';
+        }
+        else {
+            prefix = '/' + prefix + '/';
+        }
+
+        if(Drupal.settings.tesla.isFront) {
+            var url = Drupal.settings.tesla.baseUrl + prefix;
+        }
+        else {
+            var url = Drupal.settings.tesla.baseUrl + prefix + Drupal.settings.tesla.pathAlias;
+        }
+
+        var parsed_url = Drupal.behaviors.common.parseURL(window.location);
+        if(parsed_url.query == '') {
+            url = url + '?redirect=no';
+        }
+        else {
+            url = url + parsed_url.query + '&redirect=no';
+        }
+        window.location.assign(url);
+    }
+
+} (window.IPlookup = window.IPlookup || {}, jQuery, TC));

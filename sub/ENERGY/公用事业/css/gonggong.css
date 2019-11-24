@@ -1,0 +1,129 @@
+﻿body {
+    /* max-width: 1400px; */
+    width: 100%;
+    /* min-width: 680px; */
+    padding: 0px;
+    margin: 0px;
+    font-family: '宋体';
+    background: #f7f7f7;
+    color: #fff;
+    font-size: 14px;
+    margin: 0 auto;
+}
+
+.annv {
+    max-width: 225px;
+    width: 100%;
+    height: 40px;
+    background-color: rgba(173, 172, 172, 0.5);
+    line-height: 40px;
+    text-align: center;
+    font-weight: 700;
+    /* border: 0.2px solid #000; */
+}
+
+
+/*以边框为准计算盒子*/
+
+
+/*box-sizing: border-box;*/
+
+a {
+    text-decoration: none;
+    color: #fff;
+}
+
+.clear::after {
+    content: "";
+    display: block;
+    clear: both;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+ul,
+ol,
+dl,
+dt,
+dd,
+li {
+    list-style: none;
+    padding: 0px;
+    margin: 0px;
+}
+
+img,
+input {
+    border: none;
+    outline-style: none;
+    vertical-align: middle;
+    padding: 0;
+    margin: 0;
+}
+
+img {
+    border: 0;
+    /*清除图片底部默认缝隙*/
+    vertical-align: middle;
+}
+
+.w {
+    width: 80%;
+    padding: 0 20px;
+    margin: 0 auto;
+}
+
+.zuo {
+    float: left;
+}
+
+.you {
+    float: right;
+}
+
+.slh {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+textarea {
+    resize: none;
+}
+
+.shubiao:hover {
+    color: #666;
+}
+
+.red {
+    color: #c81623;
+}
+
+.tc {
+    text-align: center;
+}
+
+.f12 {
+    font-size: 12px;
+}
+
+.f14 {
+    font-size: 14px;
+}
+
+.f16 {
+    font-size: 16px;
+}
+
+.f18 {
+    font-size: 18px;
+}
+
+.f20 {
+    font-size: 20px;
+}

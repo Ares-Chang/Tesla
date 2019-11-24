@@ -1,0 +1,324 @@
+.boss {
+  width: 100%;
+  color: #000;
+  background: #fff;
+}
+.boss-nav {
+  height: 50px;
+  background: #222222;
+}
+.boss-nav .nav {
+  height: 100%;
+}
+.top-img {
+  height: 494px;
+  background: url(../img/section_hero.jpg) no-repeat;
+  background-size: 100% 100%;
+  border: 0.1px solid #222222;
+}
+.top-img .img-zi {
+  max-height: 100px;
+  height: 100%;
+  position: relative;
+  margin-top: 44px;
+}
+.top-img .img-zi .nav-zi {
+  max-height: 62px;
+  height: 100%;
+  margin-bottom: 35px;
+  padding-bottom: 25px;
+  border-bottom: 0.5px solid #000;
+  line-height: 62px;
+}
+.top-img .img-zi .nav-zi h1 {
+  font-size: 30px;
+  position: absolute;
+  padding-top: 0;
+  color: #000;
+  float: left;
+}
+.top-img .img-zi .nav-zi ul {
+  float: right;
+}
+.top-img .img-zi .nav-zi ul li {
+  float: left;
+}
+.top-img .img-zi .nav-zi ul li a {
+  color: #000;
+  font-size: 15px;
+  margin-left: 20px;
+}
+.top-img .img-zi .nav-zi ul li a:hover {
+  color: #ccc;
+}
+.huo {
+  width: 100%;
+  text-align: center;
+  border-bottom: 1px solid #000;
+}
+.huo .liaojie {
+  max-height: 40px;
+  height: 100%;
+  line-height: 40px;
+  padding: 15px 20px 15px;
+}
+.huo .liaojie a {
+  max-width: 225px;
+  width: 100%;
+  display: inline-block;
+  border: 0.5px solid #fff;
+  background: #3399FF;
+}
+.kongzhi {
+  padding: 70px 0 ;
+  width: 100%;
+}
+.kongzhi .w {
+  text-align: center;
+}
+.kongzhi .w h1 {
+  font-size: 34px;
+}
+.kongzhi .w p {
+  font-size: 15px;
+  line-height: 20px;
+  margin: 22px 0;
+}
+.kongzhi .w .feibu {
+  width: 100%;
+  padding: 30px;
+  box-sizing: border-box;
+}
+.kongzhi .w .feibu .divtu {
+  width: 33%;
+}
+.kongzhi .w .feibu .divtu .xiaotu {
+  width: 25%;
+  padding: 20px;
+  margin: 0 auto;
+}
+.kongzhi .w .feibu .divtu .xiaotu img {
+  width: 100%;
+}
+.kongzhi .w .feibu .divtu h3 {
+  text-indent: 35px;
+  text-align: left;
+  font-size: 14px;
+}
+.kongzhi .w .feibu .divtu p {
+  padding: 0 35px;
+  text-align: left;
+  margin: 5px 0 0 0;
+  font-size: 14px;
+}
+.kongzhi .w .xian {
+  width: 100%;
+  height: 1px;
+  background: #666;
+  margin: 70px 0;
+}
+.kongzhi .w .xiaozi {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 30px;
+}
+.kongzhi .w .xiaozi .xiaozi-1 {
+  width: 50%;
+  box-sizing: border-box;
+  padding: 0 8%;
+  text-align: left;
+}
+.kongzhi .w .xiaozi .xiaozi-1 h3 {
+  font-size: 14px;
+}
+.kongzhi .w .xiaozi .xiaozi-1 p {
+  font-size: 14px;
+  margin: 5px 0 2px 0;
+}
+.kongzhi .w .xiaozi .xiaozi-1 a {
+  font-size: 14px;
+  color: #3399FF;
+}
+.jiezhu {
+  padding: 70px 0;
+  background: #F2F2F2;
+}
+.jiezhu .w {
+  text-align: center;
+}
+.jiezhu .w h1 {
+  text-align: center;
+  font-size: 32px;
+}
+.jiezhu .w .pp {
+  text-align: center;
+  margin: 22px 0;
+  font-size: 15px;
+}
+.datu {
+  padding: 0 0 70px 0;
+  width: 100%;
+}
+.datu img {
+  width: 100%;
+}
+.sanliao {
+  padding: 70px 0;
+}
+.sanliao .w .xiaozi-2 {
+  width: 33%;
+  box-sizing: border-box;
+  padding: 0 3%;
+  text-align: left;
+}
+.sanliao .w .xiaozi-2 h3 {
+  font-size: 14px;
+}
+.sanliao .w .xiaozi-2 p {
+  font-size: 14px;
+  margin: 5px 0 2px 0;
+}
+.sanliao .w .xiaozi-2 a {
+  font-size: 14px;
+  color: #3399FF;
+}
+.sanliao .ww {
+  text-align: center;
+  padding: 70px 0 0 0;
+}
+.sanliao .ww .liaojie {
+  max-height: 40px;
+  height: 100%;
+  line-height: 40px;
+  padding: 15px 20px 15px;
+}
+.sanliao .ww .liaojie a {
+  max-width: 225px;
+  width: 100%;
+  display: inline-block;
+  border: 0.5px solid #fff;
+  background: #3399FF;
+}
+.zaisheng {
+  padding: 70px 0;
+  background: #FAFAFA;
+}
+.zaisheng .w {
+  text-align: center;
+}
+.zaisheng .w h1 {
+  font-size: 34px;
+}
+.zaisheng .w p {
+  font-size: 15px;
+  line-height: 20px;
+  margin: 22px 0;
+}
+.zaisheng .w .shengji {
+  width: 50%;
+  margin: 0 auto;
+  background: #212121;
+}
+.zaisheng .w .pq {
+  color: #666;
+  font-size: 12px;
+  margin-top: 5px;
+}
+.biao {
+  padding: 70px 0;
+  background: #F2F2F2;
+}
+.biao .w h1 {
+  text-align: center;
+  font-size: 34px;
+  padding: 0 0 80px 0;
+}
+.biao .w .dan {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px;
+}
+.biao .w .dan .inp {
+  width: 45%;
+  height: 60px;
+  margin: 0 5% 10px 0;
+}
+.biao .w .dan .inp input,
+.biao .w .dan .inp select {
+  width: 100%;
+  height: 40px;
+  padding: 10px;
+  box-sizing: border-box;
+  border: 0;
+  appearance: none;
+}
+.biao .w .dan .inp input:focus,
+.biao .w .dan .inp select:focus {
+  border: 1px solid #000;
+}
+.biao .w .dan .inp select {
+  padding-right: 30px;
+}
+.biao .w .dan .inp select:focus {
+  border: none;
+}
+.biao .w .dan .inp span {
+  color: #666;
+}
+.biao .w .dan .inp:nth-child(2n) {
+  margin: 0 0 10px 5%;
+  float: right;
+}
+.biao .w .dan .input1 {
+  width: 100%;
+}
+.biao .w .dan .input1 select {
+  width: 100%;
+  height: 40px;
+  padding: 10px;
+  box-sizing: border-box;
+  border: 0;
+  appearance: none;
+  margin-bottom: 10px;
+}
+.biao .w .dan .input1 span {
+  color: #666;
+}
+.biao .w .dan .input1 textarea {
+  width: 100%;
+  resize: vertical;
+}
+.biao .w .liao {
+  text-align: center;
+}
+.biao .w .liao .liaojie {
+  max-height: 40px;
+  height: 100%;
+  line-height: 40px;
+  padding: 15px 20px 15px;
+}
+.biao .w .liao .liaojie a {
+  max-width: 150px;
+  width: 100%;
+  display: inline-block;
+  border: 0.5px solid #fff;
+  background: #3399FF;
+}
+.biao .w .liao p {
+  font-size: 16px;
+  margin: 22px 0 ;
+}
+.bottom {
+  height: 52px;
+  line-height: 52px;
+  text-align: center;
+}
+.bottom a {
+  font-size: 13px;
+  color: #000;
+  padding-left: 5px;
+  border-left: 0.5px solid #ccc;
+}
+.bottom a:nth-child(1) {
+  border-left: none;
+}

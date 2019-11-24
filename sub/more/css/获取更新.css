@@ -1,0 +1,104 @@
+    body {
+        width: 100%;
+        /* text-align: center; */
+        background-color: #fff;
+        display: auto;
+        /* min-height: 600px; */
+        min-width: 1349px;
+        /* visibility: hidden; */
+        /* height: 3000px; */
+        /* overflow: hidden; */
+    }
+    
+    img,
+    input {
+        vertical-align: middle;
+        border: none;
+        outline-style: none;
+    }
+    
+    header {
+        width: 100%;
+        background-color: #222;
+        height: 52px;
+        position: relative;
+        /* margin-bottom: 44px; */
+    }
+    
+    .image {
+        width: 1349px;
+        height: 100%;
+        overflow: hidden;
+        min-width: 800px;
+    }
+    
+    .image img {
+        position: absolute;
+        top: 50%;
+        transition: all .3s;
+        transform: translateY(-50%);
+        z-index: -1;
+        /*width: 1349px;*/
+        width: 100%;
+    }
+    
+    .imageall {
+        /* margin: 0 auto; */
+        text-align: center;
+        width: 100%;
+    }
+    
+    .imageall span {
+        display: block;
+        margin-top: 55px;
+        margin-bottom: 10px;
+        font-size: 15px;
+    }
+    
+    .imageall p {
+        margin-top: 380px;
+        color: #fff;
+    }
+    
+    .imageall input {
+        width: 30%;
+        height: 40px;
+        padding-left: 10px;
+        border: 1px solid #fff;
+    }
+    /* .imageall input {
+        width: 36%;
+        height: 40px;
+        padding-left: 10px;
+        border: 1px solid #000;
+    }
+     */
+    
+    .first {
+        display: inline-block;
+        width: 12%;
+        height: 40px;
+        background-color: rgb(49, 49, 49);
+        line-height: 40px;
+        color: #fff;
+    }
+    
+    .imageall a {
+        color: #fff;
+        text-decoration: none;
+        /* list-style: none; */
+    }
+    
+    .first_span {
+        margin: 0;
+        padding-right: 30px;
+        display: block;
+        color: red;
+    }
+    
+    .first_span_two {
+        margin: 0;
+        padding-right: 30px;
+        display: block;
+        color: green;
+    }

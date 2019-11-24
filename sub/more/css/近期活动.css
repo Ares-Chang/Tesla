@@ -1,0 +1,237 @@
+body {
+    width: 100%;
+    /* text-align: center; */
+    background-color: #fff;
+    display: auto;
+    min-width: 1240px;
+    /* visibility: hidden; */
+    /* height: 3000px; */
+    /* overflow: hidden; */
+}
+
+
+/* header开始 */
+
+header {
+    width: 100%;
+    background-color: #222;
+    height: 52px;
+    position: relative;
+    margin-bottom: 44px;
+}
+
+
+/* header结束 */
+
+
+/* wrapper开始 */
+
+.wrapper {
+    width: 75.5%;
+    margin: 0 auto;
+    min-height: 38px;
+    /* background-color: red; */
+    border-bottom: 1px solid rgb(221, 219, 219);
+    margin-bottom: 28px;
+}
+
+.wrapper>span:first-child {
+    font-size: 29px;
+    float: left;
+}
+
+.wrapper span {
+    font-size: 12px;
+    line-height: 38px;
+    float: right;
+    /* margin-left: 14px; */
+    margin-right: 18px;
+}
+
+.wrapper a {
+    color: #333;
+}
+
+.wrapper a :hover {
+    color: rgb(160, 6, 6);
+}
+
+.wrapper input {
+    border: solid 1px #ccc;
+    border-radius: 50%;
+    float: right;
+    width: 30px;
+    height: 30px;
+    margin-top: 4px;
+    margin-right: 20px;
+    padding-right: 20px;
+    text-align: center;
+    /* background-color: red; */
+    /* display: none; */
+    /* box-sizing: border-box; */
+}
+
+
+/* wrapper结束 */
+
+
+/* banner开始 */
+
+.banner {
+    width: 75.5%;
+    margin: 0 auto;
+}
+
+.banner img {
+    width: 100%;
+    margin-bottom: 100px;
+}
+
+
+/* banner结束 */
+
+
+/* choose开始 */
+
+.choose {
+    width: 75.5%;
+    margin: 0 auto;
+}
+
+.chooseLeft {
+    width: 67%;
+    height: 850px;
+    float: left;
+    margin-right: 30px;
+}
+
+.chooseLeftTop {
+    width: 100%;
+    height: 105px;
+    /* float: left; */
+}
+
+.chooseLeftTop {
+    color: rgb(110, 110, 110);
+    border-bottom: 1px solid rgb(110, 110, 110);
+}
+
+.chooseLeftBottom {
+    width: 100%;
+    height: 745px;
+    /* float: left; */
+}
+
+.chooseLeftBottomLeft {
+    width: 50%;
+    float: left;
+}
+
+.chooseLeftBottomLeft img {
+    width: 5%;
+    height: 5%;
+    margin-bottom: 0px;
+}
+
+.chooseLeftBottomLeft a {
+    width: 115px;
+    height: 31px;
+    display: inline-block;
+    text-align: center;
+    line-height: 31px;
+    background-color: #000;
+    margin-bottom: 10px;
+    list-style: none;
+    text-decoration: none;
+    color: #fff;
+    font-size: 12px;
+}
+
+.chooseLeftBottomRight {
+    width: 50%;
+    height: 237px;
+    float: left;
+}
+
+.chooseLeftBottomRight img {
+    width: 80%;
+    height: 70%;
+    margin-left: 60px;
+    margin-top: 60px;
+}
+
+.chooseRight {
+    width: 30%;
+    background-color: rgb(238, 235, 235);
+    height: 700px;
+    float: left;
+}
+
+.chooseRightW {
+    width: 80%;
+    height: 700px;
+    margin: 0 auto;
+}
+
+.chooseRightW span {
+    /* color: rgb(110, 110, 110); */
+    font-size: 12px
+}
+
+.chooseRight p:first-child {
+    font-size: 18px;
+    width: 100%;
+    margin: 0 auto;
+    height: 50px;
+    line-height: 50px;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 20px;
+}
+
+.chooseRight p {
+    height: 60px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.chooseRight input {
+    width: 265px;
+    height: 40px;
+    padding-left: 10px;
+    margin-bottom: 15px;
+}
+
+.chooseRightW input:nth-child(3) {
+    width: 25px;
+    height: 25px;
+}
+
+.chooseRightW select {
+    width: 265px;
+    height: 40px;
+    margin-bottom: 20px;
+}
+
+.chooseRightW a {
+    display: inline-block;
+    width: 265px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    color: #fff;
+    background-color: #000;
+}
+
+.first_span {
+    /* margin: 0;
+    padding-right: 30px;
+    display: block; */
+    color: red;
+}
+
+.first_span_two {
+    /* margin: 0; */
+    /* padding-right: 30px; */
+    /* display: block; */
+    color: green;
+}

@@ -1,0 +1,31 @@
+/*global window */
+/**
+ * Parsley minint validator allows for a field to have a minimum number of
+ *   digits in a given string, however is only applicable if the field is
+ *   populated. A minint of 3 would accept:
+ *   - 123
+ *   - A123
+ *   - 1A2B3
+ *   - (empty)
+ */
+(function () {
+    'use strict';
+    window.Parsley.addValidator(
+        'minint',
+        function (value, minimum) {
+            var hasValue,
+                intValue,
+                hasIntValue,
+                hasMinimum;
+            // Strip non numeric.
+            intValue = value.replace(/\D/g, '');
+            minimum = parseInt(minimum);
+            // Ensure either is empty, or is not empty and has enough digits.
+            hasValue = (value !== undefined && value !== null && value !== '');
+            hasIntValue = (intValue !== undefined && intValue !== null && intValue !== '');
+            hasMinimum = !hasValue || (hasIntValue && intValue.length >= minimum);
+            return hasMinimum;
+        },
+        32
+    ).addMessage('en', 'minint', 'minimum characters not met');
+}());

@@ -1,0 +1,463 @@
+.content{
+    background-color: #000;
+    // max-width: 998x;
+}
+.container{
+    width: 100%;
+    height: 52px;
+    position: fixed;
+    z-index: 9999;
+    display: none;
+    background-color: #000;
+    h1{
+        width: 100%;
+        height: 52px;
+        position: relative;
+        .logo{ 
+            position: absolute;
+            left: 0;
+            top: 5px;
+          padding-top: 5px;
+          font-size: 13px;
+          height: 30px;
+          border-width: 2px;
+          margin-right: 15px;
+          &::after{
+              content: '';
+              display: block;
+              width: 100px;
+              height: 52px;
+              background:url('../ROADSTER-img/test.png') no-repeat;
+              background-size: contain;
+              margin-top: -10px;
+              margin-left: 30px;
+          }
+        }
+        .order{    
+            margin-top: 5px;
+            display: block;
+            width: 178px;
+            height: 35px;
+            box-sizing: border-box;
+            border: 2.5px solid #fff;
+            border-radius: 21px;
+            font-size: 12px;
+            line-height: 13px;
+            color: #fff;
+            text-align: center;
+            padding-top: 10px;
+           float: right;
+           &:hover{
+               background-color: #fff;
+               color: #000;
+           }
+            }
+        }
+    }
+
+.head{
+    position: relative;
+    .bigImg{
+        width: 100%;
+        .picture{
+            width: 100%;
+            height: 754px;
+            overflow: hidden;
+            img{
+                margin-top: -100px;
+                width: 100%;
+                // height: 100%;
+            }
+        }
+    }
+}
+.vidbg-box{
+    margin: 85px auto;
+}
+.text{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    header{
+       width: 100%;
+       height: 81px;
+       position: absolute;
+       top: 10%;
+       left: 0;
+       padding-top: 0;
+       margin-bottom: 0;
+       h1{
+           position: relative;
+           text-align: center;
+           font-size: 23px;
+           line-height: 1px;
+           color: #333;
+           margin: 4px 0 0;
+       }
+       h2{
+           font-size: 50px;
+           margin-top: 45px;
+           position: relative;
+           text-align: center;
+           line-height: 1px;
+           color: #333;
+       }
+    }
+    .info{
+       width: 380px;
+       margin-left: -190px;   
+       position: absolute;
+       margin-top: -48px;
+       text-align: center;
+       top: 85%;
+       left: 50%;
+       padding: 0;
+       font-size: 16px;
+       line-height: 24px;
+       color: #fff;
+    }
+    .stats{
+        position: absolute;
+        left: 26%;
+        top: 85%;
+        width: 800px;
+        height: 60px;
+        margin-top: 10px;
+        overflow: hidden;
+        .top{
+            height: 30px;
+            width: 100%;
+            position: relative;
+            .speed1{
+                margin-left: 25px;
+                   position: relative;
+                   width: 48px;
+                   height: 30px;
+                   img{
+                       width: 100%;
+                   }
+            .speed2{
+                   position: absolute;
+                   top: 6px;
+                   left: 8px;
+                   height:17px ;
+                   width: 33px;
+            }
+            .speed3{
+                position: absolute;
+                width: 5px;
+                height: 19px;
+                left: 57%;
+                bottom: 3.5px;
+                   img{
+                       width: 5px;
+                       height: 16px;
+                       transform: rotate(45deg);
+                   }
+            }
+            }
+            .wen{
+                width: 80px;
+                height: 30px;
+                position: absolute;
+                right: 0;
+                top: 0px;
+                span{
+                    margin-left: 5px;
+                    &:first-child{
+                        font-size: 33px;
+                        font-weight: 800;
+                    }
+                }
+            }
+        }
+        li{
+            float: left;
+            position: relative;
+            width: 198px;
+            height: 52px;
+            color: #fff;
+             border-right: 1px solid rgba(255,255,255,0.4);
+             &:last-child{
+                 border-right: none;
+             }
+             &:nth-child(3){
+                 border-right: none;
+             }
+             img{
+                 margin-left: 42px;
+             }
+             .inf{
+                 line-height: 20px;
+                 color: #fff;
+                 font-size: 20px;
+                 text-align: center;
+                 margin-bottom: 10px;
+             }
+             .in{
+                 color: #fff;
+                 font-size: 13px;
+                 text-align: center;margin-top: 10px;
+             }
+             .ding{
+                 border: 2px solid #fff;
+                 border-radius: 25px;
+                 display: block;
+                 width: 195px;
+                 height: 42px;
+                 color: #fff;
+                 text-align: center;
+                 line-height: 42px;
+                 font-size: 13px;
+                 &:hover{
+                     background-color: #fff;
+                     color: #000;
+                 }
+             }
+        }
+    }
+  }
+  .jiantou{
+      width: 20px;
+      height: 20px;
+      position: absolute;
+      bottom: 10px;
+      left: 51.5%;
+      animation: move 1.2s linear infinite;
+  }
+  @keyframes move {
+    0% {
+      transform: translate(0, 0);
+    }
+    100% {
+      transform: translate(0, 10px);
+    }
+  }
+  .specs{
+      z-index: 20;
+      height: auto;
+      position: relative;
+      width: 100%;
+      margin-top: 90px;
+    ul{
+        margin: 0;
+        padding: 0;
+        position: relative;
+        display: block;
+        top: 0;
+        left: 50%;
+        width: 600px;
+        margin-left: -300px;
+        height: auto;
+        li{
+            margin: 0;
+        padding: 16px 0;
+        width: 100%;
+        border-top: 1px solid rgba(255,255,255,0.5);
+        color: #fff;
+        font-size: 15px;
+        box-sizing: border-box;
+        display: flex;
+        justify-content: space-between;
+        &:first-child{
+            border-top: none;
+        }
+        }
+      }
+  } 
+ 
+  .middle{
+    position: relative;
+    width: 100%;
+    margin-top: -320px;
+    height: auto;
+    z-index: 10;
+    .image{
+        position: relative;
+        top: 0;
+        left: 50%;
+        margin-left: -810px;
+        width: 1496px;
+        height: 1216px;
+        img{
+            width: 100%;
+        }
+    }
+    .txt{
+        position: relative;
+        top: 0;
+        left: 50%;
+        width: 955px;
+        margin-left: -477.5px;
+        margin-top: -320px;
+        overflow: hidden;
+        p{
+            position: relative;
+            float: right;
+            width: 52%;
+            font-size: 16px;
+            color: #fff;
+            box-sizing: border-box;
+            padding-left: 45px;
+            line-height: 24px;
+        }
+        h1{
+            position: relative;
+            float: left;
+            width: 45%;
+            font-size: 30px;
+            color: #fff;
+        }}
+  }
+  .interior{
+    position: relative;
+    width: 100%;
+    margin-top: 220px;
+    height: auto;
+    z-index: 10;
+    .image{
+        position: relative;
+        top: 0;
+        left: 50%;
+        margin-left: -620px;
+        width: 1240px;
+        height: 606px;
+    }
+    .txt{
+        position: relative;
+        display: block;
+        top: 0;
+        left: 50%;
+        width: 1240px;
+        margin-left: -620px;
+        margin-top: 25px;
+        overflow: hidden;
+        h1{
+            width: auto;
+            font-size: 20px; 
+            float: left;
+            color: #fff;
+        }
+        p{
+            float: left;
+            width: auto;
+            margin-left: 50px;
+            line-height: 24px;
+            font-size: 16px;
+            color: #fff;
+            box-sizing: border-box;
+        }
+    }
+  }
+  .topview{    
+    position: relative;
+    width: 100%;
+    margin-top: 0;
+    .image{
+        position: relative;
+        top: 0;
+        // left: -267px;
+        width: 100%;
+        // height: 1000px;
+        // overflow: hidden;
+        img{
+            width: 100% ;
+            &:nth-child(2){
+                display: none;
+            }
+        }
+    }
+    .txt{
+        position: absolute;
+        bottom: 150px;
+        left: 13%;
+        h1{
+            position: relative;
+            font-size: 20px;
+            color: #fff;
+        }
+        p{
+            position: relative;
+            width: 380px;
+            margin-top: 10px;
+            font-size: 16px;
+            color: #fff;
+            box-sizing: border-box;
+            line-height: 24px;
+        }
+    }
+}
+.unveil{
+    height: 610px;
+    .flash{
+        padding: 0 20px;
+        width: 1060px;
+        margin: 0 auto;
+        height: 100%;
+        background-image: url('../ROADSTER-img/upgrade_flash_player.png');
+        background-size: contain;
+        background-position: 50% center;
+        background-repeat: no-repeat;
+        cursor: pointer;
+        background-color: rgb(33, 33, 33);
+    }
+}
+.text-content{
+    padding-top: 20px;
+    padding-bottom: 40px;
+    p{
+        text-align: center;
+        color: #fff;
+    }
+}
+.vline{
+    margin-top: 20px;
+    position: relative;
+    width: 1px;
+    height: 195px;
+    left: 50%;
+    top: 0;
+    display: block;
+    background-color: #fff;
+    opacity: .4;
+}
+.bottom-cta{
+    position: relative;
+    width: 178px;
+    left: 50%;
+    margin-left: -89px;
+    margin-top: 54px;
+    top: 0;
+    display: block;
+    margin-bottom: 0;
+    .order{
+        margin-bottom: 15px;
+        position: relative;
+        display: block;
+        width: 178px;
+        height: 42px;
+        box-sizing: border-box;
+        border: 2.5px solid #fff;
+        border-radius: 21px;
+        font-size: 12px;
+        line-height: 13px;
+        color: #fff;
+        text-align: center;
+        padding-top: 12px;
+        &:hover{
+            background-color: #fff;
+            color: #000;
+        }
+    }
+}
+.footer{
+    padding: 20px 200px;
+    text-align: left;
+    p{
+        a{     
+        color: #666;
+        }
+    }
+}

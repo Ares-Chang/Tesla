@@ -1,0 +1,2385 @@
+/*global window */
+/*global debug */
+var TeslaAnalytics = window.TeslaAnalytics || {};
+
+(function (window, TeslaAnalytics, debug) {
+    'use strict';
+
+    /**
+     * Centralized location for analytics events.
+     */
+    TeslaAnalytics.Helpers = (function () {
+        var _uuid = '';
+        var _oneTimeInteractions = [];
+
+        return {
+            /**
+             * Set uuid.
+             *
+             * @param string uuid Uuid.
+             */
+            setUuid: function (uuid) {
+                if (undefined !== uuid && uuid !== '' && uuid !== _uuid) {
+                    debug.log('GTM: uuid set to:' + uuid);
+                    _uuid = uuid;
+                }
+            },
+
+            /**
+             * Is first time calling interaction for form type.
+             *
+             * @param string interaction Interaction.
+             * @param string formType Form type.
+             * @param boolean Is first time calling interaction for form type.
+             */
+            isFirstInteraction: function (interaction, formType) {
+                var formTypeInteraction = formType + '::' + interaction;
+                if (undefined !== formTypeInteraction && formTypeInteraction !== '' && -1 === _oneTimeInteractions.indexOf(formTypeInteraction)) {
+                    // debug.log('GTM: First call to interaction: ' + interaction + ' - from formType: ' + formType);
+                    _oneTimeInteractions.push(formTypeInteraction);
+                    return true;
+                } else {
+                    // debug.log('GTM: Subsequent call to interaction (ignoring):' + interaction + ' - from formType: ' + formType);
+                    return false;
+                }
+            },
+
+            /**
+             * Wrapper around window.dataLayer.push({});
+             *
+             * @param object dataLayerObject dataLayer object to push.
+             */
+            dataLayerPush: function (dataLayerObject) {
+                if (undefined !== dataLayerObject) {
+                    // Inject uuid as userId on the dataLayerObject.
+                    if (_uuid !== '') {
+                        dataLayerObject.userId = _uuid;
+                    }
+                    debug.log('GTM: dataLayer.push:', dataLayerObject);
+                    window.dataLayer.push(dataLayerObject);
+                }
+            },
+
+            /**
+             * Wrapper for event: form-interaction.
+             *
+             * @param string interaction Interaction (ie: 'view-open').
+             * @param string formType Form type (ie: 'Test Drive).
+             * @param string engagementType Engagement type (ie: 'User Requested').
+             */
+            eventFormInteraction: function (interaction, formType, engagementType) {
+                debug.log('GTM: eventFormInteraction triggered for form type [' + formType + '] and interaction [' + interaction + '].');
+                this.dataLayerPush({
+                    event: 'form-interaction',
+                    interaction: interaction,
+                    formType: formType,
+                    engagementType: engagementType
+                });
+            },
+
+            eventApplePayInteraction: function (interaction) {
+                debug.log('GTM: eventFormInteraction triggered for apple_pay and interaction [' + interaction + '].');
+                this.dataLayerPush({
+                    event: 'apple_pay',
+                    interaction: interaction
+                });
+            },
+
+            /**
+             * Wrapper for interaction: view-open.
+             *
+             * @param string formType Form type.
+             */
+            interactionViewOpen: function (formType) {
+                var interaction = 'view-open';
+                // Only trigger view-open call once.
+                if (this.isFirstInteraction(interaction, formType)) {
+                    this.eventFormInteraction(interaction, formType, 'User Requested');
+                }
+            },
+
+            /**
+             * Wrapper for interaction: personal-info-complete.
+             *
+             * @param string formType Form type.
+             */
+            interactionPersonalInfoComplete: function (formType) {
+                this.eventFormInteraction('personal-info-complete', formType, 'User Requested');
+            },
+
+            /**
+             * Wrapper for interaction: confirm-thank-you.
+             *
+             * @param string formType Form type.
+             */
+            interactionConfirmThankYou: function (formType) {
+                this.eventFormInteraction('confirm-thank-you', formType, 'User Requested');
+            },
+
+            /**
+             * Wrapper for interaction: close.
+             *
+             * @param string formType Form type.
+             */
+            interactionClose: function (formType) {
+                var interaction = 'close';
+                // Only trigger close call once.
+                if (this.isFirstInteraction(interaction, formType)) {
+                    this.eventFormInteraction(interaction, formType, 'User Requested');
+                }
+            },
+
+            /**
+             * Wrapper for interaction: confirm-order
+             *
+             * @param string recommend_or_alternate which Powerwall option is selected (ie 'recommended' or 'alternate')
+             */
+            interactionClickConfirmOrder: function (recommend_or_alternate) {
+                this.dataLayerPush({
+                    'event': 'predelivery-powerwall',
+                    'interaction': 'confirm-order',
+                    'label': recommend_or_alternate
+                });
+            },
+
+            /**
+             * Wrapper for interaction: cancel-order
+             *
+             * @param string reason from dropdown menu of reasons for cancellation (ie 'Pricing')
+             */
+            interactionClickBackToEditOrder: function (event_name) {
+                this.dataLayerPush({
+                    'event': event_name,
+                    'interaction': 'cancel-order',
+                    'label': 'back'
+                });
+            },
+            interactionClickSubmitCancel: function (event_name, reason) {
+                this.dataLayerPush({
+                    'event': event_name,
+                    'interaction': 'cancel-order',
+                    'label': 'submit-' + reason
+                });
+            },
+
+            /**
+             * Wrapper for interaction: edit-order
+             */
+            interactionEditOrderClickBack: function (event_name) {
+                this.dataLayerPush({
+                    'event': event_name,
+                    'interaction': 'edit-order',
+                    'label': 'back'
+                });
+            },
+            interactionEditOrderClickSave: function (event_name) {
+                this.dataLayerPush({
+                    'event': event_name,
+                    'interaction': 'edit-order',
+                    'label': 'save'
+                });
+            },
+
+        };
+    }());
+
+    /**
+     * Contact us form.
+     *
+     * Form:
+     *   - tesla_contact_form
+     *   - tesla_corporate_form
+     * Url:
+     *   - /contact
+     *   - /corporate (en_GB and other EU markets)
+     * Called from:
+     *   - tesla_corporate_form.js
+     *   - tesla_corporate_form.main.inc
+     */
+    TeslaAnalytics.ContactUsForm = (function () {
+
+        var _formType = 'Contact Us';
+
+        return {
+            /**
+             * Contact us: view-open.
+             */
+            interactionViewOpen: function () {
+                TeslaAnalytics.Helpers.interactionViewOpen(_formType);
+            },
+
+            /**
+             * Contact us: personal-info-complete.
+             *
+             * @param string uuid Uuid.
+             */
+            interactionPersonalInfoComplete: function (uuid) {
+                TeslaAnalytics.Helpers.setUuid(uuid);
+                TeslaAnalytics.Helpers.interactionPersonalInfoComplete(_formType);
+            },
+
+            /**
+             * Contact us: confirm-thank-you.
+             *
+             * @param string uuid Uuid.
+             */
+            interactionConfirmThankYou: function (uuid) {
+                TeslaAnalytics.Helpers.setUuid(uuid);
+                TeslaAnalytics.Helpers.interactionConfirmThankYou(_formType);
+            }
+        };
+    }());
+
+    /**
+     * US Drive to believe (one week with Model X campaign) signup.
+     *
+     * Form:
+     *   - tesla_drive_to_blieve_form
+     * Url:
+     *   - /one-week-with-model-x
+     *   - /campaign/one-week-with-model-x
+     * Called from:
+     *   - tesla_drive_to_believe_form.main.inc
+     */
+    TeslaAnalytics.DriveToBelieveUS = (function () {
+
+        var _formType = 'newsletter signup';
+
+        return {
+            /**
+             * Drive to Believe (US): view-open.
+             */
+            interactionViewOpen: function () {
+                TeslaAnalytics.Helpers.interactionViewOpen(_formType);
+            },
+
+            /**
+             * Drive to Believe (US): personal-info-complete.
+             *
+             * @param string uuid Uuid.
+             */
+            interactionPersonalInfoComplete: function (uuid) {
+                TeslaAnalytics.Helpers.setUuid(uuid);
+                TeslaAnalytics.Helpers.interactionPersonalInfoComplete(_formType);
+            },
+
+            /**
+             * Drive to Believe (US): confirm-thank-you.
+             *
+             * @param string uuid Uuid.
+             */
+            interactionConfirmThankYou: function (uuid) {
+                TeslaAnalytics.Helpers.setUuid(uuid);
+                TeslaAnalytics.Helpers.interactionConfirmThankYou(_formType);
+            }
+        };
+    }());
+
+    /**
+     * Event.
+     *
+     * Form:
+     *   - tesla-rsvp-event-form
+     * Url:
+     *   - /events
+     * Called from:
+     *   - tesla_test_drive/templates/blog-newsletter-thank-you.tpl.php
+     */
+    TeslaAnalytics.Event = (function () {
+
+        var _formType = 'Event';
+
+        return {
+            /**
+             * Event: view-open.
+             */
+            interactionViewOpen: function () {
+                TeslaAnalytics.Helpers.interactionViewOpen(_formType);
+            },
+
+            /**
+             * Event: personal-info-complete.
+             *
+             * @param string uuid Uuid.
+             */
+            interactionPersonalInfoComplete: function (uuid) {
+                TeslaAnalytics.Helpers.setUuid(uuid);
+                TeslaAnalytics.Helpers.interactionPersonalInfoComplete(_formType);
+            },
+
+            /**
+             * Event: confirm-thank-you.
+             *
+             * @param string uuid Uuid.
+             */
+            interactionConfirmThankYou: function (uuid) {
+                TeslaAnalytics.Helpers.setUuid(uuid);
+                TeslaAnalytics.Helpers.interactionConfirmThankYou(_formType);
+            }
+        };
+    }());
+
+    /**
+     * Event RSVP.
+     *
+     * Form:
+     *   - tesla_test_drive_form
+     * Url:
+     *   - /event/tesla-explores-park-city-ut
+     * Called from:
+     *   - tesla_rsvp_event/tesla_rsvp_event.module
+     */
+    TeslaAnalytics.EventRsvp = (function () {
+
+        var _formType = 'Event RSVP';
+
+        return {
+            /**
+             * Event RSVP: view-open.
+             */
+            interactionViewOpen: function () {
+                TeslaAnalytics.Helpers.interactionViewOpen(_formType);
+            },
+
+            /**
+             * Event RSVP: personal-info-complete.
+             *
+             * @param string uuid Uuid.
+             */
+            interactionPersonalInfoComplete: function (uuid) {
+                TeslaAnalytics.Helpers.setUuid(uuid);
+                TeslaAnalytics.Helpers.interactionPersonalInfoComplete(_formType);
+            },
+
+            /**
+             * Event RSVP: confirm-thank-you.
+             *
+             * @param string uuid Uuid.
+             */
+            interactionConfirmThankYou: function (uuid) {
+                TeslaAnalytics.Helpers.setUuid(uuid);
+                TeslaAnalytics.Helpers.interactionConfirmThankYou(_formType);
+            }
+        };
+    }());
+
+    /**
+     * EU greatest drive campaign.
+     *
+     * Form:
+     *   - tesla_greatest_drive_form
+     * Url:
+     *   - /greatest-drive
+     *   - /campaign/greatest-drive
+     * Called from:
+     *   - tesla_drive_to_believe_form.tesla_greatest_drive.inc
+     */
+    TeslaAnalytics.GreatestDrive = (function () {
+
+        var _formType = 'Greatest Drive';
+
+        return {
+            /**
+             * Drive to Believe (US): view-open.
+             */
+            interactionViewOpen: function () {
+                TeslaAnalytics.Helpers.interactionViewOpen(_formType);
+            },
+
+            /**
+             * Drive to Believe (US): personal-info-complete.
+             *
+             * @param string uuid Uuid.
+             */
+            interactionPersonalInfoComplete: function (uuid) {
+                TeslaAnalytics.Helpers.setUuid(uuid);
+                TeslaAnalytics.Helpers.interactionPersonalInfoComplete(_formType);
+            },
+
+            /**
+             * Drive to Believe (US): confirm-thank-you.
+             *
+             * @param string uuid Uuid.
+             */
+            interactionConfirmThankYou: function (uuid) {
+                TeslaAnalytics.Helpers.setUuid(uuid);
+                TeslaAnalytics.Helpers.interactionConfirmThankYou(_formType);
+            }
+        };
+    }());
+
+    /**
+     * EU greatest drive campaign Co driver.
+     *
+     * Form:
+     *   - tesla_greatest_drive_co_driver_modal_form
+     * Url:
+     *   - /campaign/greatest-drive/nominate
+     *   - /campaign/greatest-drive/success
+     * Called from:
+     *   - tesla_drive_to_believe_form.tesla_greatest_drive.inc
+     */
+    TeslaAnalytics.GreatestDriveCoDriver = (function () {
+        var _formType = 'Greatest Drive - CD';
+
+        return {
+            /**
+             * Greatest Drive Co Driver: view-open.
+             */
+            interactionViewOpen: function () {
+                TeslaAnalytics.Helpers.interactionViewOpen(_formType);
+            },
+
+            /**
+             * Greatest Drive Co Driver: personal-info-complete.
+             *
+             * @param string uuid Uuid.
+             */
+            interactionPersonalInfoComplete: function (uuid) {
+                TeslaAnalytics.Helpers.setUuid(uuid);
+                TeslaAnalytics.Helpers.interactionPersonalInfoComplete(_formType);
+            },
+
+            /**
+             * Greatest Drive Co Driver: confirm-thank-you.
+             *
+             * @param string uuid Uuid.
+             */
+            interactionConfirmThankYou: function (uuid) {
+                TeslaAnalytics.Helpers.setUuid(uuid);
+                TeslaAnalytics.Helpers.interactionConfirmThankYou(_formType);
+            }
+        };
+    }());
+
+    /**
+     * Innovation marketing form with the drive to believe layout
+     *
+     * Form:
+     *   - tesla_general_marketing_form
+     * Url:
+     *   - /campaign/innovationerleben
+     *   - /campaign/innovationerleben/success
+     * Called from:
+     *   - tesla_drive_to_believe_form.tesla_general_marketing_form.inc
+     */
+    TeslaAnalytics.InnovationMarketingForm = (function () {
+        var _formType = 'Innovationerleben';
+
+        return {
+            /**
+             * Greatest Drive Co Driver: view-open.
+             */
+            interactionViewOpen: function (form_name) {
+                TeslaAnalytics.Helpers.interactionViewOpen(_formType);
+            },
+
+            /**
+             * Greatest Drive Co Driver: personal-info-complete.
+             *
+             * @param string uuid Uuid.
+             */
+            interactionPersonalInfoComplete: function (form_name, uuid) {
+                TeslaAnalytics.Helpers.setUuid(uuid);
+                TeslaAnalytics.Helpers.interactionPersonalInfoComplete(_formType);
+            },
+
+            /**
+             * Greatest Drive Co Driver: confirm-thank-you.
+             *
+             * @param string uuid Uuid.
+             */
+            interactionConfirmThankYou: function (form_name, uuid) {
+                TeslaAnalytics.Helpers.setUuid(uuid);
+                TeslaAnalytics.Helpers.interactionConfirmThankYou(_formType);
+            }
+        };
+    }());
+
+    /**
+     * digitalisierung-erfahren marketing form with the drive to believe layout
+     *
+     * Form:
+     *   - tesla_drive_to_believe_form
+     * Url:
+     *   - /campaign/digitalisierung-erfahren
+     * Called from:
+     *   - tesla_drive_to_believe_form.main.inc
+     */
+    TeslaAnalytics.Digitization = (function () {
+        var _formType = 'Digitization';
+
+        return {
+            /**
+             * Greatest Drive Co Driver: view-open.
+             */
+            interactionViewOpen: function (form_name) {
+                TeslaAnalytics.Helpers.interactionViewOpen(_formType);
+            },
+
+            /**
+             * digitalisierung-erfahren: personal-info-complete.
+             *
+             * @param string uuid Uuid.
+             */
+            interactionPersonalInfoComplete: function (uuid) {
+                TeslaAnalytics.Helpers.setUuid(uuid);
+                TeslaAnalytics.Helpers.interactionPersonalInfoComplete(_formType);
+            },
+
+            /**
+             * digitalisierung-erfahren: confirm-thank-you.
+             *
+             * @param string uuid Uuid.
+             */
+            interactionConfirmThankYou: function (uuid) {
+                TeslaAnalytics.Helpers.setUuid(uuid);
+                TeslaAnalytics.Helpers.interactionConfirmThankYou(_formType);
+            }
+        };
+    }());
+
+    /**
+     * powerwall campaign marketing form with the drive to believe layout
+     *
+     * Form:
+     *   - general_marketing_form
+     * Url:
+     *   - /campaign/powerwall
+     * Called from:
+     *   - tesla_drive_to_believe_form.general_marketing_form.inc
+     *
+     */
+    TeslaAnalytics.PowerwallCampaign = (function () {
+        var _formType = 'powerwall-home-campaign';
+
+        return {
+            /**
+             * Greatest Drive Co Driver: view-open.
+             */
+            interactionViewOpen: function (form_name) {
+                TeslaAnalytics.Helpers.interactionViewOpen(_formType);
+            },
+
+            /**
+             * digitalisierung-erfahren: personal-info-complete.
+             *
+             * @param string uuid Uuid.
+             */
+            interactionPersonalInfoComplete: function (uuid) {
+                TeslaAnalytics.Helpers.setUuid(uuid);
+                TeslaAnalytics.Helpers.interactionPersonalInfoComplete(_formType);
+            },
+
+            /**
+             * digitalisierung-erfahren: confirm-thank-you.
+             *
+             * @param string uuid Uuid.
+             */
+            interactionConfirmThankYou: function (uuid) {
+                TeslaAnalytics.Helpers.setUuid(uuid);
+                TeslaAnalytics.Helpers.interactionConfirmThankYou(_formType);
+            }
+        };
+    }());
+
+    /**
+     * Tesla home campaign marketing form with the drive to believe layout
+     *
+     * Form:
+     *   - general_marketing_form
+     * Url:
+     *   - /campaign/tesla-home
+     * Called from:
+     *   - tesla_drive_to_believe_form.general_marketing_form.inc
+     *
+     */
+    TeslaAnalytics.TeslaHomeCampaign = (function () {
+        var _formType = 'tesla-home-campaign';
+
+        return {
+            /**
+             * Greatest Drive Co Driver: view-open.
+             */
+            interactionViewOpen: function (form_name) {
+                TeslaAnalytics.Helpers.interactionViewOpen(_formType);
+            },
+
+            /**
+             * digitalisierung-erfahren: personal-info-complete.
+             *
+             * @param string uuid Uuid.
+             */
+            interactionPersonalInfoComplete: function (uuid) {
+                TeslaAnalytics.Helpers.setUuid(uuid);
+                TeslaAnalytics.Helpers.interactionPersonalInfoComplete(_formType);
+            },
+
+            /**
+             * digitalisierung-erfahren: confirm-thank-you.
+             *
+             * @param string uuid Uuid.
+             */
+            interactionConfirmThankYou: function (uuid) {
+                TeslaAnalytics.Helpers.setUuid(uuid);
+                TeslaAnalytics.Helpers.interactionConfirmThankYou(_formType);
+            }
+        };
+    }());
+
+    /**
+     * powerwall stories campaign marketing form with the drive to believe layout
+     *
+     * Form:
+     *   - general_marketing_form
+     * Url:
+     *   - /campaign/powerwallstories
+     * Called from:
+     *   - tesla_drive_to_believe_form.general_marketing_form.inc
+     */
+    TeslaAnalytics.PowerwallStoriesCampaign = (function () {
+        var _formType = 'powerwall-stories-campaign';
+        return {
+
+            /**
+             * General Marketing form: view-open.
+             */
+            interactionViewOpen: function () {
+                TeslaAnalytics.Helpers.interactionViewOpen(_formType);
+            },
+
+            /**
+             * General Marketing form: personal-info-complete.
+             *
+             * @param string uuid Uuid.
+             */
+            interactionPersonalInfoComplete: function (uuid) {
+                TeslaAnalytics.Helpers.setUuid(uuid);
+                TeslaAnalytics.Helpers.interactionPersonalInfoComplete(_formType);
+            },
+
+            /**
+             * General Marketing form: confirm-thank-you.
+             *
+             * @param string uuid Uuid.
+             */
+            interactionConfirmThankYou: function (uuid) {
+                TeslaAnalytics.Helpers.setUuid(uuid);
+                TeslaAnalytics.Helpers.interactionConfirmThankYou(_formType);
+            }
+        }
+    }());
+
+    /**
+     * powerwallhome-email campaign marketing form with the drive to believe layout
+     *
+     * Form:
+     *   - general_marketing_form
+     * Url:
+     *   - /campaign/powerwallhome-email
+     * Called from:
+     *   - tesla_drive_to_believe_form.general_marketing_form.inc
+     */
+    TeslaAnalytics.PowerwallhomeEmailCampaign = (function () {
+        var _formType = 'powerwallhome-email-campaign';
+        return {
+
+            /**
+             * General Marketing form: view-open.
+             */
+            interactionViewOpen: function () {
+                TeslaAnalytics.Helpers.interactionViewOpen(_formType);
+            },
+
+            /**
+             * General Marketing form: personal-info-complete.
+             *
+             * @param string uuid Uuid.
+             */
+            interactionPersonalInfoComplete: function (uuid) {
+                TeslaAnalytics.Helpers.setUuid(uuid);
+                TeslaAnalytics.Helpers.interactionPersonalInfoComplete(_formType);
+            },
+
+            /**
+             * General Marketing form: confirm-thank-you.
+             *
+             * @param string uuid Uuid.
+             */
+            interactionConfirmThankYou: function (uuid) {
+                TeslaAnalytics.Helpers.setUuid(uuid);
+                TeslaAnalytics.Helpers.interactionConfirmThankYou(_formType);
+            }
+        }
+    }());
+
+    /**
+    * Swedish Arkaden campaign marketing form with the drive to believe layout
+    *   - /campaign/arkaden
+    * Called from:
+    *   - tesla_drive_to_believe_form.general_marketing_form.inc
+    *
+    */
+    TeslaAnalytics.ArkadenCampaign = (function () {
+        var _formType = 'Sweden Arkaden Campaign';
+
+        return {
+            /**
+             * Greatest Drive Co Driver: view-open.
+             */
+            interactionViewOpen: function () {
+                TeslaAnalytics.Helpers.interactionViewOpen(_formType);
+            },
+
+            /**
+             * digitalisierung-erfahren: personal-info-complete.
+             *
+             * @param string uuid Uuid.
+             */
+            interactionPersonalInfoComplete: function (uuid) {
+                TeslaAnalytics.Helpers.setUuid(uuid);
+                TeslaAnalytics.Helpers.interactionPersonalInfoComplete(_formType);
+            },
+
+            /**
+             * digitalisierung-erfahren: confirm-thank-you.
+             *
+             * @param string uuid Uuid.
+             */
+            interactionConfirmThankYou: function (uuid) {
+                TeslaAnalytics.Helpers.setUuid(uuid);
+                TeslaAnalytics.Helpers.interactionConfirmThankYou(_formType);
+            }
+        };
+    }());
+
+    /**
+     * winter-experience owners campaign marketing form with the drive to believe layout
+     *   - /campaign/winter-experience/owners
+     * Called from:
+     *   - tesla_drive_to_believe_form.general_marketing_form.inc
+     *
+     */
+    TeslaAnalytics.WinterExperienceOwners = (function () {
+        var _formType = 'winter-experience owners';
+
+        return {
+            /**
+             * Greatest Drive Co Driver: view-open.
+             */
+            interactionViewOpen: function () {
+                TeslaAnalytics.Helpers.interactionViewOpen(_formType);
+            },
+
+            /**
+             * digitalisierung-erfahren: personal-info-complete.
+             *
+             * @param string uuid Uuid.
+             */
+            interactionPersonalInfoComplete: function (uuid) {
+                TeslaAnalytics.Helpers.setUuid(uuid);
+                TeslaAnalytics.Helpers.interactionPersonalInfoComplete(_formType);
+            },
+
+            /**
+             * digitalisierung-erfahren: confirm-thank-you.
+             *
+             * @param string uuid Uuid.
+             */
+            interactionConfirmThankYou: function (uuid) {
+                TeslaAnalytics.Helpers.setUuid(uuid);
+                TeslaAnalytics.Helpers.interactionConfirmThankYou(_formType);
+            }
+        };
+    }());
+
+    /**
+     * winter-experience friend campaign marketing form with the drive to believe layout
+     *   - /campaign/winter-experience/friend
+     * Called from:
+     *   - tesla_drive_to_believe_form.general_marketing_form.inc
+     *
+     */
+    TeslaAnalytics.WinterExperienceFriend = (function () {
+        var _formType = 'winter-experience friend';
+
+        return {
+            /**
+             * Greatest Drive Co Driver: view-open.
+             */
+            interactionViewOpen: function () {
+                TeslaAnalytics.Helpers.interactionViewOpen(_formType);
+            },
+
+            /**
+             * digitalisierung-erfahren: personal-info-complete.
+             *
+             * @param string uuid Uuid.
+             */
+            interactionPersonalInfoComplete: function (uuid) {
+                TeslaAnalytics.Helpers.setUuid(uuid);
+                TeslaAnalytics.Helpers.interactionPersonalInfoComplete(_formType);
+            },
+
+            /**
+             * digitalisierung-erfahren: confirm-thank-you.
+             *
+             * @param string uuid Uuid.
+             */
+            interactionConfirmThankYou: function (uuid) {
+                TeslaAnalytics.Helpers.setUuid(uuid);
+                TeslaAnalytics.Helpers.interactionConfirmThankYou(_formType);
+            }
+        };
+    }());
+
+  /**
+   * winter-experience owners campaign marketing form with the drive to believe layout
+   *   - /campaign/winter-experience/partner
+   * Called from:
+   *   - tesla_drive_to_believe_form.general_marketing_form.inc
+   *
+   */
+  TeslaAnalytics.WinterExperiencePartner = (function () {
+    var _formType = 'winter-experience partner';
+
+    return {
+      /**
+       * Greatest Drive Co Driver: view-open.
+       */
+      interactionViewOpen: function () {
+        TeslaAnalytics.Helpers.interactionViewOpen(_formType);
+      },
+
+      /**
+       * digitalisierung-erfahren: personal-info-complete.
+       *
+       * @param string uuid Uuid.
+       */
+      interactionPersonalInfoComplete: function (uuid) {
+        TeslaAnalytics.Helpers.setUuid(uuid);
+        TeslaAnalytics.Helpers.interactionPersonalInfoComplete(_formType);
+      },
+
+      /**
+       * digitalisierung-erfahren: confirm-thank-you.
+       *
+       * @param string uuid Uuid.
+       */
+      interactionConfirmThankYou: function (uuid) {
+        TeslaAnalytics.Helpers.setUuid(uuid);
+        TeslaAnalytics.Helpers.interactionConfirmThankYou(_formType);
+      }
+    };
+  }());
+
+    /**
+     * winter-experience ice main campaign marketing form with the drive to believe layout
+     *   - /campaign/winter-experience
+     * Called from:
+     *   - tesla_drive_to_believe_form.general_marketing_form.inc
+     *
+     */
+    TeslaAnalytics.WinterExperienceIce = (function () {
+        var _formType = 'winter-experience ice';
+
+        return {
+            /**
+             * Greatest Drive Co Driver: view-open.
+             */
+            interactionViewOpen: function () {
+                TeslaAnalytics.Helpers.interactionViewOpen(_formType);
+            },
+
+            /**
+             * digitalisierung-erfahren: personal-info-complete.
+             *
+             * @param string uuid Uuid.
+             */
+            interactionPersonalInfoComplete: function (uuid) {
+                TeslaAnalytics.Helpers.setUuid(uuid);
+                TeslaAnalytics.Helpers.interactionPersonalInfoComplete(_formType);
+            },
+
+            /**
+             * digitalisierung-erfahren: confirm-thank-you.
+             *
+             * @param string uuid Uuid.
+             */
+            interactionConfirmThankYou: function (uuid) {
+                TeslaAnalytics.Helpers.setUuid(uuid);
+                TeslaAnalytics.Helpers.interactionConfirmThankYou(_formType);
+            }
+        };
+    }());
+
+    /**
+     * winter-experience friend campaign marketing form with the drive to believe layout
+     *   - /campaign/winter-experience/success
+     * Called from:
+     *   - tesla_drive_to_believe_form.general_marketing_form.inc
+     *
+     */
+    TeslaAnalytics.WinterExperienceIceFriend = (function () {
+        var _formType = 'winter-experience ice friend';
+
+        return {
+            /**
+             * Greatest Drive Co Driver: view-open.
+             */
+            interactionViewOpen: function () {
+                TeslaAnalytics.Helpers.interactionViewOpen(_formType);
+            },
+
+            /**
+             * digitalisierung-erfahren: personal-info-complete.
+             *
+             * @param string uuid Uuid.
+             */
+            interactionPersonalInfoComplete: function (uuid) {
+                TeslaAnalytics.Helpers.setUuid(uuid);
+                TeslaAnalytics.Helpers.interactionPersonalInfoComplete(_formType);
+            },
+
+            /**
+             * digitalisierung-erfahren: confirm-thank-you.
+             *
+             * @param string uuid Uuid.
+             */
+            interactionConfirmThankYou: function (uuid) {
+                TeslaAnalytics.Helpers.setUuid(uuid);
+                TeslaAnalytics.Helpers.interactionConfirmThankYou(_formType);
+            }
+        };
+    }());
+
+    /**
+     * Privium owners campaign marketing form with the drive to believe layout
+     *   - /campaign/winter-experience/privium
+     * Called from:
+     *   - tesla_drive_to_believe_form.general_marketing_form.inc
+     *
+     */
+    TeslaAnalytics.PriviumCampaign = (function () {
+        var _formType = 'Privium owners';
+
+        return {
+            /**
+             * Greatest Drive Co Driver: view-open.
+             */
+            interactionViewOpen: function () {
+                TeslaAnalytics.Helpers.interactionViewOpen(_formType);
+            },
+
+            /**
+             * digitalisierung-erfahren: personal-info-complete.
+             *
+             * @param string uuid Uuid.
+             */
+            interactionPersonalInfoComplete: function (uuid) {
+                TeslaAnalytics.Helpers.setUuid(uuid);
+                TeslaAnalytics.Helpers.interactionPersonalInfoComplete(_formType);
+            },
+
+            /**
+             * digitalisierung-erfahren: confirm-thank-you.
+             *
+             * @param string uuid Uuid.
+             */
+            interactionConfirmThankYou: function (uuid) {
+                TeslaAnalytics.Helpers.setUuid(uuid);
+                TeslaAnalytics.Helpers.interactionConfirmThankYou(_formType);
+            }
+        };
+    }());
+
+    /**
+     * Privium friends campaign marketing form with the drive to believe layout
+     *   - /campaign/winter-experience/privium-friend
+     * Called from:
+     *   - tesla_drive_to_believe_form.general_marketing_form.inc
+     *
+     */
+    TeslaAnalytics.PriviumFriendCampaign = (function () {
+        var _formType = 'Privium friend';
+
+        return {
+            /**
+             * Greatest Drive Co Driver: view-open.
+             */
+            interactionViewOpen: function () {
+                TeslaAnalytics.Helpers.interactionViewOpen(_formType);
+            },
+
+            /**
+             * digitalisierung-erfahren: personal-info-complete.
+             *
+             * @param string uuid Uuid.
+             */
+            interactionPersonalInfoComplete: function (uuid) {
+                TeslaAnalytics.Helpers.setUuid(uuid);
+                TeslaAnalytics.Helpers.interactionPersonalInfoComplete(_formType);
+            },
+
+            /**
+             * digitalisierung-erfahren: confirm-thank-you.
+             *
+             * @param string uuid Uuid.
+             */
+            interactionConfirmThankYou: function (uuid) {
+                TeslaAnalytics.Helpers.setUuid(uuid);
+                TeslaAnalytics.Helpers.interactionConfirmThankYou(_formType);
+            }
+        };
+    }());
+
+    /**
+     * Tiny House campaign marketing form for Energy.
+     *   - /campaign/tiny-house
+     * Called from:
+     *   - tesla_drive_to_believe_form.general_marketing_form.inc
+     */
+    TeslaAnalytics.TinyHouse = (function () {
+        var _formType = 'tiny-house';
+
+        return {
+            /**
+             * Tiny House: view-open.
+             */
+            interactionViewOpen: function () {
+                TeslaAnalytics.Helpers.interactionViewOpen(_formType);
+            },
+
+            /**
+             * @param string uuid Uuid.
+             */
+            interactionPersonalInfoComplete: function (uuid) {
+                TeslaAnalytics.Helpers.setUuid(uuid);
+                TeslaAnalytics.Helpers.interactionPersonalInfoComplete(_formType);
+            },
+
+            /**
+             * @param string uuid Uuid.
+             */
+            interactionConfirmThankYou: function (uuid) {
+                TeslaAnalytics.Helpers.setUuid(uuid);
+                TeslaAnalytics.Helpers.interactionConfirmThankYou(_formType);
+            }
+        };
+    }());
+
+    /**
+     * Secret Cinema campaign marketing for GB market.
+     *   - /campaign/secret-cinema/travel
+     * Called from:
+     *   - tesla_drive_to_believe_form.general_marketing_form.inc
+     */
+    TeslaAnalytics.SecretCinemaTravel = (function () {
+        var _formType = 'secret-cinema-travel';
+
+        return {
+            /**
+             * Tiny House: view-open.
+             */
+            interactionViewOpen: function () {
+                TeslaAnalytics.Helpers.interactionViewOpen(_formType);
+            },
+
+            /**
+             * @param string uuid Uuid.
+             */
+            interactionPersonalInfoComplete: function (uuid) {
+                TeslaAnalytics.Helpers.setUuid(uuid);
+                TeslaAnalytics.Helpers.interactionPersonalInfoComplete(_formType);
+            },
+
+            /**
+             * @param string uuid Uuid.
+             */
+            interactionConfirmThankYou: function (uuid) {
+                TeslaAnalytics.Helpers.setUuid(uuid);
+                TeslaAnalytics.Helpers.interactionConfirmThankYou(_formType);
+            }
+        };
+    }());
+
+    /**
+     * Secret Cinema campaign marketing for GB market.
+     *   - /campaign/secret-cinema/weekend
+     * Called from:
+     *   - tesla_drive_to_believe_form.general_marketing_form.inc
+     */
+    TeslaAnalytics.SecretCinemaWeekend = (function () {
+        var _formType = 'secret-cinema-weekend';
+
+        return {
+            /**
+             * Tiny House: view-open.
+             */
+            interactionViewOpen: function () {
+                TeslaAnalytics.Helpers.interactionViewOpen(_formType);
+            },
+
+            /**
+             * @param string uuid Uuid.
+             */
+            interactionPersonalInfoComplete: function (uuid) {
+                TeslaAnalytics.Helpers.setUuid(uuid);
+                TeslaAnalytics.Helpers.interactionPersonalInfoComplete(_formType);
+            },
+
+            /**
+             * @param string uuid Uuid.
+             */
+            interactionConfirmThankYou: function (uuid) {
+                TeslaAnalytics.Helpers.setUuid(uuid);
+                TeslaAnalytics.Helpers.interactionConfirmThankYou(_formType);
+            }
+        };
+    }());
+
+    /**
+     * Secret Cinema campaign marketing for GB market.
+     *   - /campaign/secret-cinema/weekend/success
+     * Called from:
+     *   - tesla_drive_to_believe_form.general_marketing_form.inc
+     */
+    TeslaAnalytics.SecretCinemaWeekendFriend = (function () {
+        var _formType = 'secret-cinema-weekend-friend';
+
+        return {
+            /**
+             * Tiny House: view-open.
+             */
+            interactionViewOpen: function () {
+                TeslaAnalytics.Helpers.interactionViewOpen(_formType);
+            },
+
+            /**
+             * @param string uuid Uuid.
+             */
+            interactionPersonalInfoComplete: function (uuid) {
+                TeslaAnalytics.Helpers.setUuid(uuid);
+                TeslaAnalytics.Helpers.interactionPersonalInfoComplete(_formType);
+            },
+
+            /**
+             * @param string uuid Uuid.
+             */
+            interactionConfirmThankYou: function (uuid) {
+                TeslaAnalytics.Helpers.setUuid(uuid);
+                TeslaAnalytics.Helpers.interactionConfirmThankYou(_formType);
+            }
+        };
+    }());
+
+    /**
+     * experience-tesla-in-italy campaign marketing form with the drive to believe layout
+     *   - /campaign/experience-tesla-in-italy
+     * Called from:
+     *   - tesla_drive_to_believe_form.general_marketing_form.inc
+     *
+     */
+    TeslaAnalytics.ExperienceTeslaInItaly = (function () {
+        var _formType = 'experience-tesla-in-italy';
+
+        return {
+            /**
+             * Experience Tesla in Italy: view-open.
+             */
+            interactionViewOpen: function () {
+                TeslaAnalytics.Helpers.interactionViewOpen(_formType);
+            },
+
+            /**
+             * Experience Tesla in Italy: personal-info-complete.
+             *
+             * @param string uuid Uuid.
+             */
+            interactionPersonalInfoComplete: function (uuid) {
+                TeslaAnalytics.Helpers.setUuid(uuid);
+                TeslaAnalytics.Helpers.interactionPersonalInfoComplete(_formType);
+            },
+
+            /**
+             * Experience Tesla in Italy: confirm-thank-you.
+             *
+             * @param string uuid Uuid.
+             */
+            interactionConfirmThankYou: function (uuid) {
+                TeslaAnalytics.Helpers.setUuid(uuid);
+                TeslaAnalytics.Helpers.interactionConfirmThankYou(_formType);
+            }
+        };
+    }());
+
+    /**
+     * experience-tesla-in-italy campaign marketing form with the drive to believe layout
+     *   - /campaign/westfieldnewsletter
+     * Called from:
+     *   - tesla_drive_to_believe_form.general_marketing_form.inc
+     *
+     */
+    TeslaAnalytics.WestfieldNewsletter = (function () {
+        var _formType = 'westfield-newsletter';
+
+        return {
+            /**
+             * Westfield Newsletter: view-open.
+             */
+            interactionViewOpen: function () {
+                TeslaAnalytics.Helpers.interactionViewOpen(_formType);
+            },
+
+            /**
+             * Westfield Newsletter: personal-info-complete.
+             *
+             * @param string uuid Uuid.
+             */
+            interactionPersonalInfoComplete: function (uuid) {
+                TeslaAnalytics.Helpers.setUuid(uuid);
+                TeslaAnalytics.Helpers.interactionPersonalInfoComplete(_formType);
+            },
+
+            /**
+             * Westfield Newsletter: confirm-thank-you.
+             *
+             * @param string uuid Uuid.
+             */
+            interactionConfirmThankYou: function (uuid) {
+                TeslaAnalytics.Helpers.setUuid(uuid);
+                TeslaAnalytics.Helpers.interactionConfirmThankYou(_formType);
+            }
+        };
+    }());
+
+    /**
+     * ludicrous acceleration experience campaign marketing form with the drive to believe layout
+     *   - /campaign/ludicrous-fuji
+     * Called from:
+     *   - tesla_drive_to_believe_form.general_marketing_form.inc
+     *
+     */
+    TeslaAnalytics.LudicrousAccelerationExperience = (function () {
+        var _formType = 'ludicrous-acceleration-experience';
+
+        return {
+            /**
+             * Greatest Drive Co Driver: view-open.
+             */
+            interactionViewOpen: function () {
+                TeslaAnalytics.Helpers.interactionViewOpen(_formType);
+            },
+
+            /**
+             * digitalisierung-erfahren: personal-info-complete.
+             *
+             * @param string uuid Uuid.
+             */
+            interactionPersonalInfoComplete: function (uuid) {
+                TeslaAnalytics.Helpers.setUuid(uuid);
+                TeslaAnalytics.Helpers.interactionPersonalInfoComplete(_formType);
+            },
+
+            /**
+             * digitalisierung-erfahren: confirm-thank-you.
+             *
+             * @param string uuid Uuid.
+             */
+            interactionConfirmThankYou: function (uuid) {
+                TeslaAnalytics.Helpers.setUuid(uuid);
+                TeslaAnalytics.Helpers.interactionConfirmThankYou(_formType);
+            }
+        };
+    }());
+
+    /**
+     * ludicrous acceleration experience campaign clone for preformance tracking marketing form with the drive to believe layout
+     *   - /campaign/ludicrous-models
+     * Called from:
+     *   - tesla_drive_to_believe_form.general_marketing_form.inc
+     *
+     */
+    TeslaAnalytics.LudicrousAccelerationExperienceClone = (function () {
+        var _formType = 'ludicrous-models preformance Tracing';
+
+        return {
+            /**
+             * Greatest Drive Co Driver: view-open.
+             */
+            interactionViewOpen: function () {
+                TeslaAnalytics.Helpers.interactionViewOpen(_formType);
+            },
+
+            /**
+             * digitalisierung-erfahren: personal-info-complete.
+             *
+             * @param string uuid Uuid.
+             */
+            interactionPersonalInfoComplete: function (uuid) {
+                TeslaAnalytics.Helpers.setUuid(uuid);
+                TeslaAnalytics.Helpers.interactionPersonalInfoComplete(_formType);
+            },
+
+            /**
+             * digitalisierung-erfahren: confirm-thank-you.
+             *
+             * @param string uuid Uuid.
+             */
+            interactionConfirmThankYou: function (uuid) {
+                TeslaAnalytics.Helpers.setUuid(uuid);
+                TeslaAnalytics.Helpers.interactionConfirmThankYou(_formType);
+            }
+        };
+    }());
+
+    /**
+     * the german Telekom campaign marketing form with the drive to believe layout
+     *   - /campaign/telekom
+     * Called from:
+     *   - tesla_drive_to_believe_form.general_marketing_form.inc
+     *
+     */
+    TeslaAnalytics.TelekomCampaign = (function () {
+        var _formType = 'German Telekom Campaign';
+
+        return {
+            /**
+             * Greatest Drive Co Driver: view-open.
+             */
+            interactionViewOpen: function () {
+                TeslaAnalytics.Helpers.interactionViewOpen(_formType);
+            },
+
+            /**
+             * digitalisierung-erfahren: personal-info-complete.
+             *
+             * @param string uuid Uuid.
+             */
+            interactionPersonalInfoComplete: function (uuid) {
+                TeslaAnalytics.Helpers.setUuid(uuid);
+                TeslaAnalytics.Helpers.interactionPersonalInfoComplete(_formType);
+            },
+
+            /**
+             * digitalisierung-erfahren: confirm-thank-you.
+             *
+             * @param string uuid Uuid.
+             */
+            interactionConfirmThankYou: function (uuid) {
+                TeslaAnalytics.Helpers.setUuid(uuid);
+                TeslaAnalytics.Helpers.interactionConfirmThankYou(_formType);
+            }
+        };
+    }());
+
+    /**
+     * HK Tesla Workplace campaign
+     *
+     * Url
+     *   - /campaign/tesla-workplace
+     *
+     * Called from:
+     *   - tesla_workplace_form.main.inc
+     */
+    TeslaAnalytics.TeslaWorkplaceCampaign = (function () {
+        var _formType = 'Tesla Workplace';
+
+        return {
+            /**
+             * HK Tesla Workplace: view-open.
+             */
+            interactionViewOpen: function () {
+                TeslaAnalytics.Helpers.interactionViewOpen(_formType);
+            },
+
+            /**
+             * HK Tesla Workplace: personal-info-complete.
+             *
+             * @param string uuid Uuid.
+             */
+            interactionPersonalInfoComplete: function (uuid) {
+                TeslaAnalytics.Helpers.setUuid(uuid);
+                TeslaAnalytics.Helpers.interactionPersonalInfoComplete(_formType);
+            },
+
+            /**
+             * HK Tesla Workplace: confirm-thank-you.
+             *
+             * @param string uuid Uuid.
+             */
+            interactionConfirmThankYou: function (uuid) {
+                TeslaAnalytics.Helpers.setUuid(uuid);
+                TeslaAnalytics.Helpers.interactionConfirmThankYou(_formType);
+            }
+        };
+    }());
+
+    /**
+     * Go Anywhere campaign marketing form for Energy.
+     *   - /campaign/go-anywhere
+     * Called from:
+     *   - tesla_drive_to_believe_form.general_marketing_form.inc
+     */
+    TeslaAnalytics.GoAnywhere = (function () {
+        var _formType = 'go-anywhere campaign';
+
+        return {
+            /**
+             * Tiny House: view-open.
+             */
+            interactionViewOpen: function () {
+                TeslaAnalytics.Helpers.interactionViewOpen(_formType);
+            },
+
+            /**
+             * @param string uuid Uuid.
+             */
+            interactionPersonalInfoComplete: function (uuid) {
+                TeslaAnalytics.Helpers.setUuid(uuid);
+                TeslaAnalytics.Helpers.interactionPersonalInfoComplete(_formType);
+            },
+
+            /**
+             * @param string uuid Uuid.
+             */
+            interactionConfirmThankYou: function (uuid) {
+                TeslaAnalytics.Helpers.setUuid(uuid);
+                TeslaAnalytics.Helpers.interactionConfirmThankYou(_formType);
+            }
+        };
+    }());
+
+    /**
+     * Model 3 Preview Campaigns
+     *   - /campaign/model-3-preview
+     * Called from:
+     *   - tesla_drive_to_believe_form.general_marketing_form.inc
+     */
+    TeslaAnalytics.Model3Preview = (function () {
+        var _formType = 'Model 3 preview campaign';
+
+        return {
+            /**
+             * view-open.
+             */
+            interactionViewOpen: function () {
+                TeslaAnalytics.Helpers.interactionViewOpen(_formType);
+            },
+
+            /**
+             * @param string uuid Uuid.
+             */
+            interactionPersonalInfoComplete: function (uuid) {
+                TeslaAnalytics.Helpers.setUuid(uuid);
+                TeslaAnalytics.Helpers.interactionPersonalInfoComplete(_formType);
+            },
+
+            /**
+             * @param string uuid Uuid.
+             */
+            interactionConfirmThankYou: function (uuid) {
+                TeslaAnalytics.Helpers.setUuid(uuid);
+                TeslaAnalytics.Helpers.interactionConfirmThankYou(_formType);
+            }
+        };
+    }());
+
+    /**
+     * Fashion Week Campaign
+     *   - /campaign/fashionweek
+     * Called from:
+     *   - tesla_drive_to_believe_form.general_marketing_form.inc
+     */
+    TeslaAnalytics.FashionWeek = (function () {
+        var _formType = 'Fashion week campaign';
+
+        return {
+            /**
+             * view-open.
+             */
+            interactionViewOpen: function () {
+                TeslaAnalytics.Helpers.interactionViewOpen(_formType);
+            },
+
+            /**
+             * @param string uuid Uuid.
+             */
+            interactionPersonalInfoComplete: function (uuid) {
+                TeslaAnalytics.Helpers.setUuid(uuid);
+                TeslaAnalytics.Helpers.interactionPersonalInfoComplete(_formType);
+            },
+
+            /**
+             * @param string uuid Uuid.
+             */
+            interactionConfirmThankYou: function (uuid) {
+                TeslaAnalytics.Helpers.setUuid(uuid);
+                TeslaAnalytics.Helpers.interactionConfirmThankYou(_formType);
+            }
+        };
+    }());
+
+  /**
+   * Etihad Campaign
+   *   - /campaign/etihad
+   * Called from:
+   *   - tesla_drive_to_believe_form.general_marketing_form.inc
+   */
+  TeslaAnalytics.EtihadCampaign = (function () {
+    var _formType = 'Etihad campaign';
+
+    return {
+      /**
+       * view-open.
+       */
+      interactionViewOpen: function () {
+        TeslaAnalytics.Helpers.interactionViewOpen(_formType);
+      },
+
+      /**
+       * @param string uuid Uuid.
+       */
+      interactionPersonalInfoComplete: function (uuid) {
+        TeslaAnalytics.Helpers.setUuid(uuid);
+        TeslaAnalytics.Helpers.interactionPersonalInfoComplete(_formType);
+      },
+
+      /**
+       * @param string uuid Uuid.
+       */
+      interactionConfirmThankYou: function (uuid) {
+        TeslaAnalytics.Helpers.setUuid(uuid);
+        TeslaAnalytics.Helpers.interactionConfirmThankYou(_formType);
+      }
+    };
+  }());
+
+    /**
+     * LeasePlan Campaign
+     *   - /campaign/NAFLease
+     * Called from:
+     *   - tesla_drive_to_believe_form.general_marketing_form.inc
+     */
+    TeslaAnalytics.LeasePlanCampaign = (function () {
+        var _formType = 'LeasePlan campaign';
+
+        return {
+            /**
+             * view-open.
+             */
+            interactionViewOpen: function () {
+                TeslaAnalytics.Helpers.interactionViewOpen(_formType);
+            },
+
+            /**
+             * @param string uuid Uuid.
+             */
+            interactionPersonalInfoComplete: function (uuid) {
+                TeslaAnalytics.Helpers.setUuid(uuid);
+                TeslaAnalytics.Helpers.interactionPersonalInfoComplete(_formType);
+            },
+
+            /**
+             * @param string uuid Uuid.
+             */
+            interactionConfirmThankYou: function (uuid) {
+                TeslaAnalytics.Helpers.setUuid(uuid);
+                TeslaAnalytics.Helpers.interactionConfirmThankYou(_formType);
+            }
+        };
+    }());
+
+  /**
+   * DNB-Bank Campaign
+   *   - /campaign/dnbtestdrive
+   * Called from:
+   *   - tesla_drive_to_believe_form.general_marketing_form.inc
+   */
+  TeslaAnalytics.DNBBankCampaign = (function () {
+    var _formType = 'DNB-Bank campaign';
+
+    return {
+      /**
+       * view-open.
+       */
+      interactionViewOpen: function () {
+        TeslaAnalytics.Helpers.interactionViewOpen(_formType);
+      },
+
+      /**
+       * @param string uuid Uuid.
+       */
+      interactionPersonalInfoComplete: function (uuid) {
+        TeslaAnalytics.Helpers.setUuid(uuid);
+        TeslaAnalytics.Helpers.interactionPersonalInfoComplete(_formType);
+      },
+
+      /**
+       * @param string uuid Uuid.
+       */
+      interactionConfirmThankYou: function (uuid) {
+        TeslaAnalytics.Helpers.setUuid(uuid);
+        TeslaAnalytics.Helpers.interactionConfirmThankYou(_formType);
+      }
+    };
+  }());
+
+    /**
+     * Electric Weekend campaign marketing for sweden.
+     *   - /campaign/electricweekend
+     * Called from:
+     *   - tesla_drive_to_believe_form.general_marketing_form.inc
+     */
+    TeslaAnalytics.ElectricWeekend = (function () {
+        var _formType = 'electric weekend campaign';
+
+        return {
+            /**
+             * Electric weekend: view-open.
+             */
+            interactionViewOpen: function () {
+                TeslaAnalytics.Helpers.interactionViewOpen(_formType);
+            },
+
+            /**
+             * @param string uuid Uuid.
+             */
+            interactionPersonalInfoComplete: function (uuid) {
+                TeslaAnalytics.Helpers.setUuid(uuid);
+                TeslaAnalytics.Helpers.interactionPersonalInfoComplete(_formType);
+            },
+
+            /**
+             * @param string uuid Uuid.
+             */
+            interactionConfirmThankYou: function (uuid) {
+                TeslaAnalytics.Helpers.setUuid(uuid);
+                TeslaAnalytics.Helpers.interactionConfirmThankYou(_formType);
+            }
+        };
+    }());
+
+    /**
+     * Newsletter signup.
+     *
+     * Form:
+     *   - tesla_insider_form
+     * Url:
+     *   - /updates
+     *   - /model3
+     *   - / (homepage)
+     * Called from:
+     *   - tesla_insider_form/tesla_insider_form.main.inc
+     *   - tesla_get_updates/templates/get-updates-thank-you.tpl.php
+     *   - tesla_test_drive/templates/blog-newsletter-thank-you.tpl.php
+     */
+    TeslaAnalytics.NewsletterSignup = (function () {
+
+        var _formType = 'Newsletter Signup';
+
+        return {
+            /**
+             * Newsletter signup: view-open.
+             */
+            interactionViewOpen: function () {
+                TeslaAnalytics.Helpers.interactionViewOpen(_formType);
+            },
+
+            /**
+             * Newsletter signup: personal-info-complete.
+             *
+             * @param string uuid Uuid.
+             */
+            interactionPersonalInfoComplete: function (uuid) {
+                TeslaAnalytics.Helpers.setUuid(uuid);
+                TeslaAnalytics.Helpers.interactionPersonalInfoComplete(_formType);
+            },
+
+            /**
+             * Newsletter signup: confirm-thank-you.
+             *
+             * @param string uuid Uuid.
+             */
+            interactionConfirmThankYou: function (uuid) {
+                TeslaAnalytics.Helpers.setUuid(uuid);
+                TeslaAnalytics.Helpers.interactionConfirmThankYou(_formType);
+            }
+        };
+    }());
+
+    /**
+     * Test drive forms / Lead creation from order form.
+     *
+     * Form:
+     *   - tesla_order_form
+     * Url:
+     *   - /order
+     * Called from:
+     *   - tesla_payment_forms.crm.js
+     */
+    TeslaAnalytics.OrderForm = (function () {
+
+        var _formType = 'Order Form';
+
+        return {
+            /**
+             * Lead creation from order form: order-form-lead-creation.
+             *
+             * @param string uuid Uuid.
+             */
+            interactionOrderFormLeadCreation: function (uuid) {
+                TeslaAnalytics.Helpers.setUuid(uuid);
+                TeslaAnalytics.Helpers.eventFormInteraction('order-form-lead-creation', _formType, 'SF Lead Creation');
+            },
+
+            interactionShowApplePayButton: function () {
+                TeslaAnalytics.Helpers.eventApplePayInteraction('impression');
+            },
+
+            interactionClickApplePayButton: function () {
+                TeslaAnalytics.Helpers.eventApplePayInteraction('click');
+            }
+
+        };
+    }());
+
+    /**
+     * Tesla Account PW milestones page interactions
+     *
+     * Called from:
+     *   - final_confirmation.js
+     *   - tesla_cancellation.js
+     *   - tesla_edit_order_energy.js
+     */
+    TeslaAnalytics.Milestones = (function () {
+
+        return {
+            interactionClickConfirmOrderReccomended: function () {
+                TeslaAnalytics.Helpers.interactionClickConfirmOrder('recommended');
+            },
+            interactionClickConfirmOrderAlternate: function () {
+                TeslaAnalytics.Helpers.interactionClickConfirmOrder('alternate');
+            },
+            interactionClickBackToEditOrder: function () {
+                TeslaAnalytics.Helpers.interactionClickBackToEditOrder('predelivery-powerwall');
+            },
+            interactionClickSubmitCancel: function () {
+                var reason_to_cancel = $('#edit-reason')[0].value;
+                TeslaAnalytics.Helpers.interactionClickSubmitCancel('predelivery-powerwall', reason_to_cancel);
+            },
+            interactionEditOrderClickBack: function () {
+                TeslaAnalytics.Helpers.interactionEditOrderClickBack('predelivery-powerwall');
+            },
+            interactionEditOrderClickSave: function () {
+                TeslaAnalytics.Helpers.interactionEditOrderClickSave('predelivery-powerwall');
+            },
+
+        };
+    }());
+
+    /**
+     * Tesla Account Homecharging page interactions
+     *
+     * Called from:
+     *   - tesla_cancellation.js
+     *   - tesla_edit_order.energy.js
+     */
+    TeslaAnalytics.HomeCharging = (function () {
+        return {
+            interactionClickBackToEditOrder: function () {
+                TeslaAnalytics.Helpers.interactionClickBackToEditOrder('predelivery-homecharging');
+            },
+            interactionClickSubmitCancel: function () {
+                var reason_to_cancel = $('#edit-reason')[0].value;
+                TeslaAnalytics.Helpers.interactionClickSubmitCancel('predelivery-homecharging', reason_to_cancel);
+            },
+            interactionEditOrderClickBack: function () {
+                TeslaAnalytics.Helpers.interactionEditOrderClickBack('predelivery-homecharging');
+            },
+            interactionEditOrderClickSave: function () {
+                TeslaAnalytics.Helpers.interactionEditOrderClickSave('predelivery-homecharging');
+            },
+        };
+    }());
+
+    /**
+     * Request Callback.
+     *
+     * Form:
+     *   - tesla_request_callback_form
+     * Url:
+     *   - /inventory/callback/5YJXCAE4XGF006813
+     * Called from:
+     *   - tesla_test_drive/tesla_test_drive.module
+     *   - tesla_request_callback/tesla_request_callback.module
+     *   - tesla_request_callback/tesla_request_callback.main.inc
+     *   - tesla_request_callback/templates/callback-standalone.tpl.php
+     *   - tesla_request_callback/templates/call-back-standalone.tpl.php
+     *   - tesla_test_drive/templates/thank-you-form.tpl.php
+     *   - tesla_request_callback/js/request_callback.js
+     *   - tesla_enterprise/tesla_enterprise.callback_form.inc
+     *   - tesla_enterprise/js/callback_form/callback_form.js
+     */
+    TeslaAnalytics.RequestCallback = (function () {
+
+        var _formType = 'Request Callback';
+
+        return {
+            /**
+             * Request callback: view-open.
+             */
+            interactionViewOpen: function () {
+                TeslaAnalytics.Helpers.interactionViewOpen(_formType);
+            },
+
+            /**
+             * Request callback: personal-info-complete.
+             *
+             * @param string uuid Uuid.
+             */
+            interactionPersonalInfoComplete: function (uuid) {
+                TeslaAnalytics.Helpers.setUuid(uuid);
+                TeslaAnalytics.Helpers.interactionPersonalInfoComplete(_formType);
+            },
+
+            /**
+             * Request callback: confirm-thank-you.
+             *
+             * @param string uuid Uuid.
+             */
+            interactionConfirmThankYou: function (uuid) {
+                TeslaAnalytics.Helpers.setUuid(uuid);
+                TeslaAnalytics.Helpers.interactionConfirmThankYou(_formType);
+            }
+        };
+    }());
+
+    /**
+     * Save Design.
+     *
+     * Form:
+     *   - tesla_lead_forms_save_design_form
+     * Url:
+     *   - /order
+     * Called from:
+     *   - tesla_payment_forms/order_form/tesla_order_form.main.inc
+     */
+    TeslaAnalytics.SaveDesign = (function () {
+
+        var _formType = 'Save Design';
+
+        return {
+            /**
+             * Save design: view-open.
+             */
+            interactionViewOpen: function () {
+                TeslaAnalytics.Helpers.interactionViewOpen(_formType);
+            },
+
+            /**
+             * Save design: personal-info-complete.
+             *
+             * @param string uuid Uuid.
+             */
+            interactionPersonalInfoComplete: function (uuid) {
+                TeslaAnalytics.Helpers.setUuid(uuid);
+                TeslaAnalytics.Helpers.interactionPersonalInfoComplete(_formType);
+            },
+
+            /**
+             * Save design: confirm-thank-you.
+             *
+             * @param string uuid Uuid.
+             */
+            interactionConfirmThankYou: function (uuid) {
+                TeslaAnalytics.Helpers.setUuid(uuid);
+                TeslaAnalytics.Helpers.interactionConfirmThankYou(_formType);
+            },
+
+            /**
+             * Save design: close.
+             */
+            interactionClose: function () {
+                TeslaAnalytics.Helpers.interactionClose(_formType);
+            },
+
+            /**
+             * Save design: copy-link.
+             */
+            interactionCopyLink: function () {
+                var interaction = 'copy-link';
+                // Only trigger close call once.
+                if (TeslaAnalytics.Helpers.isFirstInteraction(interaction, _formType)) {
+                    TeslaAnalytics.Helpers.eventFormInteraction(interaction, _formType, 'User Requested');
+                }
+            }
+        };
+    }());
+
+    /**
+     * Support Contact Us.
+     *
+     * Form:
+     *   - ?
+     * Url:
+     *   - ?
+     * Called from:
+     *   - tesla_support/tesla_support.main.inc
+     *   - tesla_support/templates/thank-you-form.tpl.php
+     */
+    TeslaAnalytics.SupportContactUs = (function () {
+
+        var _formType = 'Support Contact Us';
+
+        return {
+            /**
+             * Support Contact Us: view-open.
+             */
+            interactionViewOpen: function () {
+                TeslaAnalytics.Helpers.interactionViewOpen(_formType);
+            },
+
+            /**
+             * Support Contact Us: personal-info-complete.
+             *
+             * @param string uuid Uuid.
+             */
+            interactionPersonalInfoComplete: function (uuid) {
+                TeslaAnalytics.Helpers.setUuid(uuid);
+                TeslaAnalytics.Helpers.interactionPersonalInfoComplete(_formType);
+            },
+
+            /**
+             * Support Contact Us: confirm-thank-you.
+             *
+             * @param string uuid Uuid.
+             */
+            interactionConfirmThankYou: function (uuid) {
+                TeslaAnalytics.Helpers.setUuid(uuid);
+                TeslaAnalytics.Helpers.interactionConfirmThankYou(_formType);
+            }
+        };
+    }());
+
+    /**
+     * Test drive forms.
+     *
+     * Form:
+     *   - tesla_test_drive_form
+     * Url:
+     *   - /
+     *   - /drive
+     * Called from:
+     *   - tesla_test_drive/js/test_drive_scripts.js
+     *   - tesla_test_drive/tesla_test_drive_form.main.inc
+     *   - tesla_test_drive/templates/call-back-standalone.tpl.php
+     *   - tesla_test_drive/templates/test-drive-standalone.tpl.php
+     */
+    TeslaAnalytics.TestDriveForm = (function () {
+
+        var _formType = 'Test Drive';
+
+        return {
+            /**
+             * Test drive: view-open.
+             */
+            interactionViewOpen: function () {
+                TeslaAnalytics.Helpers.interactionViewOpen(_formType);
+            },
+
+            /**
+             * Test drive: email-submitted.
+             *
+             * @param string uuid Uuid.
+             */
+            interactionEmailOnlyComplete: function (uuid) {
+                TeslaAnalytics.Helpers.setUuid(uuid);
+                TeslaAnalytics.Helpers.eventFormInteraction('email-submitted', _formType, 'User Requested');
+            },
+
+            /**
+             * Test drive: personal-info-complete.
+             *
+             * @param string uuid Uuid.
+             */
+            interactionPersonalInfoComplete: function (uuid) {
+                TeslaAnalytics.Helpers.setUuid(uuid);
+                TeslaAnalytics.Helpers.interactionPersonalInfoComplete(_formType);
+            },
+
+            /**
+             * Test drive: vehicle-model-selected.
+             */
+            interactionVehicleModelSelected: function () {
+                TeslaAnalytics.Helpers.eventFormInteraction('vehicle-model-selected', _formType, 'User Requested');
+            },
+
+            /**
+             * Test drive: location-time-complete.
+             */
+            interactionLocationTimeComplete: function () {
+                TeslaAnalytics.Helpers.eventFormInteraction('location-time-complete', _formType, 'User Requested');
+            },
+
+            /**
+             * Test drive: confirm-call-request.
+             *
+             * @param string uuid Uuid.
+             */
+            interactionConfirmCallRequest: function (uuid) {
+                TeslaAnalytics.Helpers.setUuid(uuid);
+                TeslaAnalytics.Helpers.eventFormInteraction('confirm-call-request', _formType, 'User Requested');
+            },
+
+            /**
+             * Test drive: driving-questions-complete.
+             *
+             * @param string uuid Uuid.
+             */
+            interactionDrivingQuestionsComplete: function (uuid) {
+                TeslaAnalytics.Helpers.setUuid(uuid);
+                TeslaAnalytics.Helpers.eventFormInteraction('driving-questions-complete', _formType, 'User Requested');
+            },
+
+            /**
+             * Test drive: confirm-thank-you.
+             *
+             * @param string uuid Uuid.
+             */
+            interactionConfirmThankYou: function (uuid) {
+                TeslaAnalytics.Helpers.setUuid(uuid);
+                TeslaAnalytics.Helpers.interactionConfirmThankYou(_formType);
+            }
+        };
+    }());
+
+    /**
+     * Trade-In.
+     *
+     * Form:
+     *   - tesla_request_callback_form
+     * Url:
+     *   - ?
+     * Called from:
+     *   - tesla_test_drive/tesla_test_drive.module
+     *   - tesla_request_callback/tesla_request_callback.module
+     *   - tesla_request_callback/tesla_request_callback.main.inc
+     *   - tesla_request_callback/callback-standalone.tpl.php
+     *   - tesla_request_callback/request-callback-standalone.tpl.php
+     *   - tesla_request_callback/request-quote-standalone.tpl.php
+     *   - tesla_test_drive/templates/thank-you-form.tpl.php
+     */
+    TeslaAnalytics.TradeIn = (function () {
+
+        var _formType = 'Trade-In';
+
+        return {
+            /**
+             * Request callback: view-open.
+             */
+            interactionViewOpen: function () {
+                TeslaAnalytics.Helpers.interactionViewOpen(_formType);
+            },
+
+            /**
+             * Request callback: quote-offered
+             */
+            interactionQuoteOffered: function(tradeInVehicleString) {
+                TeslaAnalytics.Helpers.dataLayerPush({
+                    event: 'form-interaction',
+                    interaction: 'quote-offered',
+                    formType: _formType,
+                    engagementType: 'User Requested',
+                    tradeInVehicle: tradeInVehicleString
+                });
+            },
+
+            /**
+             * Request callback: quote-saved
+             */
+            interactionQuoteSaved: function() {
+                TeslaAnalytics.Helpers.eventFormInteraction('quote-saved', _formType, 'User Requested');
+            },
+
+            /**
+             * Request callback: personal-info-complete.
+             *
+             * @param string uuid Uuid.
+             */
+            interactionPersonalInfoComplete: function (uuid) {
+                TeslaAnalytics.Helpers.setUuid(uuid);
+                TeslaAnalytics.Helpers.interactionPersonalInfoComplete(_formType);
+            },
+
+            /**
+             * Request callback: confirm-thank-you.
+             *
+             * @param string uuid Uuid.
+             */
+            interactionConfirmThankYou: function (uuid) {
+                TeslaAnalytics.Helpers.setUuid(uuid);
+                TeslaAnalytics.Helpers.interactionConfirmThankYou(_formType);
+            }
+        };
+    }());
+
+    /**
+     * Charging Site Request.
+     *
+     * Form:
+     *   - tesla_charging_partner_form
+     * Url:
+     *   - /charging-partners
+     * Called from:
+     *   - tesla_charging_partner_form/tesla_charging_partner_form.module
+     */
+    TeslaAnalytics.ChargingSiteRequest = (function () {
+
+        var _formType = 'charging-site-request';
+
+        return {
+            /**
+             * Charging Site Request: personal-info-complete.
+             *
+             * @param string uuid Uuid.
+             */
+            interactionPersonalInfoComplete: function (uuid) {
+                TeslaAnalytics.Helpers.setUuid(uuid);
+                TeslaAnalytics.Helpers.interactionPersonalInfoComplete(_formType);
+            }
+        };
+    }());
+
+    /**
+     * Analytics for the life with model 3 page
+     *   - /life-with-model-3
+     * Called from:
+     *   - tesla_drive_to_believe_form.general_marketing_form.inc
+     */
+    TeslaAnalytics.LifeWithModel3 = (function () {
+        var _formType = 'Life with model 3';
+        return {
+            /**
+             * view-open.
+             */
+            interactionViewOpen: function () {
+                TeslaAnalytics.Helpers.interactionViewOpen(_formType);
+            },
+
+            /**
+             * @param {string} uuid Uuid
+             */
+            interactionPersonalInfoComplete: function (uuid) {
+                TeslaAnalytics.Helpers.setUuid(uuid);
+                TeslaAnalytics.Helpers.interactionPersonalInfoComplete(_formType);
+            },
+
+            /**
+             * @param {string} uuid Uuid
+             */
+            interactionConfirmThankYou: function (uuid) {
+                TeslaAnalytics.Helpers.setUuid(uuid);
+                TeslaAnalytics.Helpers.interactionConfirmThankYou(_formType);
+            }
+        };
+    }());
+
+    /**
+     * Analytics for the marketing campaign content type
+     *   - /campaign/*
+     * Called from:
+     *   - tesla_drive_to_believe_form.general_marketing_form.inc
+     */
+    TeslaAnalytics.MarketingCampaignContent = (function () {
+        var _formType = 'marketing-campaign-content: ';
+        return {
+            /**
+             * view-open.
+             *
+             * @param {string} campaign_name the Campaign name
+             */
+            interactionViewOpen: function (campaign_name) {
+                TeslaAnalytics.Helpers.interactionViewOpen(_formType + campaign_name);
+            },
+
+            /**
+             * @param {string} uuid Uuid
+             * @param {string} campaign_name The Campaign name
+             */
+            interactionPersonalInfoComplete: function (uuid, campaign_name) {
+                TeslaAnalytics.Helpers.setUuid(uuid);
+                TeslaAnalytics.Helpers.interactionPersonalInfoComplete(_formType + campaign_name);
+            },
+
+            /**
+             * @param {string} uuid Uuid
+             * @param {string} campaign_name the campaign name
+             */
+            interactionConfirmThankYou: function (uuid, campaign_name) {
+                TeslaAnalytics.Helpers.setUuid(uuid);
+                TeslaAnalytics.Helpers.interactionConfirmThankYou(_formType + campaign_name);
+            }
+        };
+    }());
+
+    /**
+     * vice owners campaign marketing form with the drive to believe layout
+     *   - /campaign/vice-nl
+     * Called from:
+     *   - tesla_drive_to_believe_form.general_marketing_form.inc
+     *
+     */
+    TeslaAnalytics.ViceCampaign = (function () {
+        var _formType = 'vice-nl';
+
+        return {
+            /**
+             * vice-nl: view-open.
+             */
+            interactionViewOpen: function () {
+                TeslaAnalytics.Helpers.interactionViewOpen(_formType);
+            },
+
+            /**
+             * vice-nl: personal-info-complete.
+             *
+             * @param string uuid Uuid.
+             */
+            interactionPersonalInfoComplete: function (uuid) {
+                TeslaAnalytics.Helpers.setUuid(uuid);
+                TeslaAnalytics.Helpers.interactionPersonalInfoComplete(_formType);
+            },
+
+            /**
+             * vice-nl: confirm-thank-you.
+             *
+             * @param string uuid Uuid.
+             */
+            interactionConfirmThankYou: function (uuid) {
+                TeslaAnalytics.Helpers.setUuid(uuid);
+                TeslaAnalytics.Helpers.interactionConfirmThankYou(_formType);
+            }
+        };
+    }());
+
+    /**
+     * vice friend campaign marketing form with the drive to believe layout
+     *   - /campaign/vice-nl/friend
+     * Called from:
+     *   - tesla_drive_to_believe_form.general_marketing_form.inc
+     *
+     */
+    TeslaAnalytics.ViceFriendCampaign = (function () {
+        var _formType = 'vice-nl friend';
+
+        return {
+            /**
+             * vice-nl: view-open.
+             */
+            interactionViewOpen: function () {
+                TeslaAnalytics.Helpers.interactionViewOpen(_formType);
+            },
+
+            /**
+             * vice-nl: personal-info-complete.
+             *
+             * @param string uuid Uuid.
+             */
+            interactionPersonalInfoComplete: function (uuid) {
+                TeslaAnalytics.Helpers.setUuid(uuid);
+                TeslaAnalytics.Helpers.interactionPersonalInfoComplete(_formType);
+            },
+
+            /**
+             * vice-nl: confirm-thank-you.
+             *
+             * @param string uuid Uuid.
+             */
+            interactionConfirmThankYou: function (uuid) {
+                TeslaAnalytics.Helpers.setUuid(uuid);
+                TeslaAnalytics.Helpers.interactionConfirmThankYou(_formType);
+            }
+        };
+    }());
+
+    /**
+     * Drive it like you own it campaign marketing form with the drive to believe layout
+     *   - /overnight-drive/
+     * Called from:
+     *   - tesla_drive_to_believe_form.general_marketing_form.inc
+     *
+     */
+    TeslaAnalytics.DriveItLikeYouOwnItCampaign = (function () {
+        var _formType = 'drive-it-like-you-own-it';
+
+        return {
+            /**
+             * drive-it-like-you-own-it: view-open.
+             */
+            interactionViewOpen: function () {
+                TeslaAnalytics.Helpers.interactionViewOpen(_formType);
+            },
+
+            /**
+             * drive-it-like-you-own-it: personal-info-complete.
+             *
+             * @param string uuid Uuid.
+             */
+            interactionPersonalInfoComplete: function (uuid) {
+                TeslaAnalytics.Helpers.setUuid(uuid);
+                TeslaAnalytics.Helpers.interactionPersonalInfoComplete(_formType);
+            },
+
+            /**
+             * drive-it-like-you-own-it: confirm-thank-you.
+             *
+             * @param string uuid Uuid.
+             */
+            interactionConfirmThankYou: function (uuid) {
+                TeslaAnalytics.Helpers.setUuid(uuid);
+                TeslaAnalytics.Helpers.interactionConfirmThankYou(_formType);
+            }
+        };
+    }());
+
+    /**
+     * Drive it like you own it Referral campaign marketing form with the drive to believe layout
+     *   - /overnight-drive/friend
+     * Called from:
+     *   - tesla_drive_to_believe_form.general_marketing_form.inc
+     *
+     */
+    TeslaAnalytics.DriveItLikeYouOwnItReferralCampaign = (function () {
+        var _formType = 'drive-it-like-you-own-it-referral';
+
+        return {
+            /**
+             * drive-it-like-you-own-it-referral: view-open.
+             */
+            interactionViewOpen: function () {
+                TeslaAnalytics.Helpers.interactionViewOpen(_formType);
+            },
+
+            /**
+             * drive-it-like-you-own-it-referral: personal-info-complete.
+             *
+             * @param string uuid Uuid.
+             */
+            interactionPersonalInfoComplete: function (uuid) {
+                TeslaAnalytics.Helpers.setUuid(uuid);
+                TeslaAnalytics.Helpers.interactionPersonalInfoComplete(_formType);
+            },
+
+            /**
+             * drive-it-like-you-own-it-referral: confirm-thank-you.
+             *
+             * @param string uuid Uuid.
+             */
+            interactionConfirmThankYou: function (uuid) {
+                TeslaAnalytics.Helpers.setUuid(uuid);
+                TeslaAnalytics.Helpers.interactionConfirmThankYou(_formType);
+            }
+        };
+    }());
+}(window, TeslaAnalytics, debug));

@@ -1,0 +1,261 @@
+.boss {
+  width: 100%;
+  color: #000;
+  background: #fff;
+}
+.boss-nav {
+  height: 50px;
+  background: #222222;
+}
+.boss-nav .nav {
+  height: 100%;
+}
+.top-img {
+  height: 494px;
+  background: url(../img/1.jpg) no-repeat;
+  background-size: 100% 100%;
+  border: 0.1px solid #222222;
+}
+.top-img .img-zi {
+  max-height: 100px;
+  height: 100%;
+  position: relative;
+  margin-top: 44px;
+}
+.top-img .img-zi .nav-zi {
+  max-height: 62px;
+  height: 100%;
+  margin-bottom: 35px;
+  padding-bottom: 25px;
+  border-bottom: 0.5px solid #fff;
+  line-height: 62px;
+}
+.top-img .img-zi .nav-zi h1 {
+  font-size: 30px;
+  position: absolute;
+  padding-top: 0;
+  color: white;
+  float: left;
+}
+.top-img .img-zi .nav-zi ul {
+  float: right;
+}
+.top-img .img-zi .nav-zi ul li {
+  float: left;
+}
+.top-img .img-zi .nav-zi ul li a {
+  color: white;
+  font-size: 15px;
+  margin-left: 20px;
+}
+.top-img .img-zi .nav-zi ul li a:hover {
+  color: #ccc;
+}
+.top-nav {
+  width: 100%;
+}
+.top-nav .nav .nav-zi {
+  width: 25%;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 12px 0;
+  text-align: center;
+}
+.top-nav .nav-tu .nav-xiaotu {
+  width: 25%;
+}
+.top-nav .nav-tu .nav-xiaotu img {
+  width: 100%;
+}
+.top-nav .nav-tu .nav-xiaotu .touming {
+  z-index: 99;
+}
+.dianneng {
+  text-align: center;
+  padding: 70px 0;
+}
+.dianneng h1 {
+  font-size: 34px;
+}
+.dianneng p {
+  text-align: left;
+  margin: 22px 0;
+  font-size: 15px;
+  line-height: 20px;
+}
+.dianneng .liaojie {
+  max-height: 40px;
+  height: 100%;
+  line-height: 40px;
+  padding: 30px 20px 0;
+}
+.dianneng .liaojie a {
+  max-width: 225px;
+  width: 100%;
+  display: inline-block;
+  border: 0.5px solid #fff;
+  background: #3399FF;
+}
+.yinxing {
+  width: 100%;
+  background: #F2F2F2;
+}
+.yinxing .yin {
+  width: 50%;
+}
+.yinxing .yin img {
+  width: 100%;
+}
+.yinxing .yin h2 {
+  font-size: 34px;
+}
+.yinxing .yin p {
+  text-align: left;
+  margin: 25px 0;
+  font-size: 15px;
+  line-height: 20px;
+}
+.yinxing .yin1 {
+  box-sizing: border-box;
+  padding: 14% 5%;
+}
+.taiyang {
+  width: 100%;
+  padding: 70px 0;
+  text-align: center;
+}
+.taiyang h1 {
+  font-size: 34px;
+  line-height: 36px;
+}
+.taiyang p {
+  font-size: 15px;
+  line-height: 20px;
+  color: #666;
+  margin: 22px 130px 50px;
+}
+.taiyang .taizuo {
+  width: 34%;
+}
+.taiyang .taizuo p {
+  color: #0181ff;
+  text-align: left;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  margin: 12px;
+  line-height: 20px;
+}
+.taiyang .taiyou {
+  width: 66%;
+}
+.taiyang .taiyou p {
+  color: #bbb;
+  text-align: left;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  margin: 12px;
+  line-height: 20px;
+}
+.taiyang .taiyang-zhong {
+  width: 100%;
+}
+.taiyang .taiyang-zhong video {
+  width: 100%;
+}
+.taiyang .taiyang-bottom {
+  color: #999;
+  padding: 15px 20px;
+}
+.taiyang .taiyang-bottom p {
+  margin: 0;
+  font-size: 13px;
+}
+.duli {
+  width: 100%;
+  padding: 70px 0;
+  background: #F2F2F2;
+}
+.duli .dulizuo {
+  box-sizing: border-box;
+  width: 30%;
+  margin: 0 5% 0 18%;
+  padding: 100px 0;
+}
+.duli .dulizuo h1 {
+  font-size: 34px;
+}
+.duli .dulizuo p {
+  margin: 22px 0;
+  line-height: 20px;
+}
+.duli .duliyou {
+  width: 28%;
+}
+.duli .duliyou img {
+  width: 100%;
+}
+.baoxui {
+  width: 100%;
+  padding: 70px 0;
+}
+.baoxui .w h1 {
+  text-align: center;
+  font-size: 34px;
+}
+.baoxui .w .zuo {
+  padding: 100px 100px 50px 100px;
+}
+.baoxui .w .zuo img {
+  width: 310px;
+}
+.baoxui .w .you {
+  padding-top: 80px;
+}
+.baoxui .w .you ul {
+  display: inline-block;
+  margin: 0 25px 0 0 ;
+}
+.baoxui .w .you ul li {
+  font-size: 15px;
+  margin-bottom: 15px;
+}
+.baoxui .w .you ul li strong,
+.baoxui .w .you ul li span {
+  display: block;
+  line-height: 20px;
+}
+.baoxui .w .you .zuo1 {
+  float: left;
+}
+.baoxui .w .you .you1 {
+  float: right;
+}
+.baoxui .liaojie {
+  max-height: 40px;
+  height: 100%;
+  line-height: 40px;
+  text-align: center;
+}
+.baoxui .liaojie a {
+  max-width: 225px;
+  width: 100%;
+  display: inline-block;
+  border: 0.5px solid #fff;
+  background: #3399FF;
+}
+.bottom {
+  height: 52px;
+  line-height: 52px;
+  text-align: center;
+}
+.bottom a {
+  font-size: 13px;
+  color: #000;
+  padding-left: 5px;
+  border-left: 0.5px solid #ccc;
+}
+.bottom a:nth-child(1) {
+  border-left: none;
+}

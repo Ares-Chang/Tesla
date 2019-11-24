@@ -1,0 +1,177 @@
+(function ($) {
+    "use strict";
+
+    Drupal.behaviors.request_callback_form = {
+        attach: function (context, settings) {
+            var $form = $('#callback-form');
+            var modelCode = $('input:hidden[name=model_code]').val();
+            $('input:hidden[name=model_code_request_callback]').attr('value', (modelCode ? modelCode : 'ms'));
+            $('input:hidden[name=is_preowned]').attr('value', ($( "#order-form").hasClass("cpo") && $( "#order-form").hasClass("used")));
+            $('#edit-submit-request-callback').click(function(e){
+                var reg = new RegExp("(^|&)bd=([^&]*)(&|$)", "i");
+                var param = window.location.search.substr(1).match(reg);
+                var $adword;
+                if (param != null) $adword = unescape(param[2]);
+                var cookie = $.cookie('bd');
+
+                if ($adword != null) {
+                    $.cookie('bd', $adword, {expires : 30});
+                    $('input[name=ad_word_request_callback]').val($adword);
+                } else {
+                    if (cookie != null && cookie != '') {
+                        $('input[name=ad_word_request_callback]').val(cookie);
+                    }
+                }
+            });
+            if ($form.length) {
+                $form.parsley().destroy();
+                $form.parsley();
+
+                $('#request-callback-modal').once(
+                    function(){
+                        // do this once - start
+                        $('#request-callback-modal').on('show.bs.modal', function (event) {
+                            TeslaAnalytics.RequestCallback.interactionViewOpen();
+                        });
+                        // do this once - end
+                    }
+                );
+
+                //Stop the submit of the form if it is not valid
+                $('#edit-submit-request-callback', '#callback-form').click(function (e) {
+                    e.preventDefault(); //prevent default form submit
+                    var valid = $form.parsley().validate();
+                    if (valid) {
+                        var $formModal = $('#request-quote-modal').length ? $('#request-quote-modal') : $('#request-callback-modal');
+                        $('#' + $formModal.attr('id') + ' .modal-throbber').removeClass('hidden');
+                        $(this).trigger('submit_form');
+                        if ($formModal.attr('id') == 'request-quote-modal') {
+                            $("html, body").animate({ scrollTop: 0 }, "slow");
+                        }
+                    }
+                });
+
+                //Regenerate the modal (form) on close AND when it is displaying the thank you page
+                $('#request-callback-modal').on('hide.bs.modal', function (e) {
+                    //var mymodal = $(this);
+                    if ($('#request-callback-modal .thanks').length) {
+                        //e.preventDefault();
+                        var country = (_.indexOf(['en_US', 'zh_CN'], Drupal.settings.tesla.locale) === -1) ? "/" + Drupal.settings.tesla.locale : '';
+                        $('.modal-body', '#request-callback-modal').load(country + "/tesla_request_callback/regenerate", function () {
+                            $('#request-callback-modal input[name=current_path]').attr('value', window.location.pathname);
+                            Drupal.attachBehaviors();
+                            // wait until the form have been created
+                            //mymodal.modal('hide');
+                        });
+                    }
+                });
+
+                //TWS-23655/23656 add make/model/year items field in test drive form.
+                var countryArr = ['en_HK', 'zh_HK', 'zh_TW'];
+                if (countryArr.indexOf(Drupal.settings.tesla.locale) >= 0) {
+                    $('#edit-request-trade-in-request-callback').on('change', function () {
+                        if ($(this).is(':checked')) {
+                            $('.personal-details_quote').removeClass('hidden');
+                        } else {
+                            $('#edit-make-request-callback').val('');
+                            $('#edit-model-request-callback').val('');
+                            $('#edit-year-request-callback').val('');
+                            $('.personal-details_quote').addClass('hidden');
+                        }
+                    });
+                }
+
+                $('#trade-in-value-vin').on('click', function (e) {
+                    e.preventDefault ? e.preventDefault() : e.returnValue = false;
+                    var $rn = $('#edit-rn-tradein'),
+                        $mileage = $('#edit-mileage-tradein'),
+                        validateRN = $rn.parsley().validate(),
+                        validateMileage = $mileage.parsley().validate();
+
+                    if (validateRN === true && validateMileage === true) {
+                        var $valuation         = $('#trade-in-valuation'),
+                            $valuationInput    = $('input[name="tradein_valuation"]'),
+                            $description       = $('#trade-in-description'),
+                            $descriptionInput  = $('input[name="tradein_description"]'),
+                            $responseContainer = $('#tradein-calculation-response');
+
+                        var request = $.get(Drupal.settings.tesla.localePrefix + '/autotrader/valuation/' + $.trim($rn.val()) + '/' + $.trim($mileage.val()));
+                        $responseContainer.find('div').html('');
+                        $responseContainer.find('input').attr('value', '');
+                        $responseContainer.addClass('trade-in-spinner');
+                        request.done(function (response) {
+                            $responseContainer.removeClass('trade-in-spinner');
+                            $descriptionInput.attr('value', JSON.stringify(response.car_details));
+                            if (response.hasOwnProperty('Error')) {
+                                $description.html(response.Error);
+                                if (!response.hasOwnProperty('car_description')) {
+                                    $descriptionInput.attr('value', JSON.stringify({
+                                        error: response.Error,
+                                        registration_number: $rn.val(),
+                                        mileage: $mileage.val()
+                                    }));
+                                }
+                            } else {
+                                $description.html(response.car_description);
+                                $valuation.html(Drupal.t('Your estimated trade-in value is: @amount. Subject to inspection.', {
+                                    '@amount': Tesla.formatMoney(response.valuation, Drupal.settings.tesla.locale, 0)
+                                }));
+                                $valuationInput.attr('value', response.valuation);
+                            }
+                        }).fail(function () {
+                            $responseContainer.removeClass('trade-in-spinner');
+                            $description.html(Drupal.t('Car not found'));
+                            $descriptionInput.attr('value', JSON.stringify({
+                                error: Drupal.t('Car not Found'),
+                                registration_number: $rn.val(),
+                                mileage: $mileage.val()
+                            }));
+                        });
+                    }
+                });
+
+                //Make the phone call option default only for en_US
+                if (Drupal.settings.tesla.locale == 'en_US') {
+                    Drupal.behaviors.request_callback_form.handleContactPrefChange('phone');
+                }
+
+                $('#edit-method-of-contact-request-callback').change(function () {
+                    if (this.value === 'Phone Call') {
+                        Drupal.behaviors.request_callback_form.handleContactPrefChange('phone');
+                    }
+                    else if (this.value === 'Email') {
+                        Drupal.behaviors.request_callback_form.handleContactPrefChange('email');
+                    }
+                });
+            }
+        },
+        handleContactPrefChange: function (preference) {
+            var phoneNumberField = $('#edit-phone-number-request-callback');
+            if (preference === 'phone') {
+                phoneNumberField.addClass('required').attr({'data-parsley-required-message' : 'required', 'data-parsley-required' : 'true'});
+            }
+            else if (preference === 'email') {
+                phoneNumberField.removeClass('required').removeAttr('data-parsley-required-message data-parsley-required');
+            }
+        }
+    };
+
+})(jQuery);
+
+/*
+ * Helper function that will select a quote for the modal, this require that the link to the modal have a new attribute
+ * onclick="multiple_choice( $('#name-of-the-quote-to-select')
+ *
+ * Possible values for the quotes are:
+ *
+ * edit-request-leasing-request-callback == Leasing
+ * edit-request-financing-request-callback == Financing
+ * edit-request-trade-in-request-callback == Trade In
+ * edit-request-callback-request-callback == Request Callback (US only)
+ * */
+var multiple_choice = function (the_checkbox) {
+    $('.sending-options').find(':checkbox').attr('checked', false);
+    if (typeof the_checkbox !== 'undefined') {
+        the_checkbox.attr('checked', true);
+    }
+};

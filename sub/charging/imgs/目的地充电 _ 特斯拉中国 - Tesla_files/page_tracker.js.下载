@@ -1,0 +1,23 @@
+/**
+ * Script for tracking energy and vehicle page views in the browser localStorage to later tailor user experience
+ */
+
+(function (Drupal) {
+    var energyPageTracking = Drupal && Drupal.settings && Drupal.settings.energyPageTracking;
+    var energyPageRegex = /(\/energy($|\?)|\/solarpanels($|\?)|\/solarroof($|\?)|\/powerwall($|\?)|\/commercial($|\?)|\/utilities($|\?))/g;
+    var energyPage = energyPageRegex.test(window.location.href);
+
+    var vehiclePageRegex = /(\/drive($|\?)|\/tradein($|\?)|\/order($|\?)|\/model(s|x)\/design($|\?)|\/inventory\/(new|used)\/(ms|mx)($|\?)|\/(teslaroadster|model3)\/reserve($|\?))/g;
+    var vehiclePage = vehiclePageRegex.test(window.location.href);
+
+    var key;
+    if (vehiclePage) {
+        key = energyPageTracking && energyPageTracking.vehicleKey;
+    } else if (energyPage) {
+        key = energyPageTracking && energyPageTracking.energyKey;
+    }
+
+    if ((vehiclePage || energyPage) && Storage && key) {
+        Storage.set(key, true, { expires: 'month' });
+    }
+}(this.Drupal));

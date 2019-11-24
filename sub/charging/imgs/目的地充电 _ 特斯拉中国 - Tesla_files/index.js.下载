@@ -1,0 +1,129 @@
+/**
+ * Created by jdolinsky on 12/1/16.
+ * best to include at the bottom of the page
+ */
+
+
+/* OLD CHAT TOOL FOR US */
+(function () {
+    var DEFAULT_DELAY = 0;
+
+    // For all major browsers, except IE 8 and earlier
+    if (window.addEventListener) {
+        window.addEventListener("load", onLoad);
+    } // For IE 8 and earlier versions
+    else if (window.attachEvent) {
+        window.attachEvent("load", onLoad);
+    }
+    function onLoad () {
+
+        try {
+            var country =  Drupal.settings.tesla.country;
+
+            if (country === 'US') {
+              return;
+            }
+            else {
+                var delay = (this.chatDelay == undefined) ? DEFAULT_DELAY : this.chatDelay;
+                teslaChat().getChatWidget({delay:delay, country:country});
+            }
+
+
+        } catch(e){
+            debug.error("Unable to detect country for chat with us. chat terminated");
+        }
+
+    };
+
+    function teslaChat () {
+
+        var country_chat_id = {
+            "GB": "e4bcc4ed-55d4-4fc2-9606-4a86db07a452",
+            "NL": "b1855617-d8a6-430a-9901-ffc17337a003",
+            "HK": "ab8b31cb-b4fc-45fa-a99e-8668ce1091d6",
+            "JP": "b7d53248-c698-4fea-8048-c0080f9c8f57",
+            "CN": "e54ad98d-3330-4a28-838e-4b3721752060",
+            "AU": "d5edb0b6-d3f8-4f45-9231-887fc29682f6",
+            "DE": "fc54a0ec-32cc-40af-a5e0-13c676f5a6ae",
+            "FR": "d26113ee-30b7-4e60-b294-a7e25f3a50a1",
+            "NO": "44587f3f-1dcf-49de-b8bb-e20e5a369065"
+        };
+
+        var countries_alternative_url = ["CN"];
+        var storage_google_url = "storage.googleapis.com/code.snapengage.com";
+        var storage_snap_url = "www.snapengage.com/cdn";
+
+        this.getChatWidget = function (options) {
+            if (options) {
+                try {
+                    this.country = options.country;
+                    this.delay = (null === options.delay)? 0 : options.delay;
+                }
+                catch(e) {
+                    debug.info("teslaChat.getChatWidget requires country");
+                }
+
+            }
+            else {
+                debug.info("teslaChat.getChatWidget requires option parameter");
+                return;
+            }
+            //get chat ID for country
+            var chat_id = country_chat_id[this.country];
+            if (chat_id) {
+                return this.defaultChat(chat_id);
+            }
+            else {
+                debug.info("chat country is not supported");
+            }
+
+        };
+        // returns correct url to load for chat
+        this.getStorageURL = function () {
+            if (countries_alternative_url.indexOf(this.country) !== -1) {
+               return  storage_snap_url;
+            }
+
+            return storage_google_url
+        };
+
+        //returns the correct widget for country
+        this.defaultChat = function (chat_id) {
+            var se = document.createElement ('script');
+            se.delay = this.delay;
+            se.type = 'text/javascript';
+            se.async = true;
+            se.src = '//' +  this.getStorageURL() + '/js/' + chat_id + '.js';
+            var done = false;
+            se.onload = se.onreadystatechange = function () {
+                if (!done && (!this.readyState || this.readyState==='loaded' || this.readyState==='complete')) {
+                    done = true;
+                    /* Place your SnapEngage JS API code below */
+                    /* SnapEngage.allowChatSound(true); Example JS API: Enable sounds for Visitors. */
+                    if(se.delay > 0){
+                        //hiding button
+                        SnapEngage.hideButton();
+                        setTimeout( 'SnapEngage.showButton()', this.delay*1000 );
+                    }
+
+                    SnapEngage.setCallback('Open', function () {
+                        window.dataLayer.push({
+                            'event': 'widget-interaction',
+                            'widget name': 'Live Chat - Open'
+                        });
+                    });
+                    SnapEngage.setCallback('StartChat', function (email, msg, type) {
+                        window.dataLayer.push({
+                            'event': 'widget-interaction',
+                            'widget name': 'Live Chat - Chat'
+                        });
+                    });
+                }
+            };
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(se, s);
+        };
+
+        return this;
+    }
+
+})();

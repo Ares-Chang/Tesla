@@ -1,0 +1,555 @@
+body {
+    width: 100%;
+    /* text-align: center; */
+    background-color: #fff;
+    display: auto;
+    min-width: 1240px;
+    /* visibility: hidden; */
+    /* height: 3000px; */
+    /* overflow: hidden; */
+}
+
+
+/* header开始 */
+
+header {
+    width: 100%;
+    background-color: #222;
+    height: 52px;
+    position: relative;
+    margin-bottom: 44px;
+}
+
+
+/* header结束 */
+
+
+/* wrapper开始 */
+
+.wrapper {
+    width: 75.5%;
+    margin: 0 auto;
+    min-height: 38px;
+    /* background-color: red; */
+    border-bottom: 1px solid rgb(221, 219, 219);
+    padding-bottom: 28px;
+}
+
+.wrapper>span:first-child {
+    font-size: 29px;
+    float: left;
+}
+
+.wrapper span {
+    font-size: 12px;
+    line-height: 38px;
+    float: right;
+    /* margin-left: 14px; */
+    margin-right: 18px;
+}
+
+.wrapper a {
+    color: #333;
+}
+
+.wrapper a :hover {
+    color: rgb(160, 6, 6);
+}
+
+.wrapper input {
+    border: solid 1px #ccc;
+    border-radius: 50%;
+    float: right;
+    width: 30px;
+    height: 30px;
+    margin-top: 4px;
+    margin-right: 20px;
+    padding-right: 20px;
+    text-align: center;
+    /* background-color: red; */
+    /* display: none; */
+    /* box-sizing: border-box; */
+}
+
+
+/* wrapper结束 */
+
+
+/* view开始 */
+
+.view {
+    width: 75.5%;
+    margin: 0 auto;
+    /* background-color: blue; */
+    /* height: 440px; */
+}
+
+.viewallmouth {
+    width: 100%;
+    margin: 0 auto;
+    /* height: 440px; */
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 80px;
+}
+
+.viewmouth {
+    width: 33.5%;
+    height: 440px;
+    float: left;
+}
+
+.viewmouthright {
+    width: 100%;
+    height: 440px;
+}
+
+.viewmouth h3 {
+    margin-top: 36px;
+    font-size: 26px;
+    font-weight: 300;
+    color: #ccc;
+    float: left;
+}
+
+.viewmouthright h2 {
+    font-size: 17px;
+    font-weight: 300;
+}
+
+.viewmouthright a {
+    color: #000;
+    display: block;
+    /* margin-top: 24px; */
+    margin-top: 32px;
+    /* float: left; */
+    /* margin-left: 27%; */
+    /* float: left; */
+}
+
+.viewmouthright span {
+    color: rgb(110, 110, 110);
+}
+
+.viewmouthright p {
+    color: rgb(110, 110, 110);
+}
+
+.viewmouthright p:nth-child(2) {
+    margin-top: 22px;
+}
+
+.viewmouthright p:nth-child(3) {
+    margin-top: 22px;
+}
+
+.viewmouthright p:nth-child(4) {
+    margin-top: 22px;
+}
+
+.viewmouthright a:nth-child(5) {
+    color: rgb(211, 81, 81);
+    margin-bottom: 40px;
+    display: inline-block;
+}
+
+.viewmouthright a:nth-child(5):hover {
+    color: red;
+}
+
+.viewmouthright a:nth-child(9) {
+    color: rgb(211, 81, 81);
+    display: inline-block;
+}
+
+.viewmouthright a:nth-child(9):hover {
+    color: red;
+}
+
+
+/*/*/
+
+.viewallmouth_1 {
+    width: 100%;
+    margin: 0 auto;
+    border-bottom: 1px solid #ccc;
+    height: 585px;
+    padding-bottom: 40px;
+}
+
+.viewmouth_1 {
+    width: 33.5%;
+    height: 585px;
+    float: left;
+}
+
+.viewmouth_1 h3 {
+    margin-top: 36px;
+    font-size: 26px;
+    font-weight: 300;
+    color: #ccc;
+    float: left;
+}
+
+.viewmouthright_1 {
+    width: 100%;
+    height: 585px;
+}
+
+.viewmouthright_1 h2 {
+    font-size: 17px;
+    font-weight: 300;
+}
+
+.viewmouthright_1 a {
+    color: #000;
+    display: block;
+    margin-top: 26px;
+}
+
+.viewmouthright_1 a:last-child {
+    color: rgb(211, 81, 81);
+    display: inline-block;
+}
+
+.viewmouthright_1 a:last-child:hover {
+    color: red;
+}
+
+.viewmouthright_1 img {
+    width: 66%;
+    height: 60%;
+    margin-top: 20px;
+}
+
+.viewmouthright_1 p {
+    margin-top: 20px;
+    color: rgb(110, 110, 110);
+
+}
+.viewmouthright_1 span{
+    color: rgb(110, 110, 110);
+} 
+
+
+/*/*/
+.viewallmouth_2{
+        width: 100%;
+        margin: 0 auto;
+        height: 351px;
+        border-bottom: 1px solid #ccc;
+        padding-bottom: 80px;
+        margin-bottom: 20px;
+}
+
+.viewmouth_2 {
+    width: 33.5%;
+    height: 351px;
+    float: left;
+}
+
+.viewmouthright_2 {
+    width: 100%;
+    height: 440px;
+}
+
+.viewmouth_2 h3 {
+    margin-top: 36px;
+    font-size: 26px;
+    font-weight: 300;
+    color: #ccc;
+    float: left;
+}
+
+.viewmouthright_2 a {
+    color: #000;
+    display: block;
+    margin-top: 32px;
+}
+
+.viewmouthright_2 h2 {
+    font-size: 17px;
+    font-weight: 300;
+}
+
+.viewmouthright_2 a:nth-child(4){
+    color: rgb(211, 81, 81);
+    display: inline-block;
+}
+
+.viewmouthright_2 a:nth-child(4):hover{
+    color: red;
+}
+
+.viewmouthright_2 a:nth-child(8){
+    color: rgb(211, 81, 81);
+    display: inline-block;
+}
+
+.viewmouthright_2 a:nth-child(8):hover{
+    color: red;
+}
+
+.viewmouthright_2 p {
+    color: rgb(110, 110, 110);
+    
+}
+.viewmouthright_2 span {
+    color: rgb(110, 110, 110);
+    
+}
+
+.viewallmouth_3 {
+    width: 100%;
+    margin: 0 auto;
+    /* height: 440px; */
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 80px;
+}
+
+.viewmouth_3 {
+    width: 33.5%;
+    height: 225px;
+    float: left;
+}
+
+.viewmouthright_3 {
+    width: 100%;
+    height: 225px;
+}
+
+.viewmouth_3 h3 {
+    margin-top: 36px;
+    font-size: 26px;
+    font-weight: 300;
+    color: #ccc;
+    float: left;
+}
+
+.viewmouthright_3 h2 {
+    font-size: 17px;
+    font-weight: 300;
+}
+
+.viewmouthright_3 a {
+    color: #000;
+    display: block;
+    margin-top: 32px;
+}
+.viewmouthright_3 span {
+    color: rgb(110, 110, 110);
+}
+
+.viewmouthright_3 p {
+    color: rgb(110, 110, 110);
+}
+
+.viewmouthright_3 a:nth-child(5){
+    color: rgb(211, 81, 81);
+    display: inline-block;
+}
+.viewmouthright_3 a:nth-child(5):hover{
+    color: red;
+}
+
+
+.viewmouthright_3_btn {
+    width: 100%;
+    padding-right: 220px;
+    text-align: center;
+}
+
+.viewmouthright_3_btn input{
+    border: none;
+    background-color: #fff;
+    color: red;
+    /* list-style: ''; */
+    display: inline-block;
+}
+
+.viewmouthright_3_btn input:hover{
+    color: red;
+}
+
+.viewmouthright_3_btn img{
+    /* display: none; */
+    display: none;
+    color: #fff;
+    background-color: #fff;
+}
+
+
+/*/*/
+.viewallmouth_4 {
+    width: 100%;
+    margin: 0 auto;
+    /* height: 440px; */
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 80px;
+    /* display: none; */
+}
+.viewmouth_4 {
+    width: 33.5%;
+    height: 535px;
+    float: left;
+}
+
+.viewmouthright_4 {
+    width: 100%;
+    height: 535px;
+}
+
+.viewmouth_4 h3 {
+    margin-top: 36px;
+    font-size: 26px;
+    font-weight: 300;
+    color: #ccc;
+    float: left;
+}
+
+.viewmouthright_4 h2 {
+    font-size: 17px;
+    font-weight: 300;
+}
+
+.viewmouthright_4 a {
+    color: #000;
+    display: block;
+    margin-top: 32px;
+}
+
+.viewmouthright_4 span {
+    color: rgb(110, 110, 110);
+}
+
+.viewmouthright_4 p {
+    color: rgb(110, 110, 110);
+}
+
+.viewmouthright_4 a:nth-child(5){
+    color: rgb(211, 81, 81);
+    display: inline-block;
+}
+.viewmouthright_4 a:nth-child(5):hover{
+    color: red;
+}
+.viewmouthright_4 a:nth-child(10){
+    color: rgb(211, 81, 81);
+    display: inline-block;
+}
+.viewmouthright_4 a:nth-child(10):hover{
+    color: red;
+}
+
+/*/*/
+.viewallmouth_5 {
+    width: 100%;
+    margin: 0 auto;
+    /* height: 440px; */
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 100px;
+    display: none;
+}
+.viewmouth_5 {
+    width: 33.5%;
+    height: 453px;
+    float: left;
+}
+.viewmouthright_5 {
+    width: 100%;
+    height: 453px;
+}
+.viewmouth_5 h3 {
+    margin-top: 36px;
+    font-size: 26px;
+    font-weight: 300;
+    color: #ccc;
+    float: left;
+}
+.viewmouthright_5 h2 {
+    font-size: 17px;
+    font-weight: 300;
+}
+.viewmouthright_5 a {
+    color: #000;
+    display: block;
+    margin-top: 52px;
+}
+.viewmouthright_5 span {
+    color: rgb(110, 110, 110);
+}
+.viewmouthright_5 p {
+    color: rgb(110, 110, 110);
+}
+.viewmouthright_5 a:nth-child(5){
+    color: rgb(211, 81, 81);
+    display: inline-block;
+}
+.viewmouthright_5 a:nth-child(5):hover{
+    color: red;
+}
+.viewmouthright_5 a:nth-child(10){
+    color: rgb(211, 81, 81);
+    display: inline-block;
+}
+.viewmouthright_5 a:nth-child(10):hover{
+    color: red;
+}
+
+/*/*/
+.viewallmouth_6 {
+    width: 100%;
+    margin: 0 auto;
+    /* height: 440px; */
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 80px;
+    display: none;
+}
+.viewmouth_6 {
+    width: 33.5%;
+    height: 249px;
+    float: left;
+}
+.viewmouthright_6 {
+    width: 100%;
+    height: 249px;
+}
+.viewmouth_6 h3 {
+    margin-top: 36px;
+    font-size: 26px;
+    font-weight: 300;
+    color: #ccc;
+    float: left;
+}
+.viewmouthright_6 h2 {
+    font-size: 17px;
+    font-weight: 300;
+}
+.viewmouthright_6 a {
+    color: #000;
+    display: block;
+    margin-top: 32px;
+}
+.viewmouthright_6 span {
+    color: rgb(110, 110, 110);
+}
+.viewmouthright_6 p {
+    color: rgb(110, 110, 110);
+}
+
+.viewmouthright_6 a:last-child{
+    color: rgb(211, 81, 81);
+    display: inline-block;
+}
+.viewmouthright_6 a:last-child:hover{
+    color: red;
+}
+/* view结束 */
+
+
+/*.viewmouthcenter {
+    width: 60%;
+    float: left;
+    margin-right: 2.43902%;
+    margin-left: 40.14634%;
+    padding: 0;
+} */

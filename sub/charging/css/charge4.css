@@ -1,0 +1,263 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+.all {
+  width: 100%;
+}
+.stick-nav {
+  background-color: #211c1c;
+}
+.bgc {
+  width: 100%;
+  height: 632px;
+  background: url('../imgs/dest_charging_hero.jpg') no-repeat center;
+  background-size: 1349px 632px;
+  overflow: hidden;
+}
+.t_w {
+  margin-top: 100px;
+}
+.t_nav {
+  border-bottom: 1px solid #fff;
+  overflow: hidden;
+  padding-bottom: 20px;
+}
+.t_nav h1 {
+  color: #fff;
+  font-weight: normal;
+  float: left;
+}
+.t_nav ul {
+  float: right;
+  margin-right: 5px;
+}
+.t_nav li a {
+  color: #fff;
+  font-size: 13px;
+}
+.t_nav li {
+  float: left;
+  margin-left: 20px;
+  padding-top: 10px;
+}
+.t_nav li:last-child a {
+  color: #ccc;
+}
+.lable {
+  width: 408px;
+  height: 36px;
+  padding-bottom: 5px;
+  margin: 0 auto;
+  margin-top: 117px;
+}
+.lable input {
+  width: 100%;
+  height: 36px;
+  border-radius: 20px;
+  padding: 0 24px;
+  box-sizing: border-box;
+}
+.lable .pos {
+  width: 16px;
+  height: 16px;
+  position: absolute;
+  left: 845px;
+  top: 275px;
+}
+.lable .pos img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.section-content {
+  width: 600px;
+  height: 240px;
+  margin-top: 80px;
+}
+.section-content h1 {
+  margin-bottom: 10px;
+  font-size: 34px;
+  font-weight: normal;
+  text-align: center;
+  height: 36px;
+  line-height: 36px;
+}
+.section-content h2 {
+  width: 600px;
+  height: 30px;
+  line-height: 30px;
+  font-weight: normal;
+  text-align: center;
+  font-size: 22px;
+}
+.section-content p {
+  margin: 22px 0;
+  font-size: 15px;
+  line-height: 20px;
+  color: #666;
+}
+.section-content p a {
+  color: #c00;
+}
+.map {
+  width: 100%;
+  height: 755px;
+  background: url('../imgs/destination_charging_apac.jpg');
+  background-size: 100% 100%;
+  margin-top: 100px;
+  position: relative;
+}
+.mmp {
+  width: 1349px;
+  padding: 20px 0;
+  background-color: #fff;
+  background-color: rgba(255, 255, 255, 0.85);
+}
+.mmp h1 {
+  font-size: 34px;
+  font-weight: normal;
+  height: 36px;
+  line-height: 36px;
+  text-align: center;
+}
+.mmf {
+  width: 1349px;
+  padding: 15px 0;
+  height: 44px;
+  background-color: #fff;
+  background-color: rgba(255, 255, 255, 0.85);
+  position: absolute;
+  bottom: 0;
+}
+.mmf input {
+  width: 400px;
+  height: 39px;
+  border-radius: 20px;
+  margin-left: 415px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  padding-left: 20px;
+}
+.mmf a {
+  color: #c00;
+  line-height: 44px;
+  margin-left: 20px;
+  font-size: 15px;
+}
+.mmf .b {
+  position: relative;
+}
+.mmf .wz {
+  width: 16px;
+  height: 16px;
+  position: absolute;
+  left: 785px;
+  bottom: 73px;
+}
+.mmf .wz img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.foot {
+  background-color: #383636;
+  height: 50px;
+  line-height: 50px;
+}
+.foot a {
+  color: #fff;
+}
+.foot .footer {
+  border-left: 1px solid #fff;
+  padding-left: 8px;
+  margin-left: 4px;
+}
+.par {
+  width: 100%;
+  height: 545px;
+  background-image: url('../imgs/join_tesla_bck.jpg');
+  color: #fff;
+  overflow: hidden;
+}
+.par .wz {
+  margin-top: 100px;
+}
+.par .hezuo {
+  width: 400px;
+}
+.par .hezuo h1 {
+  font-weight: normal;
+  margin-bottom: 10px;
+}
+.par .hezuo p {
+  margin-top: 22px;
+  margin-bottom: 22px;
+  line-height: 20px;
+  font-size: 15px;
+}
+.par .hezuo p a {
+  color: #fff;
+}
+.par .hezuo .more {
+  padding: 12px 20px 10px 20px;
+  background: red;
+  width: 60px;
+}
+.par .hezuo .more a {
+  text-align: center;
+}
+.kong {
+  width: 100%;
+  height: 68px;
+}
+.fix {
+  width: 100%;
+  height: 38px;
+  padding: 15px 0;
+  border-top: 1px solid #ccc;
+  background-color: #f3f1f1;
+  position: fixed;
+  bottom: 0px;
+}
+.guding {
+  overflow: hidden;
+}
+.gd_l {
+  float: left;
+  width: 100px;
+  height: 30px;
+  font-size: 20px;
+  font-weight: normal;
+  line-height: 30px;
+}
+.gd_r {
+  float: right;
+  height: 38px;
+}
+.gd_r .a1 {
+  color: #c00;
+  font-size: 15px;
+  display: inline-block;
+  padding: 0 20px;
+}
+.gd_r .a2 {
+  display: inline-block;
+  width: 65px;
+  height: 16px;
+  padding: 12px 20px 10px 20px;
+  margin: 0 2px;
+  background-color: #c00;
+  color: #fff;
+  text-align: center;
+}
+.gd_r .a3 {
+  display: inline-block;
+  width: 85px;
+  height: 16px;
+  padding: 12px 20px 10px 20px;
+  margin: 0 2px;
+  color: #fff;
+  background-color: #333;
+  text-align: center;
+}

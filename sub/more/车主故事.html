@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>车主故事</title>
+    <link rel="stylesheet" href="./css/格式化.css">
+    <link rel="stylesheet" href="./css/车主故事.css">
+    <link rel="stylesheet" href="./css/bootstrap-theme.min.css">
+    <link rel="icon" href="img/favicon_32x32.png">
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/default.css">
+    <link rel="stylesheet" href="css/base.css">
+    
+    <link rel="icon" href="./icon/favicon.ico">
+    <link rel="stylesheet" href="./css/base1.css">
+    <link rel="stylesheet" href="./iconfont/iconfont.css">
+    <script src="./js/jquery.min.js"></script>
+
+    <style>
+        header {
+            width: 100%;
+            background-color: #222;
+            height: 52px;
+            position: relative;
+            margin-bottom: 44px;
+        }
+        
+        #gallery-wrapper {
+            position: relative;
+            max-width: 100%;
+            width: 980px;
+            margin-top: 30px;
+        }
+        
+        img.thumb {
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+        }
+        
+        .white-panel {
+            position: absolute;
+            background: white;
+            border-radius: 5px;
+            box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.3);
+            padding: 10px;
+        }
+        
+        .white-panel h1 {
+            font-size: 1em;
+        }
+        
+        .white-panel h1 a {
+            color: #666;
+        }
+        
+        .white-panel:hover {
+            box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.5);
+            margin-top: -5px;
+            -webkit-transition: all 0.3s ease-in-out;
+            -moz-transition: all 0.3s ease-in-out;
+            -o-transition: all 0.3s ease-in-out;
+            transition: all 0.3s ease-in-out;
+        }
+        
+        .dibu {
+            height: 140px;
+            background-color: #666;
+            display: flex;
+        }
+        
+        .wenzi1 {
+            display: flex;
+            align-items: center;
+        }
+        
+        .dibu img {
+            width: 50px;
+        }
+        /* wrapper开始 */
+        
+        .wrapper {
+            width: 75.5%;
+            margin: 0 auto;
+            min-height: 38px;
+            /* background-color: red; */
+            border-bottom: 1px solid rgb(221, 219, 219);
+            padding-bottom: 28px;
+        }
+        
+        .wrapper>span:first-child {
+            font-size: 29px;
+            float: left;
+            /* color: #ccc; */
+        }
+        
+        .wrapper span {
+            font-size: 12px;
+            line-height: 38px;
+            float: right;
+            /* margin-left: 14px; */
+            margin-right: 18px;
+        }
+        
+        .wrapper a {
+            color: #333;
+        }
+        
+        .wrapper a :hover {
+            color: rgb(160, 6, 6);
+        }
+        
+        .wrapper input {
+            border: solid 1px #ccc;
+            border-radius: 50%;
+            float: right;
+            width: 8px;
+            height: 26px;
+            margin-top: 4px;
+            margin-right: 20px;
+            padding-right: 25px;
+            text-align: center;
+            /* background-color: red; */
+            /* display: none; */
+            /* box-sizing: border-box; */
+        }
+        /* wrapper结束 */
+    </style>
+</head>
+
+<body>
+    <header>
+        <!-- 顶部模块 -->
+    <!-- 复制这里，写入自己的 -->
+    <div class="stick-nav">
+        <h1><a href="../../index.html" title="Tesla, Inc."></a></h1>
+        <ul>
+            <li><a href="../ModelS/ModelS.html">MODEL S</a></li>
+            <li><a href="../Model3/Model3.html">MODEL 3</a></li>
+            <li><a href="../ModelX/ModelX.html">MODEL X</a></li>
+            <li><a href="../ModelY/tesla-model_y.html">MODEL Y</a></li>
+            <li><a href="../ROADSTER/index1.html">ROADSTER</a></li>
+            <li><a href="../ENERGY/Tesla_Energy/Tesla_Energy.html">ENERGY</a></li>
+        </ul>
+        <div class="stick-nav-right">
+            <a href="../Log-in/denglu.html">登录</a>
+            <label for="">
+            <span  id="open">
+                <i class="Down"></i>
+                <i></i>
+                <i class="Up"></i>
+            </span>
+        </label>
+        </div>
+        <!-- 遮罩 -->
+        <div class="cover" style="display: none;"></div>
+        <div class="side-bar" style="display: none;">
+            <ul>
+                <li><a href="../ordering/New/Newindex.html">准现车</a></li>
+                <li><a href="../ordering/Used/Usedindex.html">认证二手车</a></li>
+                <li><a href="../map/common.html">找到我们</a></li>
+                <li><a href="../question/question.html">问题解答</a></li>
+                <li><a href="#">订阅更新</a></li>
+                <li><a href="#">最新消息</a></li>
+                <li><a href="../charging/charge1.html">如何充电</a></li>
+                <li><a href="../discharge/tesila.html">减少碳排放</a></li>
+                <li><a href="../enterprise/qykh.html">企业客户</a></li>
+            </ul>
+            <span id="shutDown">
+            <i></i>
+            <i></i>
+        </span>
+        </div>
+    </div>
+    </header>
+    <div class="wrapper">
+        <span>视频音频</span>
+        <input type="text" placeholder="&nbsp;&nbsp;&nbsp;搜索" class="chAt">
+        <!-- <input type="button" onclick='location.href=("http://help.finereport.com/doc-view-1839.html")' /> -->
+        <span class="push" style="font-size:24px;">☞</span>
+        <!-- <span class="glyphicon glyphicon-user"></span> -->
+        <!-- <span class="glyphicon glyphicon-user" aria-hidden="true"></span> -->
+        <a href="./获取更新.html"><span>获得更新</span></a>
+        <a href="./近期活动.html"><span>近期活动</span></a>
+        <a href="./车主故事.html"><span style="color: rgb(145, 145, 145);">车主故事</span></a>
+        <a href="./媒体报道.html"><span>媒体报道</span></a>
+        <a href="./视频音频.html"><span>视频音频</span></a>
+        <a href="./官方资讯.html"><span>官方资讯</span></a>
+
+        <!-- <a href="#"><span></span></a> -->
+    </div>
+
+    <section id="gallery-wrapper" class="banxin">
+        <article class="white-panel">
+            <img src="./车主故事/5分钟下单竟无意中成特斯拉首位MODELX女车主2.jpg" class="thumb ">
+            <h1><a href="#">极地快车</a></h1>
+            <p>Lisa & James Locke</p>
+            <p>2016年8月11日</p>
+        </article>
+        <article class="white-panel">
+            <img src="./车主故事/特斯拉为我和我的家庭带来了一种全新的生活方式1.png" class="thumb >
+            <h1><a href=" # ">群像丨首批Model S车主怎么看待特斯拉？</a></h1>
+            <p>车主：红景天，高璇 ，Steven | 来源：PCauto汽车杂志</p>
+            <p>2016年7月12日</p>
+        </article>
+        <article class=" white-panel ">
+            <img src=" ./车主故事/首批ModelS车主怎么看待特斯拉1.png " class=" thumb ">
+            <h1><a href=" # ">5分钟下单竟无意中成特斯拉首位Model X女车主</a></h1>
+            <p>车主：Vanessa | 来源：易车</p>
+            <p>2016年7月1日</p>
+        </article>
+        <article class=" white-panel ">
+            <img src=" ./车主故事/Allister_Lam_1.jpg " class=" thumb ">
+            <h1><a href=" # ">特斯拉为我和我的家庭带来了一种全新的生活方式</a></h1>
+            <p>Lucy 和曾先生</p>
+            <p>2016年7月1日</p>
+        </article>
+        <article class=" white-panel ">
+            <img src=" ./车主故事/customer_story_a_more_useful_driving_experience.png " class=" thumb ">
+            <h1><a href=" # ">爹地，感觉我们成名人了！</a></h1>
+            <p>Allister Lam</p>
+            <p>2016年6月2日</p>
+        </article>
+        <article class=" white-panel ">
+            <img src=" ./车主故事/customer_story_daily_charging_and_sustainability.png " class=" thumb ">
+            <h1><a href=" # ">车主 Stephan ： 可持续的交通方式</a></h1>
+            <p>Stephan Pescaron</p>
+            <p>2016年3月15日</p>
+        </article> 
+         <article class=" white-panel ">
+            <img src=" ./车主故事/customer_story_dependable_and_cost_effective.png " class=" thumb ">
+            <h1><a href=" # ">科技工作者 Simon ：未来之驱</a></h1>
+            <p>Simon Hackett</p>
+            <p>2016年3月14日</p>
+        </article> 
+        <article class=" white-panel ">
+            <img src=" ./车主故事/Linda_Krueger_Customer_Stories.jpg " class=" thumb ">
+            <h1><a href=" # ">邮递员 Henry：开特斯拉送信，可靠又省钱</a></h1>
+            <p>Henry Nelson</p>
+            <p>2016年3月7日</p>
+        </article>
+        <article class=" white-panel ">
+            <img src=" ./车主故事/James_Locke_250x170_1.jpg " class=" thumb ">
+            <h1><a href=" # ">高性能车驾驶教练 Jim ：安全第一</a></h1>
+            <p>Jim Hartman</p>
+            <p>2016年3月7日</p>
+        </article>
+        <article class=" white-panel ">
+            <img src=" ./车主故事/Johnny_Wen_9.jpg " class=" thumb ">
+            <h1><a href=" # ">为什么我绝不会再买汽油车</a></h1>
+            <p>美国车主 Greg Papay</p>
+            <p>2016年2月29日</p>
+        </article>
+        <article class=" white-panel ">
+            <img src=" ./车主故事/Kiker_1.jpg " class=" thumb ">
+            <h1><a href=" # ">阳光出行！</a></h1>
+            <p>英国车主 Mark Maurice</p>
+            <p>2016年2月29日</p>
+        </article>
+        <article class=" white-panel ">
+            <img src=" ./车主故事/Linda_Krueger_Customer_Stories.jpg " class=" thumb ">
+            <h1><a href=" # ">特斯拉Model S 85D试驾记</a></h1>
+            <p>GQ澳大利亚团队</p>
+            <p>2016年2月26日</p>
+        </article>
+        <article class=" white-panel ">
+            <img src=" ./车主故事/特斯拉为我和我的家庭带来了一种全新的生活方式1.png " class=" thumb ">
+            <h1><a href=" # ">我有一个爱车名单，特斯拉总在其中</a></h1>
+            <p>陈步洲</p>
+            <p>2015年12月15日</p>
+        </article>
+         <article class=" white-panel ">
+            <img src=" ./车主故事/5分钟下单竟无意中成特斯拉首位MODELX女车主2.jpg " class=" thumb ">
+            <h1><a href=" # ">极地快车</a></h1>
+            <p>Lisa & James Locke</p>
+            <p>2016年8月11日</p>
+        </article> 
+
+        <article class=" white-panel ">
+            <img src=" ./车主故事/首批ModelS车主怎么看待特斯拉1.png " class=" thumb ">
+            <h1><a href=" # ">5分钟下单竟无意中成特斯拉首位Model X女车主</a></h1>
+            <p>车主：Vanessa | 来源：易车</p>
+            <p>2016年7月1日</p>
+        </article> -->
+        <article class=" white-panel ">
+            <img src=" ./车主故事/Allister_Lam_1.jpg " class=" thumb ">
+            <h1><a href=" # ">特斯拉为我和我的家庭带来了一种全新的生活方式</a></h1>
+            <p>Lucy 和曾先生</p>
+            <p>2016年7月1日</p>
+        </article>
+        <article class=" white-panel ">
+            <img src=" ./车主故事/customer_story_a_more_useful_driving_experience.png " class=" thumb ">
+            <h1><a href=" # ">爹地，感觉我们成名人了！</a></h1>
+            <p>Allister Lam</p>
+            <p>2016年6月2日</p>
+        </article>
+        <article class=" white-panel ">
+            <img src=" ./车主故事/customer_story_daily_charging_and_sustainability.png " class=" thumb ">
+            <h1><a href=" # ">车主 Stephan ： 可持续的交通方式</a></h1>
+            <p>Stephan Pescaron</p>
+            <p>2016年3月15日</p>
+        </article>
+        <article class=" white-panel ">
+            <img src=" ./车主故事/customer_story_dependable_and_cost_effective.png " class=" thumb ">
+            <h1><a href=" # ">科技工作者 Simon ：未来之驱</a></h1>
+            <p>Simon Hackett</p>
+            <p>2016年3月14日</p>
+        </article>
+        <article class=" white-panel ">
+            <img src=" ./车主故事/Linda_Krueger_Customer_Stories.jpg " class=" thumb ">
+            <h1><a href=" # ">邮递员 Henry：开特斯拉送信，可靠又省钱</a></h1>
+            <p>Henry Nelson</p>
+            <p>2016年3月7日</p>
+        </article>
+        <article class=" white-panel ">
+            <img src=" ./车主故事/James_Locke_250x170_1.jpg " class=" thumb ">
+            <h1><a href=" # ">高性能车驾驶教练 Jim ：安全第一</a></h1>
+            <p>Jim Hartman</p>
+            <p>2016年3月7日</p>
+        </article>
+        <article class=" white-panel ">
+            <img src=" ./车主故事/Johnny_Wen_9.jpg " class=" thumb ">
+            <h1><a href=" # ">为什么我绝不会再买汽油车</a></h1>
+            <p>美国车主 Greg Papay</p>
+            <p>2016年2月29日</p>
+        </article>
+        <article class=" white-panel ">
+            <img src=" ./车主故事/Kiker_1.jpg " class=" thumb ">
+            <h1><a href=" # ">阳光出行！</a></h1>
+            <p>英国车主 Mark Maurice</p>
+            <p>2016年2月29日</p>
+        </article>
+        <article class=" white-panel ">
+            <img src=" ./车主故事/Linda_Krueger_Customer_Stories.jpg " class=" thumb ">
+            <h1><a href=" # ">特斯拉Model S 85D试驾记</a></h1>
+            <p>GQ澳大利亚团队</p>
+            <p>2016年2月26日</p>
+        </article>
+        <article class=" white-panel ">
+            <img src=" ./车主故事/特斯拉为我和我的家庭带来了一种全新的生活方式1.png " class=" thumb ">
+            <h1><a href=" # ">我有一个爱车名单，特斯拉总在其中</a></h1>
+            <p>陈步洲</p>
+            <p>2015年12月15日</p>
+        </article>
+
+
+
+
+
+
+
+
+    </section>
+    <script src=" js/jquery-1.11.0.min.js " type=" text/javascript "></script>
+    <script src=" js/pinterest_grid.js "></script>
+    <script type=" text/javascript ">
+        $(function() {
+            $(" #gallery-wrapper ").pinterest_grid({
+                no_columns: 5,
+                padding_x: 20,
+                padding_y: 10,
+                margin_bottom: 60,
+                single_column_breakpoint: 700
+            });
+
+        });
+    </script>
+    <div class=" dibu ">
+
+
+        <div class=" wenzi1 banxin ">
+            <div><img src=" ./车主故事/favicon_96x96.png " alt=" "></div>
+
+            <p>Tesla © 2019 沪ICP备14038430号-1 隐私&法律 联系人信息 工作机会</p>
+        </div>
+
+
+    </div>
+</body>
+<script>
+    $(function () {
+        $('.push').mouseenter(function () {
+            $('.chAt').stop().animate({
+                'width': 220,
+                'border-radius': 30,
+                'disabled': false
+            }, 1000)
+            // $('.chAt').css('display', 'inline-block')
+
+        })
+        $('.chAt').mouseenter(function () {
+            $('.chAt').stop().animate({
+                'width': 220,
+                'border-radius': 30,
+                'disabled': false
+            }, 1000)
+            $('.chAt').css('display', 'inline-block')
+
+        })
+        $('.chAt').mouseleave(function () {
+            $('.chAt').stop().animate({
+                'width': 8,
+                'border-radius': 50,
+                // 'disabled':true
+            }, 1000)
+            // $('.chAt').css('display', 'inline-block')
+
+        })
+        $('.push').mouseleave(function () {
+            $('.chAt').stop().animate({
+                'width': 8,
+                'border-radius': 50,
+                // 'disabled':true
+            }, 1000)
+            // $('.chAt').css('display', 'inline-block')
+
+        })
+
+
+        $('.btn').click(function () {
+            $('.btn').css({
+                'outline': 'none'
+            })
+            $('.wall').css('display', 'inline-block')
+            $('body').stop().animate({
+                'height': 1900
+            }, 2000);
+            // .$('.viewallmouth_5').stop().animate({
+            //     'display': 'block'
+            // }, 2000)
+            $('.dis').css({
+                'display': 'block'
+            });
+            $('.dis').css({
+                'display': 'block'
+            })
+            if ($('body').css('height') == 1900) {
+                $('.wall').css('display', 'none')
+
+            }
+        })
+
+
+        // <input onmouseover=this.focus() onfocus=this.select()>
+
+    })
+</script>
+    <script src="./js/base.js"></script>
+</html>

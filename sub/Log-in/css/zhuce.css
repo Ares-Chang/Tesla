@@ -1,0 +1,192 @@
+body {
+    background: radial-gradient(transparent, hsl(0, 0%, 2%)), #333 url('../images/login_semi_hangar.jpg') no-repeat center center fixed;
+    background-size: 100%;
+    height: 750px;
+    position: relative;
+}
+
+body .zhuce {
+    width: 500px;
+    height: 720px;
+    background: #eee;
+    border-radius: 15px;
+    position: absolute;
+    top: 20px;
+    right: 150px;
+    overflow: hidden;
+}
+
+body .zhuce .box1 {
+    height: 40px;
+    width: 500px;
+    line-height: 40px;
+    text-align: center;
+    background-color: #fff;
+    font-size: 12px;
+}
+
+body .zhuce .box1 a {
+    color: blue;
+}
+
+body .zhuce .box2 {
+    width: 450px;
+    height: 80px;
+    text-align: center;
+    line-height: 80px;
+    font-size: 30px;
+    border-bottom: 2px solid #ccc;
+    margin: 0px auto;
+}
+
+body .zhuce .box3 {
+    width: 450px;
+    height: 40px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    margin: 15px auto;
+    text-align: center;
+    line-height: 40px;
+    background-color: #fff;
+    margin-bottom: 0;
+}
+
+body .zhuce .box3 input {
+    width: 400px;
+    height: 37px;
+    font-size: 14px;
+    outline-style: none;
+    border: none;
+}
+
+body .zhuce .tishi {
+    width: 450px;
+    margin: 0 auto;
+    text-align: center;
+    font-size: 12px;
+    margin-bottom: 20px;
+}
+
+body .zhuce .box4 {
+    width: 450px;
+    height: 40px;
+    text-align: center;
+    margin: 0 auto;
+    background-color: #ffffff;
+    line-height: 40px;
+    overflow: hidden;
+}
+
+body .zhuce .box4 img {
+    height: 40px;
+}
+
+body .zhuce .box5 {
+    width: 450px;
+    height: 60px;
+    margin: 0 auto;
+    margin-top: 15px;
+    overflow: hidden;
+}
+
+body .zhuce .box5 input {
+    float: left;
+    width: 30px;
+    height: 30px;
+}
+
+body .zhuce .box5 .zi {
+    width: 400px;
+    height: 60px;
+    float: left;
+}
+
+body .zhuce .box5 .zi a {
+    color: blue;
+}
+
+body .zhuce .box6 {
+    width: 450px;
+    height: 40px;
+    background: #3e6be2;
+    margin: 10px auto;
+    border-radius: 20px;
+    margin-bottom: 0;
+}
+
+body .zhuce .box6 a {
+    width: 450px;
+    height: 40px;
+    display: block;
+    text-align: center;
+    line-height: 40px;
+    color: #fff;
+    font-size: 20px;
+}
+
+body .zhuce .box6 a:hover {
+    border: 2px solid #bbb;
+    box-sizing: border-box;
+    border-radius: 20px;
+}
+
+body .zhuce .dilan {
+    width: 420px;
+    margin: 0 auto;
+    font-size: 13px;
+    text-align: center;
+}
+
+body .zhuce .dilan a {
+    color: blue;
+}
+
+body .meiguo {
+    position: absolute;
+    top: 700px;
+    left: 50%;
+}
+
+body .meiguo:hover {
+    cursor: pointer;
+}
+
+body .guobiao {
+    width: 800px;
+    height: 600px;
+    background: #000000;
+    text-align: center;
+    position: relative;
+    margin: 0 auto;
+    display: none;
+}
+
+body .guobiao .guanbi {
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    text-align: center;
+    line-height: 30px;
+    font-size: 22px;
+    color: white;
+}
+
+body .guobiao .guanbi:hover {
+    cursor: pointer;
+}
+
+body .guobiao img {
+    width: 700px;
+    height: 500px;
+    position: absolute;
+    top: 45px;
+    left: 35px;
+}
+
+.starman {
+    position: relative;
+    background: radial-gradient(transparent, hsl(0, 0%, 2%)), #333 url('../images/roadster_starman.jpg') no-repeat center center fixed;
+    background-size: 100%;
+}

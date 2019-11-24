@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+   <link rel="stylesheet" href="./css/bar.css">
+    <link rel="stylesheet" href="./less/index.css">
+    <script src="./js/index.js"></script>
+    <script src="./js/jquery.min.js"></script>
+    <!-- <script>
+    window.onload=function(){
+
+    }
+    
+    
+    </script> -->
+</head>
+<body>
+
+    <!-- 需求: 分 上中下三个部分 ,最大的div:main;
+     -->
+     <div class="main">
+        <!-- 第一部分,top  分三小部分 左中右; -->
+        <div class="top">
+
+            <div class="left">
+                <a href="../../index.html"><img src="./images/logo.PNG" alt=""></a>
+            </div>
+            <div class="middle">
+                <ul>
+                    <li>1. 车型</li>
+                    <li>2. 外观</li>
+                    <li>3. 内饰</li>
+                    <li>4. <b>Autopilot </b> 自动辅助驾驶</li>
+                    <li>5. 付款</li>
+                </ul>
+            </div>
+            <div class="right">
+                <img src="./images/cn.PNG" alt="">
+            </div>
+        </div>
+ <!-- 第二部分 content 分大小盒子左右-->
+        <div class="content">
+            <div class="bigger">
+
+                    <div class="big" >
+                            <section class="title">
+            
+                                <img src="./images/tanhao.PNG" alt="">
+                                Model 3 部分车型享受购置税减免政策，最高节省约5.2万。
+                                <a href="https://www.tesla.cn/support/vehicle-incentives">了解更多</a>
+                            </section>
+                            <div class="car1">
+                                <img src="./images/car1.PNG" alt="">
+                            </div>
+            
+                        </div>
+                        <div class="big big1" style="display: none">
+                            <img src="./images/car2.PNG" alt="" >
+                        </div>
+                        <div class="big big2" style="display: none"><img src="./images/内饰.PNG" alt=""></div>
+                        <div class="big big3" style="display: none">
+                            <div class="p">
+                            <p id="p1">Autopilot 自动辅助驾驶</p> 
+                            <p id="p2"> Autopilot 自动辅助驾驶先进的安全与便捷功能，旨在帮助您将驾驶化繁为简。所有全新 Tesla 车辆均标配基础驾驶<br>
+                                辅助功能，如紧急制动、碰撞预警和盲点监测等。</p></div>
+
+                            <img src="./images/1_150525103505_1.jpg" alt="">
+
+                        </div>
+                        <div class="big big4" style="display: none">
+                            <div class="user">创建账户</div>
+                            <p>名字  <span>姓氏</span></p>
+                            <input type="text">
+                            <input type="text" id="in2">
+                            <p>电子邮件  <span>电话</span></p>
+                            <input type="text">
+                            <input type="text" id="in2">
+                        </div>
+
+
+            </div>
+<div class="smaller">
+
+        <div class="small" >
+                <div class="zong">
+                    <div class="shang">
+                        选择车型
+                    </div>
+                    <div class="zhong">
+                        <div class="group1">
+                            <p class="t1">后轮驱动</p>
+                            <p class="t2"> <a href="">升级版内饰套件</a> </p>
+                            <p class="t3">标准续航升级版*<span><b>¥ 355,800</b> </span></p>
+                            <p class="t4"><b>中国制造</b></p>
+                            
+                        </div>
+                        <div class="group2">
+                           <p class="p1">双电机全轮驱动</p>
+                           <p class="p2">高级版内饰套件</p>
+                           <p class="p3">长续航<span><b>¥ 439,900</b> </span></p>
+                           <p class="p4">Performance 高性能<span><b>¥ 509,900</b> </span></p>
+                        </div>
+                    </div>
+                    <div class="xia">
+                        *中国制造，待监管机构批准
+                    </div>
+                </div>
+            </div>
+            <div class="small small1" style="display: none">
+    <div class="top1">
+        <p class="wenzi">颜色</p>
+        <div class="color"><img src="./images/颜色按钮.PNG" alt=""></div>
+        <p class="xia">珍珠白（多涂层）车漆</p>
+    </div>
+    <div class="bottom"> 
+        <p class="wenzi">选择轮毂</p>
+        <div class="color"><img src="./images/轮毂.PNG" alt=""></div>
+        <p class="xia"><b>19</b>  英寸运动轮毂
+    <span>¥ 14,200</span>
+</p>
+    </div>
+            </div>
+            <div class="small small2" style="display: none">
+                <p class="wenzi">选择内饰</p>
+                <div class="tupian"><img src="./images/内饰按钮.PNG" alt=""></div>
+                <p class="wenzi1">纯黑色内饰（黑色座椅）</p>
+                <p class="wenzi2">套件包含</p>
+                <ul>
+                    <li>前排座椅加热，可向12个方向电动调节</li>
+                    <li>高级座椅材质与饰板</li>
+                    <li>升级版音响系统，沉浸式音效</li>
+                    <li>通过蓝牙进行音乐和媒体播放</li>
+                    <li>有色玻璃车顶，有效阻隔紫外线和红外线</li>
+                    <li>电动折叠、加热式侧后视镜</li>
+                    <li>驾驶员偏好设置</li>
+                    <li>中控台储物空间，4个USB接口，2个智能手机底</li>
+                </ul>
+            </div>
+            <div class="small small3" style="display: none">
+                <p>基础版辅助驾驶功能</p> 
+
+                <li>车辆能够根据其他车辆与行人在行驶车道内自动辅助实施转向、加速和制动。</li>
+            </div>
+            <div class="small small4" style="display: none"></div>
+
+
+</div>
+           
+        
+
+
+        </div>
+<!-- 尾部 分四块,foot1---4 -->
+        <div class="footer">
+            <div class="foot1">
+                现金
+                <span></span>
+            </div>
+            <div class="foot2">
+              <div class="price1">
+                  <p class="pi">¥ 293,300</p>
+                  <p class="txt">减去预估节省费用</p>
+              </div>
+              <div class="price2">
+                    <p class="pi">¥ 355,800</p>
+                    <p class="txt">实际价格</p>
+              </div>
+              <div class="fukuan">付款计算器</div>
+            </div>
+            <div class="foot3">
+                预计交付日期：2020年一季度
+            </div>
+            <div class="foot4">
+            <button >
+                下一步
+            </button>
+        </div>
+        </div>
+
+
+
+
+
+     </div>
+</body>
+</html>

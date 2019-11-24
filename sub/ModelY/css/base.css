@@ -1,0 +1,52 @@
+* {
+    padding: 0;
+    margin: 0;
+    margin-top: 0;
+    list-style: none;
+    text-decoration: none;
+    box-sizing: border-box;
+    
+}
+
+body,
+html {
+    width: 100%;
+    margin: 0 auto;
+    min-width: 1360px;
+    max-width: 1880px;
+    box-sizing: border-box;
+    /* overflow: hidden; */
+    /* background-color: rgb(73, 73, 73); */
+}
+
+a,
+a:hover {
+    color: aliceblue;
+    text-decoration: none;
+}
+
+
+.left {
+    float: left;
+}
+
+.right {
+    float: left;
+}
+
+.clearfix::after {
+    content: '';
+    display: block;
+    clear: both;
+}
+
+img,
+input {
+    vertical-align: middle;
+    border: none;
+    outline-style: none;
+}
+
+ol,ul,li {
+    list-style: none;
+}

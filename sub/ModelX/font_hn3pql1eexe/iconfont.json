@@ -1,0 +1,23 @@
+{
+  "id": "",
+  "name": "",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "45475",
+      "name": "座椅",
+      "font_class": "zuoyi",
+      "unicode": "e622",
+      "unicode_decimal": 58914
+    },
+    {
+      "icon_id": "1794583",
+      "name": "箭头",
+      "font_class": "jiantou-copy-copy",
+      "unicode": "e66c",
+      "unicode_decimal": 58988
+    }
+  ]
+}

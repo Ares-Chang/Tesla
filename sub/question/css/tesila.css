@@ -1,0 +1,457 @@
+
+/*index头部*/
+.index-nav {
+	width: 100%;
+	height: 52px;
+	position: fixed;
+	z-index: 99;
+}
+.index-nav h1 {
+	overflow: hidden;
+	float: left;
+}
+.index-nav h1::after {
+	content: "Tesla, Inc";
+	display: none;
+}
+.index-nav h1 a img {
+	width: 120px;
+	margin-top: 15px;
+	margin-left: 17px;
+}
+
+.index-nav > .iconfont {
+	float: right;
+	/*display: block;*/
+	/*width: 24px;
+	height: 24px;*/
+	/*background-color: pink;*/
+	color: #fff;
+	transform: translate(-3px,10px) rotate(180deg);
+
+}
+.index-nav > .iconfont::before {
+	font-size: 24px;
+}
+/*模块一*/
+.module1{
+	position: relative;
+	/*z-index: -99;*/
+	overflow: hidden;
+}
+.module2{
+	position: relative;
+	/*z-index: -99;*/
+	overflow: hidden;
+}
+/*以下通用*/
+.re-img {
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	/*z-index: -99;*/
+}
+.re-img img {
+	width: 100%;
+	/*height: 100%;*/
+	position: absolute;
+	top: -100px;
+}
+.module1-top {
+	position: absolute;
+	top: 100px;
+	left: 50%;
+	z-index: 99;
+	transform: translate(-50%);
+	text-align: center;
+}
+.module1-top h2 {
+	color: #fff;
+	font-size: 40px;
+	font-family: HeiT ASC Traditional Chinese,M Hei PRC W45,AXIS Font Japanese W55,FB New Gothic,Swissra,Gotham Medium,system,sans-serif;
+}
+.module1-top ul {
+	width: 100%;
+	display: flex;
+	/*flex-direction: column;*/
+}
+.module1-top li {
+	display: inline-block;
+	margin-top: 15px;
+	margin-bottom: 15px;
+	margin-left: 10px;
+	/*float: left;*/
+
+}
+.module1-top li a {
+	display: inline-block;
+	width: 164px;
+	height: 24px;
+	line-height: 24px;
+	padding: 5px 40px;
+	/*background-color: #fff;*/
+	border-radius: 20px;
+	border: 2px solid #fff;
+}
+.module1-top .mak a {
+	color: #fff;
+	font-size: 12px;
+	margin: 0 auto;
+	border-bottom: 2px solid rgba(255,255,255,.8);
+	transition: all .2s;
+	padding-bottom: 3px;
+}
+/*.module1-top .mak a:hover{
+	border-bottom: 4px solid #fff;
+}*/
+/*下部*/
+.module1-bottom {
+	position: absolute;
+	bottom: 0px;
+	left: 50%;
+	transform: translate(-50%);
+	text-align: center;
+}
+.module1-bottom ul {
+	display: inline-block;
+	overflow: hidden;
+}
+.module1-bottom ul li{
+	float: left;
+	width: 6px;
+	height: 6px;
+	border: 2px solid #fff;
+	border-radius: 50%;
+	margin-left: 10px;
+}
+.module1-bottom .introduce p {
+	color: #fff;
+	font-size: 12px;
+	margin: 10px;
+	margin-bottom: 70px;
+}
+.module1-bottom .module1-bottom-icon {
+	color: #fff;
+	/*margin-top: 30px;*/
+	/*margin-bottom: 10px;*/
+	position: absolute;
+	bottom: 20px;
+	left: 50%;
+	transform: translate(-50%);
+	/*transition: all 1s;*/
+	/*animation-name: jump;
+	animation-duration: 1s;*/
+	/*	名称 执行时间	 延时 次数*/
+	animation: jump 3s infinite;
+	cursor: pointer;
+}
+.module1-bottom .module1-bottom-icon span::before {
+	font-size: 26px;
+}
+/*跳动箭头*/
+@keyframes jump {
+			0% {
+				bottom: 20px;
+			}
+			60% {
+				bottom: 20px;
+			}
+			75% {
+				bottom: 14px;
+			}
+			/*87% {
+				bottom: 20px;
+			}*/
+			88% {
+				bottom: 25px;
+			}
+			100% {
+				bottom: 20px;
+			}
+		}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+body{
+	min-width: 1240px;
+	position: relative;
+}
+
+.dingbu {
+    height: 50px;
+    background: black;
+}
+
+a:hover{
+    color: blue;
+    text-decoration:underline;
+}
+
+
+.dingbutup{
+    position:relative
+}
+.dingbutup img {
+    width: 100%;
+}
+
+.d1 input {
+    width: 500px;
+    height: 45px;
+    padding-left: 10px;
+    border-radius: 5px;
+    outline: none;
+    position:absolute;
+    top: 15%;
+    left: 38%;
+    background-color:white;
+    border-radius: 25px;
+    
+  
+  }
+
+.huati {
+    margin-top: 80px;
+}
+
+.huati p {
+    font-size: 30px;
+    font-family: 'Gotham Medium';
+}
+
+.leibiao1 ul {
+    display: flex;
+    padding-right: 0;
+    padding-top: 20px;
+    justify-content: space-between;
+}
+
+.leibiao1 ul li:nth-child(1) {
+    font-weight: 700;
+}
+
+.leibiao2 p{
+     font-size: 18px;
+     margin-bottom: 30px;
+     margin-top: 60px;
+}
+
+
+.leibiao2 ul{
+       display: flex;
+       flex-direction: column;
+      
+    
+}
+.leibiao2 ul a{
+    margin-top: 20px;
+    color: #666;
+}
+.leibiao2 ul a:hover{
+    color: blue;
+    text-decoration:underline;
+}
+
+.leibiao2{
+    display: flex;
+   
+}
+.leibiao2 .hezi1{
+    display: flex;
+    flex: 1;
+    justify-content: space-around;
+}
+
+
+
+
+.tup1 img{
+    width: 480px;
+    margin-top: 60px;
+}
+.tupian1{
+    display:flex;
+    flex-direction: row-reverse;
+    align-items: center;
+}
+.wenzi .wenzi1{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end; 
+}
+.wenzi1 p:nth-child(1){
+    font-size: 20px;
+}
+.wenzi1 p:nth-child(2){
+    color: #666;
+    margin: 20px 0 20px;
+}
+.wenzi1{
+    padding-right: 50px;
+}
+
+
+
+
+.tupian2{
+    display:flex;
+    align-items: center;
+    
+}
+.wenzi .wenzi2{
+    display: flex;
+    flex-direction: column;
+}
+
+.wenzi2 p:nth-child(1){
+    font-size: 20px;
+}
+.wenzi2 p:nth-child(2){
+    color: #666;
+    margin: 20px 0 20px;
+}
+.wenzi2{
+    padding-left: 50px;
+}
+
+
+
+
+
+
+
+.weixin{
+    margin-top: 60px;
+   background-color: #f7f7f7;
+    display: flex;
+}
+.wenxinwenzi{
+display: flex;
+flex-direction: column;
+align-items: center;
+}
+.weixintu img{
+    width:180px;
+    margin-bottom: 60px;
+}
+.wenxinwenzi P:nth-child(1){
+    font-size: 25px;
+    margin:60px 0 20px;
+}
+.wenxinwenzi P:nth-child(2){
+  color: #666;
+}
+.wenxinwenzi P:nth-child(3){
+   margin-top: 20px;
+   color: #666;
+}
+.wenxinwenzi P:nth-child(4){
+    color: #666;
+ }
+
+
+
+
+ 
+
+.dibu{
+    background-color: #333;
+    height: 450px;
+}
+
+ .dibuwenzi1{
+     display: flex;
+     border-bottom: 1px solid #666;
+    
+     
+ }
+
+.xiaowenzi1 {
+  flex:25%;
+  height: 300px;
+  margin-top: 60px;
+  margin-right: 80px;
+  
+}
+
+.xiaowenzi1 a{
+    color: #ccc;
+}
+
+.xiaowenzi2 {
+   float: left;
+   margin-top: 60px;
+   margin-right: 50px;
+   
+  }
+  .xiaowenzi2 a{
+    color: #ccc;
+}
+ 
+
+
+
+
+
+
+
+.leib{
+    display: flex;
+    flex: 30%;
+    border-left: 1px solid #666;
+    margin-top: 50px;
+    
+
+    
+}
+.leib1 ul a{
+    display: flex;
+    flex-direction: column;
+    margin-left: 20px;
+    margin-top: 10px; 
+    color: #ccc;
+}
+
+.leib1 ul:nth-child(2){
+    margin-top: 40px;
+    margin-bottom: 20px;
+}
+
+
+
+.leib2 ul a{
+    display: flex;
+    flex-direction: column;
+    margin-left: 20px;
+    margin-top: 10px; 
+    color: #ccc;
+}
+
+.leib2 ul:nth-child(2){
+    margin-top: 40px;
+}
+
+.zuihou p{
+    color: #ccc;
+    margin-top: 10px;
+    
+}
+
+
+.swiper-slide img{
+	text-align: center;
+	
+	width: 100%;
+	height: 100%;
+}

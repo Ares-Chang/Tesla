@@ -1,0 +1,61 @@
+//let's not polute global space
+var footerNS = footerNS || {};
+
+footerNS.localeSelectInit = function() {
+    footerNS.locale_wrapper = $("#locale-modal");
+    $("#locale-selector-d7 .modal-link").click(function() {
+        footerNS.toggleLocaleSelector();
+    });
+}
+
+footerNS.toggleLocaleSelector = function() {
+    footerNS.locale_wrapper.toggleClass("open");
+    footerNS.locale_wrapper.css("display", "block");
+    footerNS.topCss = $(window).scrollTop() + footerNS.locale_wrapper.height();
+    $("html, body").animate({ scrollTop : footerNS.topCss });
+}
+
+$(window).resize(function () {
+    footerNS.viewportWidth = $(window).width();
+    if (footerNS.viewportWidth < 640) {
+        if (footerNS.locale_wrapper.length) { 
+            footerNS.locale_wrapper.removeClass("open");
+        }
+    }
+});
+
+$(document).ready(footerNS.localeSelectInit);
+
+(function (window, document, $, Drupal) {
+    "use strict";
+
+    Drupal.behaviors.wechat_button_popover = {
+        attach: function (context) {
+            var $wechatPopover;
+
+            $('.social-icons').on('click', '.icon-wechat', function(e) {
+                e.preventDefault();
+                $wechatPopover = $(this).find('.popover');
+                $wechatPopover.toggle();
+            });
+            $('.social-icons').on('mouseleave', '.icon-wechat', function(e) {
+                e.preventDefault();
+                $wechatPopover = $(this).find('.popover');
+                $wechatPopover.hide();
+            });
+        }
+    };
+
+    Drupal.behaviors.blog_sticky_footer = {
+        attach: function (context) {
+            $('[id^="page-blog"] #sticky-footer-btns').on('click', '[class*="btn-"]', function(e) {
+                    window.dataLayer.push({
+                        'event': 'form-interaction',
+                        'interaction': 'button click',
+                        'formType': 'Static Footer',
+                        'engagementType': 'User Requested'
+                    });
+            });
+        }
+    };
+}(this, this.document, this.jQuery, this.Drupal));

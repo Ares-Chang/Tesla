@@ -1,0 +1,161 @@
+.boss {
+  width: 100%;
+}
+.boss-nav {
+  height: 50px;
+  background: #222222;
+}
+.boss-nav .nav {
+  height: 100%;
+}
+.top-img {
+  height: 494px;
+  background: url(../img/section_hero_march.jpg) no-repeat;
+  background-size: 100% 100%;
+  border: 0.1px solid #222222;
+}
+.top-img .img-zi {
+  max-height: 100px;
+  height: 100%;
+  position: relative;
+  margin-top: 44px;
+}
+.top-img .img-zi .nav-zi {
+  max-height: 62px;
+  height: 100%;
+  margin-bottom: 35px;
+  padding-bottom: 25px;
+  border-bottom: 0.5px solid #fff;
+  line-height: 62px;
+}
+.top-img .img-zi .nav-zi h1 {
+  font-size: 30px;
+  position: absolute;
+  padding-top: 0;
+  color: white;
+  float: left;
+}
+.top-img .img-zi .nav-zi ul {
+  float: right;
+}
+.top-img .img-zi .nav-zi ul li {
+  float: left;
+}
+.top-img .img-zi .nav-zi ul li a {
+  color: white;
+  font-size: 15px;
+  margin-left: 20px;
+}
+.top-img .img-zi .nav-zi ul li a:hover {
+  color: #ccc;
+}
+.zhong-top {
+  max-height: 641px;
+  height: 100%;
+  padding-top: 50px;
+}
+.zhong-top .zhong-top-zi {
+  height: 150px;
+  color: #000000;
+}
+.zhong-top .zhong-top-zi h1 {
+  font-size: 40px;
+}
+.zhong-top .zhong-top-zi p {
+  font-size: 15px;
+  line-height: 60px;
+}
+.zhong-top .zhong-top-zi .liaojie {
+  max-height: 40px;
+  height: 100%;
+  line-height: 40px;
+}
+.zhong-top .zhong-top-zi .liaojie a {
+  max-width: 225px;
+  width: 100%;
+  display: inline-block;
+  border: 0.5px solid #fff;
+  background: #3399FF;
+}
+.zhong-top .tu {
+  height: 461px;
+  width: 60%;
+  margin: 0 auto;
+  margin-top: 30px;
+}
+.zhong-top .tu img {
+  width: 100%;
+  height: 100%;
+}
+.zhong-bottom {
+  height: 615px;
+  position: relative;
+}
+.zhong-bottom img {
+  position: absolute;
+  width: 100%;
+}
+.zhong-bottom h1 {
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  margin-left: -215px;
+  font-size: 40px;
+}
+.zhong-bottom p {
+  position: absolute;
+  top: 28%;
+  left: 50%;
+  margin-left: -135px;
+  font-size: 15px;
+  line-height: 60px;
+}
+.zhong-bottom .annv {
+  position: absolute;
+  top: 38%;
+  left: 50%;
+  margin-left: -112.5px;
+}
+.zhong-bottom .h1 {
+  width: 700px;
+  text-align: center;
+  margin-left: -350px;
+}
+.zhong-bottom .p1 {
+  top: 40%;
+  left: 37%;
+}
+.zhong-bottom .p2 {
+  top: 40%;
+  left: 68%;
+}
+.zhong-bottom .annv1 {
+  top: 50%;
+  left: 34%;
+}
+.zhong-bottom .annv2 {
+  top: 50%;
+  left: 66%;
+}
+.zhong-bottom1 {
+  height: 786px !important;
+}
+.bottom {
+  height: 52px;
+  line-height: 52px;
+  text-align: center;
+}
+.bottom a {
+  font-size: 13px;
+  color: #000;
+  padding-left: 5px;
+  border-left: 0.5px solid #ccc;
+}
+.bottom a:nth-child(1) {
+  border-left: none;
+}
+.yiru {
+  box-sizing: border-box;
+  border: 0.5px solid #fff;
+  background-color: rgba(173, 172, 172, 0.8);
+}

@@ -1,0 +1,463 @@
+(function (window, document, $, Drupal) {
+
+    "use strict";
+    var interestFormSettings = {
+      autocomplete : undefined,
+      addressSelected: false
+    };
+
+    Drupal.behaviors.stationary_storage_form = {
+
+        attach: function (context, settings) {
+            var forms = ['#stationary-storage-solarPanels-form', '#stationary-storage-energy-form','#stationary-storage-home-form', '#stationary-storage-business-form',
+                "#stationary-storage-commercial-form",  '#stationary-storage-partner-form', '#stationary-storage-solar-form', '#stationary-storage-solar_callback-form',
+                "#stationary-storage-solarInt-form", "#stationary-storage-utilities-form", "#stationary-storage-program-form", '#stationary-storage-megapack-form',
+                "#stationary-storage-powerwall-form", "#stationary-storage-callback-form", "#stationary-storage-energyFooter-form", "#stationary-storage-interest-form"];
+            var $form;
+            var $ajax_country = true;
+            $(forms).each(function() {
+                var $form = $(this);
+                if ($form.length) {
+                    $form.parsley().destroy();
+                    $form.parsley();
+
+                    var topic = $('#' + $form.attr('id') + ' input[name="topic"]').val();
+                    var topics = [];
+                    topics["SS_HOME"] = "home";
+                    topics["SS_BUSINESS"] = "business";
+                    topics["SS_MEGAPACK_CALLBACK"] = "megapack";
+                    topics["SS_COMMERCIAL"] = "commercial";
+                    topics["SS_PARTNER"] = "partner";
+                    topics["SS_SOLAR"] = "solar";
+                    topics["SS_SOLAR_CALLBACK"] = "solar_callback";
+                    topics["SS_SOLAR_INT"] = "solarInt";
+                    topics["SS_SOLAR_PANELS"] = "solarPanels";
+                    topics["SS_ENERGY"] = "energy";
+                    topics["SS_UTILITIES"] = "utilities";
+                    topics["SS_PROGRAM"] = "program";
+                    topics["SS_POWERWALL"] = "powerwall";
+                    topics["SS_HOME_CALLBACK"] = "callback";
+                    topics["SS_ENERGY_FOOTER"] = "energyFooter";
+                    topics["SS_INTEREST"] = "interest";
+                    $form.find('.form-item input, .form-item textarea').click(function (){
+                        Drupal.behaviors.stationary_storage_form.pushAnalyticsOnUIClick(topic);
+                    });
+                    $form.submit(function(event){
+                        event.preventDefault(); //prevent default form submit
+                        var valid = $form.parsley().validate();
+                        if (valid && $ajax_country) {
+                            $('#stationary-storage-' + topics[topic] + '-modal .modal-throbber').removeClass('hidden');
+                            $('.btn-ajax', $form).trigger('submit_form');
+                        }
+                    });
+                    $('.btn-ajax', $form).click(function (event) {
+                        event.preventDefault(); //prevent default form submit
+                        var valid = $form.parsley().validate();
+                        if (valid && $ajax_country) {
+                            $('#stationary-storage-' + topics[topic] + '-modal .modal-throbber').removeClass('hidden');
+                            $(this).trigger('submit_form');
+                        }
+                    });
+
+                    $('#stationary-storage-' + topics[topic] + '-modal').once().on('hide.bs.modal', function (event) {
+                        if ($('#tesla_stationary_storage_' + topics[topic] + '_form .thanks').length) {
+                            var locale = ((Drupal.settings.tesla.locale != 'ja_JP') ? (Drupal.settings.tesla.locale) : ('jp'));
+                            var country = (_.indexOf(['en_US', 'zh_CN'], locale) === -1) ? "/" + locale : '';
+                            $('.modal-body', '#stationary-storage-' + topics[topic] + '-modal').load(country + "/stationary/storage/form/" + topic, function () {
+                                Drupal.attachBehaviors();
+                            });
+                        }
+                    });
+
+                    var editContactPrefSelector = $('#contact_pref');
+
+                    // Hook up the contact preference handler
+                    if(editContactPrefSelector.length > 0) {
+                        editContactPrefSelector.change(function () {
+                            var selectedPref = editContactPrefSelector.val();
+                            updatePhoneRequiredState(selectedPref === 'Phone Call');
+                        });
+                        var updatePhoneRequiredState = function (isRequired) {
+                            if (isRequired === undefined) {
+                                // No explicit state defined, so just toggle current state
+                                var curState = editContactPrefSelector.val() === 'Phone Call';
+                                $('#edit-phone').attr('data-parsley-required', curState);
+                            } else {
+                                // A desired state is defined
+                                $('#edit-phone').attr('data-parsley-required', isRequired);
+                            }
+                        };
+                        // Initialize the phone number field as REQUIRED
+                        updatePhoneRequiredState(true);
+                    }
+
+                    // Prepopulate form fields on client side for all SS forms
+                    Drupal.behaviors.stationary_storage_form.prepopulateFormFields();
+
+                    // Show the firstname and lastname if user is logged in for these forms
+                    var formsHidingNameFields = ['SS_HOME_CALLBACK', 'SS_SOLAR', 'SS_SOLAR_CALLBACK', 'SS_COMMERCIAL', 'SS_UTILITIES'];
+                    var loggedInFirstName = Drupal.behaviors.common.getFirstName() ? Drupal.behaviors.common.getFirstName() : '';
+                    var loggedInLastName = Drupal.behaviors.common.getLastName() ? Drupal.behaviors.common.getLastName() : '';
+                    if (formsHidingNameFields.indexOf(topic) >= 0 && loggedInFirstName.length && loggedInLastName.length) {
+                        var locale = Drupal.settings.tesla.locale === 'en_US' ? '' : '/' + Drupal.settings.tesla.locale;
+                        var userLoggedInLabel = '<label class="form-label label-logout">Name</label><p>';
+                        var userLoggedInName = loggedInFirstName + ' ' + loggedInLastName;
+                        var userLoggedInNotYou =
+                                '<span class="link-logout"> (<a href="' + locale + '/user/logout")" title="not you?">not ' + loggedInFirstName + '?</a>)</span></p>';
+                        var userLoggedInDom = $('<div class="user-logged-in"></div>');
+                        userLoggedInDom.append($.parseHTML(userLoggedInLabel + userLoggedInName + userLoggedInNotYou));
+
+                        // Hide the firstname & lastname input fields
+                        $('.form-item-firstname').addClass('hidden');
+                        $('.form-item-lastname').addClass('hidden');
+
+                        // Add the firstname & lastname section to DOM
+                        if (document.querySelectorAll('.user-logged-in').length === 0) {
+                            $('.stationary-storage-details').prepend(userLoggedInDom);
+                        }
+                    }
+
+                    // TWS-23467 Update the form field labels for National-Grid campaign
+                    var formNationalGrid = $('.form-national__grid');
+                    if (formNationalGrid.length) {
+                        formNationalGrid.find('.form-item-email .form-label').text('National Grid Email');
+                        formNationalGrid.find('.form-item-postalcode .form-label').text('Zip Code');
+                    }
+
+                    // auto-complete
+                    var autocompleteReady = false;
+                    if (topic === 'SS_INTEREST') {
+                        if (autocompleteReady) {
+                            var $autocompleteInput = $('#autocomplete-field');
+                            Drupal.behaviors.stationary_storage_form.initAutocomplete();
+                            // $autocompleteInput.focus(Drupal.behaviors.stationary_storage_form.initAutocomplete);
+                            $autocompleteInput.change(Drupal.behaviors.stationary_storage_form.userUpdate);
+
+                            window.Parsley.addValidator('autocompleteerror', {
+                                validateString: function() {
+                                    return interestFormSettings.addressSelected;
+                                },
+                                messages: {
+                                    // reducersData string only available in legacy version
+                                    en: window.reducersData ? (window.reducersData.strings.address.noAddressFound)
+                                    || Drupal.t("We couldn't find that address. Please edit again.")
+                                    : Drupal.t("We couldn't find that address. Please edit again.")
+                                }
+                            });
+
+                            $('.form-item-country').hide();
+                            $('.form-item-street1').hide();
+                            $('.form-item-city').hide();
+                            $('.form-item-zipCode').hide();
+                            $('.form-item-state').hide();
+                        } else {
+                            $('.form-item-company-address').hide();
+                        }
+                    }
+                }
+            });
+        },
+        apiLoaded: function() {
+            // Create the autocomplete object, restricting the search to geographical location types.
+            var autocompleteInput = document.getElementById('autocomplete-field'),
+                options = {
+                    types: ['address'],
+                    componentRestrictions: { country: "us" }
+                };
+
+            interestFormSettings.autocomplete = new google.maps.places.Autocomplete(autocompleteInput, options);
+
+            // When the user selects an address from the dropdown, populate the address fields in the form.
+            interestFormSettings.autocomplete.addListener('place_changed', Drupal.behaviors.stationary_storage_form.fillInAddress);
+        },
+        initAutocomplete: function () {
+            var script = document.createElement("script");
+            script.src = "https://maps.googleapis.com/maps/api/js?libraries=places&client=gme-teslamotorsinc&channel=partner_interest&callback=Drupal.behaviors.stationary_storage_form.apiLoaded";
+            script.type = "text/javascript";
+            document.getElementsByTagName("head")[0].appendChild(script);
+        },
+        userUpdate: function () {
+            interestFormSettings.addressSelected = false;
+        },
+        fillInAddress: function() {
+            var $autocompleteInput = $('#autocomplete-field'),
+            componentForm = {
+                street_number: 'short_name',
+                route: 'long_name',
+                locality: 'long_name',
+                administrative_area_level_1: 'short_name',
+                country: 'short_name',
+                postal_code: 'short_name'
+            };
+
+            // Get the place details from the autocomplete object.
+            var place = interestFormSettings.autocomplete.getPlace(),
+                addressType,
+                validZip = false,
+                validStreetNumber = false,
+                validRoute = false;
+
+            // clear out existing values
+            for (var component in componentForm) {
+                document.getElementById(component).value = '';
+                document.getElementById(component).disabled = false;
+            }
+
+            // Get each component of the address from the place details
+            // and fill the corresponding field on the form.
+            var parsedAddress = {},
+                addressText = '';
+
+            for (var i = 0; i < place.address_components.length; i++) {
+                addressType = place.address_components[i].types[0];
+
+                if (addressType === 'postal_code') {
+                    validZip = true;
+                }
+
+                if (addressType === 'street_number') {
+                    validStreetNumber = true;
+                }
+
+                if (addressType === 'route') {
+                    validRoute = true;
+                }
+
+                // Some autocompleted addresses are missing the 'locality' field and
+                // instead have 'administrative_area_level_3'. In that case, use this value instead.
+                if (addressType === 'administrative_area_level_3') {
+                    place.address_components[i].types.unshift('locality');
+                    addressType = 'locality';
+                }
+
+                if (componentForm[addressType]) {
+                    addressText = place.address_components[i][componentForm[addressType]];
+                    addressText =  (addressType === 'country') ? addressText.toLowerCase() : addressText;
+                    parsedAddress[addressType] = addressText;
+                    document.getElementById(addressType).value = addressText;
+                    interestFormSettings.addressSelected = true;
+                }
+            }
+
+            document.getElementById('street_number').value += ' ' + document.getElementById('route').value;
+
+            // if street_number or route are missing, powerwall_order.main.inc powerwall_order_reservation method
+            // will fail because it will look for address1, which needs to be manually entered
+            if (!validStreetNumber || !validRoute) {
+                interestFormSettings.addressSelected = false;
+            }
+
+            if (interestFormSettings.addressSelected) {
+                $autocompleteInput.parsley().validate('autocomplete-field');
+
+                // IE compability
+                // https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/CustomEvent#Polyfill
+                if (!(typeof window.CustomEvent === 'function')) {
+                    (function () {
+                        function CustomEvent ( event, params ) {
+                            params = params || { bubbles: false, cancelable: false, detail: undefined };
+                            var evt = document.createEvent( 'CustomEvent' );
+                            evt.initCustomEvent( event, params.bubbles, params.cancelable, params.detail );
+                            return evt;
+                        }
+
+                        CustomEvent.prototype = window.Event.prototype;
+
+                        window.CustomEvent = CustomEvent;
+                    })();
+                }
+
+                document.dispatchEvent(new CustomEvent('addressChanged', {
+                    detail: parsedAddress
+                }));
+
+                // If we get an address without zip code, do a reverse lookup on coordinates and use that zipcode
+                // request is flagged with `RecalculateTax` that address is not complete and follow up will be done
+                if (!validZip) {
+                    var geocoder = new google.maps.Geocoder(),
+                    latlng = {
+                        lat: place.geometry.location.lat(),
+                        lng: place.geometry.location.lng()
+                    };
+
+                    geocoder.geocode({'location': latlng}, function(results, status) {
+                        if (status === 'OK') {
+                            if (results[0]) {
+                                var result = results[0];
+                                for (var j = 0; j < result.address_components.length; j++) {
+                                    addressType = result.address_components[j].types[0];
+                                    if (addressType === 'postal_code') {
+                                        addressText = result.address_components[j][componentForm[addressType]];
+                                        document.getElementById(addressType).value = addressText;
+                                    }
+                                }
+                            }
+                        }
+                    });
+                }
+            }
+        },
+        getFormType: function (form_name) {
+            var form_types = [];
+            form_types["SS_HOME"] = "te request callback";
+            form_types["SS_BUSINESS"] = "te request callback";
+            form_types["SS_MEGAPACK_CALLBACK"] = "te request callback";
+            form_types["SS_COMMERCIAL"] = "te request callback";
+            form_types["SS_PARTNER"] = "te request callback";
+            form_types["SS_SOLAR"] = "te newsletter signup";
+            form_types["SS_SOLAR_CALLBACK"] = "te request callback";
+            form_types["SS_SOLAR_INT"] = "te request callback";
+            form_types["SS_SOLAR_PANELS"] = "te request callback";
+            form_types["SS_ENERGY"] = "te request callback";
+            form_types["SS_ENERGY_FOOTER"] = "te newsletter signup";
+            form_types["SS_UTILITIES"] = "te request callback";
+            form_types["SS_PROGRAM"] = "te request callback";
+            form_types["SS_POWERWALL"] = "te newsletter signup";
+            form_types["SS_HOME_CALLBACK" ] = "te request callback";
+            form_types["SS_INTEREST" ] = "te request callback";
+            if (form_name === 'SS_SOLAR_PANELS' && $('.referral_form').length) {
+              return 'solar referral form';
+            }
+            return form_types[form_name];
+        },
+        pushAnalyticsOnUIClick: function () {
+            var first_interaction = true;
+            return function (topic){
+                if (undefined != topic) {
+                    //fires the event only on first interaction
+                    if (!first_interaction) return;
+                    first_interaction = false;
+                    //do not fire this event for
+                    var no_event = ['SS_HOME', 'SS_BUSINESS', 'SS_MEGAPACK_CALLBACK'];
+                    if (no_event.indexOf(topic) != -1 ) return;
+                    var form_type = Drupal.behaviors.stationary_storage_form.getFormType(topic);
+                    var ga = {
+                        event: 'form-interaction',
+                        interaction: 'view open',
+                        formType: form_type,
+                        engagementType: 'User Requested'
+                    };
+                    window.dataLayer.push(ga);
+                }
+            }
+        }(),
+        pushAnalyticsOnLoad: function (form_type) {
+            if (undefined != form_type) {
+                switch (form_type) {
+                    case 'SS_HOME':
+                    case 'SS_PROGRAM':
+                    case 'SS_HOME_CALLBACK':
+                        window.dataLayer.push({
+                            'event': 'form-interaction',
+                            'interaction': 'view open',
+                            'formType': 'te request callback',
+                            'engagementType': 'User Requested'
+                        });
+                        break;
+
+                    case 'SS_BUSINESS':
+                    case 'SS_MEGAPACK_CALLBACK':
+                        window.dataLayer.push({
+                            'event': 'form-interaction',
+                            'interaction': 'view open',
+                            'formType': 'te request callback',
+                            'engagementType': 'User Requested'
+                        });
+                        break;
+
+                    case 'SS_COMMERCIAL':
+                        window.dataLayer.push({
+                            'event': 'form-interaction',
+                            'interaction': 'view open',
+                            'formType': 'te request callback',
+                            'engagementType': 'User Requested'
+                        });
+                        break;
+
+                    case 'SS_SOLAR_PANELS':
+                    case 'SS_ENERGY':
+                        if ($('.referral_form').length) {
+                          window.dataLayer.push({
+                            'event': 'form-interaction',
+                            'interaction': 'view-open',
+                            'formType': 'solar referral form',
+                            'engagementType': 'User Requested',
+                          });
+                        } else if (!$('#app').children().length) {
+                          window.dataLayer.push({
+                            'event': 'form-interaction',
+                            'interaction': 'view open',
+                            'formType': 'te request callback',
+                            'engagementType': 'User Requested'
+                          });
+                        }
+
+                        break;
+
+                    case 'SS_UTILITIES':
+                        window.dataLayer.push({
+                            'event': 'form-interaction',
+                            'interaction': 'view open',
+                            'formType': 'te request callback',
+                            'engagementType': 'User Requested'
+                        });
+                        break;
+                }
+            }
+        },
+        pushAnalyticsOnConfirmation: function (form_type, uuid) {
+            if (undefined != form_type) {
+                var ga = {
+                    event: 'form-interaction',
+                    interaction: 'personal-info-complete',
+                    formType: form_type,
+                    engagementType: 'User Requested',
+                    userId: uuid
+
+                };
+                window.dataLayer.push(ga);
+                ga.interaction = 'confirm-thank-you';
+                window.dataLayer.push(ga);
+            }
+        },
+        prepopulateFormFields: function ($form) {
+            // Define field name and initial values (from cookie)
+            var fields = [{
+                name: 'firstname',
+                value: Drupal.behaviors.common.getFirstName()
+            },
+            {
+                name: 'lastname',
+                value: Drupal.behaviors.common.getLastName()
+            },
+            {
+                name: 'email',
+                value: Drupal.behaviors.common.getEmailAddress()
+            },
+            {
+                name: 'phone',
+                value: Drupal.behaviors.common.getPhoneNumber()
+            }];
+
+            // Populate the input fields
+            fields.forEach(function(field) {
+                if (field.value) {
+                    var fieldId = '#edit-' + field.name;
+                    $(fieldId).val(field.value);
+                }
+            });
+        }
+    };
+    /**
+     * Form confirmation, fire analytics. This is fired from Drupal ajax, and
+     * creates the following js:
+     *   $('body').stationaryStorageFormPushAnalyticsOnConfirmation(form_type);
+     * Which triggers:
+     *   Drupal.behaviors.stationary_storage_form.pushAnalyticsOnConfirmation(form_type);
+     */
+    $.fn.stationaryStorageFormPushAnalyticsOnConfirmation = function(form_type, uuid) {
+        if (undefined != form_type) {
+            Drupal.behaviors.stationary_storage_form.pushAnalyticsOnConfirmation(Drupal.behaviors.stationary_storage_form.getFormType(form_type), uuid);
+        }
+    };
+}(this, this.document, this.jQuery, this.Drupal));

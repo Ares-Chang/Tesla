@@ -1,0 +1,48 @@
+.viewallmouth {
+    width: 100%;
+    margin: 0 auto;
+    /* height: 440px; */
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 80px;
+}
+
+.viewmouth {
+    width: 33.5%;
+    height: 440px;
+    float: left;
+}
+
+.viewmouthright {
+    width: 100%;
+    height: 440px;
+}
+
+.viewmouth h3 {
+    margin-top: 36px;
+    font-size: 26px;
+    font-weight: 300;
+    color: #ccc;
+    float: left;
+}
+
+.viewmouthright h2 {
+    font-size: 17px;
+    font-weight: 300;
+}
+
+.viewmouthright a {
+    color: #000;
+    display: block;
+    margin-top: 32px;
+}
+
+.viewmouthright span {
+    color: rgb(110, 110, 110);
+}
+
+.viewmouthright p {
+    color: rgb(110, 110, 110);
+}
+
+color: rgb(211, 81, 81);
+display: inline-block;

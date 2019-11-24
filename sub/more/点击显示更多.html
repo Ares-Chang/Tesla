@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>
+            测试
+        </title>
+        <script type="text/javascript"></script>
+    </head>
+    <body>
+        <div>
+           我是展示的第一部分
+           <div id = "showdiv" style="display:none;">我是隐藏的那部分</div>
+           <a href="#" onclick="showHideCode()">查看更多</a>
+        </div>
+    </body>
+    <script type="text/javascript">
+ 
+        function showHideCode(){
+            var show =document.querySelector('#showdiv')
+            show.style.display='block'
+            // animate
+            // show.stop().animate({
+            //     // height:500
+            // })
+        //    $("#showdiv").toggle();
+        }
+</script>
+</html>

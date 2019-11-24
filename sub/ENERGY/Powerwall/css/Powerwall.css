@@ -1,0 +1,296 @@
+.boss {
+  width: 100%;
+}
+.boss-nav {
+  height: 50px;
+  background: #222222;
+}
+.boss-nav .nav {
+  height: 100%;
+}
+.top-img {
+  height: 494px;
+  background: url(../img/section_hero_march.jpg) no-repeat;
+  background-size: 100% 100%;
+  border: 0.1px solid #222222;
+}
+.top-img .img-zi {
+  max-height: 100px;
+  height: 100%;
+  position: relative;
+  margin-top: 44px;
+}
+.top-img .img-zi .nav-zi {
+  max-height: 62px;
+  height: 100%;
+  margin-bottom: 35px;
+  padding-bottom: 25px;
+  border-bottom: 0.5px solid #fff;
+  line-height: 62px;
+}
+.top-img .img-zi .nav-zi h1 {
+  font-size: 30px;
+  position: absolute;
+  padding-top: 0;
+  color: white;
+  float: left;
+}
+.top-img .img-zi .nav-zi ul {
+  float: right;
+}
+.top-img .img-zi .nav-zi ul li {
+  float: left;
+}
+.top-img .img-zi .nav-zi ul li a {
+  color: white;
+  font-size: 15px;
+  margin-left: 20px;
+}
+.top-img .img-zi .nav-zi ul li a:hover {
+  color: #ccc;
+}
+.gengxin {
+  height: 40px;
+  padding: 15px 0;
+  text-align: center;
+  border-bottom: 1px solid #000;
+}
+.gengxin .annv {
+  display: inline-block;
+  max-width: 225px;
+  width: 100%;
+  background: #000;
+}
+.kekao {
+  padding: 100px;
+}
+.kekao .ww {
+  text-align: center;
+  color: #000;
+}
+.kekao .ww h1 {
+  font-size: 34px;
+}
+.kekao .ww p {
+  font-size: 15px;
+  margin: 30px 0;
+}
+.kekao .column {
+  width: 50%;
+  float: left;
+  color: #000;
+  text-align: center;
+}
+.kekao .column .xiaotu {
+  width: 85px;
+  height: 70px;
+  padding: 20px;
+  margin: 0 auto;
+}
+.kekao .column p {
+  margin: 22px 0;
+}
+.zhong {
+  position: relative;
+  padding: 70px 0;
+  background: -moz-linear-gradient(top, #ccc 0%, #ffffff 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ccc), color-stop(100%, #ffffff));
+  background: -webkit-linear-gradient(top, #ccc 0%, #ffffff 100%);
+  background: -o-linear-gradient(top, #ccc 0%, #ffffff 100%);
+  background: -ms-linear-gradient(top, #ccc 0%, #ffffff 100%);
+  background: linear-gradient(to bottom, #ccc 0%, #ffffff 100%);
+}
+.zhong > span {
+  display: block;
+  color: #000;
+  font-weight: 700;
+}
+.zhong > span span {
+  display: inline-block;
+  width: 80px;
+  height: 1px;
+  background: #2CABE1;
+}
+.zhong .a {
+  position: absolute;
+  top: 30%;
+  left: 20%;
+}
+.zhong .b {
+  position: absolute;
+  top: 25%;
+  left: 70%;
+}
+.zhong .c {
+  position: absolute;
+  top: 30%;
+  left: 70%;
+}
+.zhong .d {
+  position: absolute;
+  top: 40%;
+  left: 70%;
+}
+.zhong .jiandan {
+  height: 80px;
+  color: #000;
+  margin-bottom: 50px;
+  text-align: center;
+}
+.zhong .jiandan h1 {
+  font-size: 34px;
+}
+.zhong .jiandan p {
+  margin: 20px 0;
+}
+.zhong img {
+  width: 100%;
+}
+.zhong .an {
+  height: 65px;
+  margin-bottom: 50px;
+  text-align: center;
+}
+.zhong .an a {
+  display: inline-block;
+  width: 150px;
+  height: 65px;
+  text-align: center;
+  line-height: 65px;
+  border: 0.5px solid #ccc;
+  color: #000;
+  background: #fff;
+}
+.zhong .an .z {
+  border-radius: 30px 0 0 30px;
+}
+.zhong .an .y {
+  border-radius: 0 30px 30px 0;
+}
+.zhong .container {
+  height: 165px;
+}
+.zhong .container .h {
+  width: 33.3%;
+  color: #000;
+}
+.zhong .container .h .h-h {
+  padding: 20px;
+  width: 141px;
+  height: 70px;
+  margin: 0 auto;
+}
+.zhong .container .h .h-h img {
+  width: 100%;
+  height: 100%;
+}
+.zhong .container .h h1 {
+  text-indent: 1.5em;
+}
+.zhong .container .h p {
+  margin-top: 3px;
+  padding: 0 1.5em;
+}
+.xianshi {
+  display: none;
+}
+.shouji {
+  padding-top: 70px;
+  background: #666666;
+  text-align: center;
+}
+.shouji .shouji-wrap {
+  display: inline-block;
+  padding-left: 30px;
+  width: 280px;
+}
+.shouji .shouji-wrap h1 {
+  font-size: 34px;
+}
+.shouji .shouji-wrap p {
+  margin: 30px 0;
+  font-size: 15px;
+  line-height: 20px;
+}
+.jishu {
+  padding: 70px 0;
+  color: #000;
+}
+.jishu h1 {
+  font-size: 34px;
+  text-align: center;
+  padding-bottom: 70px;
+}
+.jishu .section-image {
+  position: relative;
+}
+.jishu .section-image span {
+  display: block;
+  color: #000;
+  font-size: 12px;
+}
+.jishu .section-image .a {
+  position: absolute;
+  top: -5px;
+  left: 170px;
+}
+.jishu .section-image .b {
+  position: absolute;
+  top: -5px;
+  left: 395px;
+}
+.jishu .section-image .c {
+  position: absolute;
+  top: 250px;
+  left: -5px;
+  transform: rotate(-90deg);
+}
+.jishu .section-image .maxul {
+  display: inline-block;
+  width: 48%;
+}
+.jishu .section-image .maxul ul {
+  display: inline-block;
+  margin: 40px 25px 0 0 ;
+}
+.jishu .section-image .maxul ul li {
+  font-size: 15px;
+  margin-bottom: 15px;
+}
+.jishu .section-image .maxul ul li strong,
+.jishu .section-image .maxul ul li span {
+  display: block;
+  line-height: 20px;
+}
+.renzheng {
+  padding: 70px 0;
+}
+.renzheng .renzheng {
+  padding: 0px;
+  color: #000000;
+  text-align: center;
+}
+.renzheng .renzheng h2 {
+  font-size: 30px;
+}
+.renzheng .renzheng p {
+  line-height: 30px;
+  font-size: 15px;
+}
+.renzheng .renzheng p a {
+  color: #CC0000;
+}
+.bottom {
+  height: 52px;
+  line-height: 52px;
+  text-align: center;
+}
+.bottom a {
+  font-size: 13px;
+  color: #000;
+  padding-left: 5px;
+  border-left: 0.5px solid #ccc;
+}
+.bottom a:nth-child(1) {
+  border-left: none;
+}

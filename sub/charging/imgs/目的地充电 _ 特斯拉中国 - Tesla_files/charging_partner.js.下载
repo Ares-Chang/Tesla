@@ -1,0 +1,72 @@
+(function (window, document, $, Drupal) {
+    Drupal.behaviors.chargiing_partner_form = {
+        attach: function () {
+            var $partner_details = $('#tesla-charging-partner-details');
+            var $form = $('#tesla-charging-partner-form');
+            var $zip_code = $('#edit-zipcode-cp');
+            var $phone = $('#edit-phonenumber-cp');
+            var $province_list = $('#edit-state-cp');
+            var $province_list_wrapper = $('#province-wrapper');
+            var $submit_button = $('#edit-submit-cp-ajax');
+            $('#edit-countries-cp').change(function () {
+                var url = (Drupal.settings.tesla.locale != 'en_US') ? "/" + Drupal.settings.tesla.locale : '';
+                var country = $('#edit-countries-cp').val();
+                $.ajax({
+                    url: url + '/regex/' + country,
+                    dataType: "json"
+                }).success(function (data, textStatus, jqXHR) {
+                    //Little hack to change the regex and message that parsley will do
+                    $zip_code.attr('data-parsley-pattern', ((data.regex) ? (data.regex) : ('/^[a-zA-Z0-9\-\s]{1,}$/')));
+                    $zip_code.attr('data-parsley-pattern-message', ((data.message) ? (data.message) : (Drupal.t('contains one or more illegal characters'))));
+                    $zip_code.attr('maxlength', ((data.postal_code_max_length) ? (data.postal_code_max_length) : (6)));
+                    $phone.val(data.phone_code);
+                    //Reactivate the parsley validation
+                    $zip_code.focusout();
+                }).done(function (data, textStatus, jqXHR) {
+                    //enable the submit button
+                    $ajax_country = true;
+                })
+
+                $.post('/'+ Drupal.settings.pathPrefix +'teslaaccount/get-states', {Country: country, Translate: true}, function (data) {
+                    if (data.result == "") {
+                        $province_list_wrapper.addClass("hidden");
+                        $partner_details.addClass('no-province');
+                        $province_list.attr('data-parsley-required', 'false');
+
+                    } else {
+                        $province_list_wrapper.removeClass("hidden");
+                        $partner_details.removeClass('no-province');
+                        $province_list.attr('data-parsley-required', 'true');
+                    }
+                    $province_list.empty();
+                    // TWS-23578 Remove default state in the dropdown for US
+                    if (country === 'US') {
+                        $province_list.append('<option value="">Select State</option>');
+                    }
+                    $province_list.append(data.result);
+                });
+            });
+            $.fn.scrollPageToMessage = function () {
+              $("html, body").animate({scrollTop: $(".section-application").offset().top}, 1000)
+            };
+            $submit_button.click(function (event) {
+                event.preventDefault(); //prevent default form submit
+                var valid = $form.parsley().validate();
+                if (valid) {
+                    $('#form-content-cp .modal-throbber').removeClass('hidden');
+                    $(this).trigger('submit_form');
+                }
+            });
+
+            if (window.location.hash == "#charging-support") {
+                if (!$("#stationary-storage-callback-modal").hasClass("processed")) {
+                    $(".sticky-nav--link").trigger("click");
+
+                    $("#edit-submit-ajax").on("click", function() {
+                        $("#stationary-storage-callback-modal").addClass("processed");
+                    })
+                }
+            }
+        }
+    }
+}(this, this.document, this.jQuery, this.Drupal))

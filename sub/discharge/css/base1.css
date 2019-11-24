@@ -1,0 +1,295 @@
+body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, dl, dt, dd, ul, ol, li, pre, form, fieldset, legend, button, input, textarea, th, td { margin:0; padding:0; } 
+body{font:"宋体","Arial Narrow",HELVETICA;background:#fff;-webkit-text-size-adjust:100%;} 
+a{text-decoration:none} 
+/* a:hover{color:#cd0200;}  */
+em{font-style:normal} 
+li{list-style:none} 
+img{border:0;vertical-align:middle} 
+table{border-collapse:collapse;border-spacing:0} 
+/* p{word-wrap:break-word}  */
+
+.fll{
+	float: left;
+}
+.flr{
+	float: right;
+}
+
+/*置顶顶部*/
+.stick-nav {
+	width: 100%;
+	height: 52px;
+	display: flex;
+	padding: 0 20px;
+	box-sizing: border-box;
+	justify-content: space-between;
+	/* line-height: 52px; */
+	font-size: 14px;
+	/* position: absolute; */
+	z-index: 99;
+	/* overflow: hidden; */
+}
+.stick-nav h1 {
+	overflow: hidden;
+}
+.stick-nav h1::after {
+	content: "Tesla, Inc";
+	display: block;
+}
+.stick-nav h1 a {
+	display: inline-block;
+	width: 100px;
+	height: 52px;
+	width: 100%;
+	height: 100%;
+	background: url(../images/test.png) no-repeat 0px 17px;
+	-webkit-background-size: 80%;
+	background-size: 80%;
+}
+.stick-nav > ul {
+	display: flex;
+	height: 100%;
+}
+.stick-nav > ul li {
+	height: 100%;
+	line-height: 52px;
+	margin: 0 10px;
+	font-weight: 700;
+	/*font-family: var(--tds-fonts-combined--base);*/
+}
+.stick-nav > ul li a {
+	color: rgb(255, 255, 255);
+	font-family: HeiT ASC Traditional Chinese,M Hei PRC W45,AXIS Font Japanese W55,FB New Gothic,Swissra,Gotham Medium,system,sans-serif;
+}
+.stick-nav > ul li > a:hover {
+	color: rgba(255, 255, 255, 0.5);
+}
+/*登录*/
+.stick-nav-right {
+	height: 100%;
+}
+.stick-nav-right > a {
+	color: rgb(255, 255, 255);
+	margin: 0 10px;
+	line-height: 52px;
+	font-family: HeiT ASC Traditional Chinese,M Hei PRC W45,AXIS Font Japanese W55,FB New Gothic,Swissra,Gotham Medium,system,sans-serif;
+}
+.stick-nav-right > a:hover{
+	color: rgba(255, 255, 255, 0.5);
+}
+/*三道杠*/
+.stick-nav-right label span{
+	position: relative;
+	display: inline-block;
+	width: 18px;
+	height: 16px;
+	/*overflow: hidden;*/
+	/*background-color: pink;*/
+	top: 5px;
+	cursor: pointer;
+}
+.stick-nav-right label span:after {
+	content: "";
+	display: block;
+	clear: both;
+}
+.stick-nav-right label span i {
+	position: absolute;
+	display: block;
+	height: 2px;
+	background-color: #fff;
+	/*padding-top: 2px;*/
+	width: 18px;
+}
+.stick-nav-right label span i::before {
+	content: "";
+	position: absolute;
+	display: block;
+	width: 100%;
+	height: 2px;
+	background-color: #fff;
+	top: 6px;
+}
+.stick-nav-right label span i::after{
+	content: "";
+	position: absolute;
+	display: block;
+	width: 100%;
+	height: 2px;
+	background-color: #fff;
+	top: 12px;
+}
+/*遮罩*/
+.cover {
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	left: 0;
+	background-color: rgba(0,0,0,.2);
+}
+/*隐藏侧边栏*/
+.side-bar {
+	width: 0;
+	position: fixed;
+	height: 700px;
+	right: 0;
+	z-index: 99;
+	/*opacity: .5;*/
+}
+.side-bar ul {
+	width: 271px;
+	height: 100%;
+	background-color: #fff;
+	padding: 20px;
+	padding-top: 30px;
+	/*flex-direction:column;*/
+	/*display: inline-block;*/
+}
+.side-bar ul li {
+	width: 100%;
+	box-sizing: border-box;
+	overflow: hidden;
+	font-weight: 700;
+}
+.side-bar ul li a {
+	display: block;
+	width: 100%;
+	padding: 20px 10px;
+	color: #000;
+	border-bottom: 1px solid #d0d1d2;
+}
+/*关闭*/
+.side-bar i {
+	position: absolute;
+	display: block;
+	top: 25px;
+	right: 23px;
+	cursor: pointer;
+	/*width: 20px;
+	height: 20px;*/
+}
+.side-bar i::after {
+	content: "";
+	display: block;
+	width: 18px;
+	height: 2px;
+	background-color: #000;
+	transform-origin: 50%;
+	transform: rotate(45deg); 
+}
+.side-bar i::before {
+	content: "";
+	display: block;
+	width: 18px;
+	height: 2px;
+	background-color: #000;
+	transform-origin: 50%;
+	transform: rotate(-45deg); 
+}
+/*这行代码注释*/
+body{
+	background-color: #000;
+}
+.box{
+    width: 1020px;
+    height: 685px;
+    margin: 0 auto;
+}
+.box .zl p{
+    margin-left: 430px;
+    color: #fff;
+}
+.box h1{
+    color: #fff;
+    margin-left: 320px;
+    font-size: 55px;
+}
+.box img{
+	width: 1020px;
+}
+.xbt{
+    width: 400px;
+    height: 40px;
+    border: 1px solid #333;
+    margin: 0 auto;
+    color: #fff;
+	border-radius: 5px;
+	overflow: hidden;
+}
+.xbt .zg{
+    width: 200px;
+    height: 40px;
+    border-right: 1px solid #333;
+	float: left;
+	padding-top: 10px;
+	text-align: center;
+}
+.xbt .qq{
+    width: 199px;
+    height: 40px;
+	float: left;
+	padding-top: 10px;
+	text-align: center;
+}
+.xbt a{
+	color: #fff;
+}
+.pl{
+    width: 600px;
+    height: 3090px;
+    margin: 0 auto;
+    margin-top: 40px;
+    overflow: hidden;
+}
+.pl ul{
+	color: #fff;
+	height: 60px;
+    border-top: 1px solid #333;
+}
+.pl ul li{
+	float: left;
+	line-height: 60px;
+	color: #999;
+}
+.pl .bt .jl{
+	padding-left: 67px;
+	padding-right: 154px;
+}
+.pl .bt .co{
+	padding-left: 50px;
+	overflow: hidden;
+}
+.pl .gj li img{
+	width: 22px;
+}
+.pl .gj .yi{
+	padding-left: 20px;
+	padding-right: 40px;
+}
+.pl .gj .po{
+	float: right;
+	padding-right: 10px;
+}
+.pl .gj .gq{
+	width: 160px;
+	padding-right: 64px;
+}
+.wz{
+    width: 472px;
+    height: 40px;
+    margin: 20px  auto;
+}
+.wz p{
+    font-size: 14px;
+    color: #999485;
+}
+.db{
+	width: 408px;
+	height: 20px;
+	margin: 55px auto;
+	
+}
+.db P{
+	font-size: 12PX;
+	color: #666;
+}

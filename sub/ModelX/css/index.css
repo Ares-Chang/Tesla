@@ -1,0 +1,685 @@
+@font-face {
+  font-family: 'iconfont';
+  src: url('iconfont.eot');
+  src: url('iconfont.eot?#iefix') format('embedded-opentype'), url('iconfont.woff2') format('woff2'), url('iconfont.woff') format('woff'), url('iconfont.ttf') format('truetype'), url('iconfont.svg#iconfont') format('svg');
+}
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.container {
+  height: 766px;
+}
+.login {
+  width: 180px;
+  height: 35px;
+  margin-left: 1350px ;
+}
+.choice,
+.denglu {
+  color: aliceblue;
+  float: right;
+  line-height: 35px;
+  margin-right: 10px;
+}
+.choice a,
+.denglu a {
+  color: #fff;
+}
+.hengxian {
+  display: block;
+  width: 30px;
+  height: 4px;
+  background-color: #fff;
+  margin-top: 6px ;
+}
+#title {
+  color: aliceblue;
+  font-size: 20px;
+  font-weight: 200;
+  margin-top: 100px ;
+  text-align: center;
+}
+.title {
+  color: aliceblue;
+  font-size: 40px;
+  text-align: center;
+}
+.dingbu {
+  position: absolute;
+  left: 50%;
+  top: 580px;
+  transform: translateX(-50%);
+  color: aliceblue;
+}
+.dingbu .one {
+  float: left;
+}
+.dingbu .pingji,
+.dingbu .zuowei,
+.dingbu .ints {
+  border-right: 1px solid #fff;
+  padding: 0 30px;
+  text-align: center;
+}
+.dingbu .pingji div {
+  font-size: 19px;
+}
+.dingbu .pingji p {
+  font-size: 12px;
+  margin-top: 8px;
+}
+.dingbu .zuowei .tubiao {
+  font-size: 25px;
+}
+.dingbu .zuowei .number {
+  font-size: 18px;
+  font-weight: bold;
+}
+.dingbu .zuowei .kuanchang {
+  font-size: 12px;
+  margin-top: 8px;
+}
+.dingbu .ints {
+  border-right: none;
+}
+.dingbu .ints .gongli .number {
+  font-size: 24px;
+  font-weight: bold;
+}
+.dingbu .ints .gongli .lichen {
+  font-size: 18px;
+}
+.dingbu .ints .licheng {
+  font-size: 12px;
+  margin-top: 7px;
+  margin-left: 20px;
+}
+.dingbu a:hover {
+  color: #ccc;
+}
+.dingbu .dinggou {
+  margin-left: 30px;
+  border: 3px solid #fff;
+  width: 140px;
+  height: 45px;
+  line-height: 45px;
+  text-align: center;
+  border-radius: 26px;
+}
+.dingbu .dinggou:hover {
+  background-color: #fff;
+  color: #000;
+}
+.tuihuan {
+  text-align: center;
+  font-size: 12px;
+  position: absolute;
+  top: 640px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: aliceblue;
+}
+.jiantou {
+  color: #fff;
+  position: absolute;
+  top: 680px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.daohang {
+  color: #fff;
+  font-size: 12px;
+  margin-left: 5px;
+}
+.daohang li {
+  border-left: 1px solid #fff;
+  margin-top: 8px ;
+  height: 18px;
+  width: 160px;
+}
+.daohang li a {
+  display: none;
+  margin-left: 8px ;
+}
+.daohang .lis {
+  border-left: 3px solid #000;
+}
+.daohang li:hover a {
+  display: block;
+  color: #fff;
+}
+.two {
+  height: 786px;
+}
+.two .twoleft {
+  width: 25%;
+}
+.two .twoleft .logo {
+  font-size: 40px;
+  padding: 15px 0 20px 15px;
+  font-weight: 700;
+}
+.two .twoleft .outer {
+  padding: 0 35px 0 35px;
+}
+.two .twoleft .outer .sheji {
+  font-size: 25px;
+  padding: 3px 0 18px 0;
+}
+.two .twoleft .outer .discript {
+  line-height: 30px;
+  font-size: 14px;
+}
+.two .twoleft .outer .pingjia {
+  width: 100%;
+  height: 270px;
+  background-color: #ccc;
+  margin-top: 30px;
+  border-radius: 15px;
+}
+.two .twoleft .outer .pingjia h3 {
+  text-align: center;
+  padding: 20px 0 15px 0;
+}
+.two .twoleft .outer .pingjia .diver {
+  margin-top: 6spx;
+}
+.two .twoleft .outer .pingjia .diver .divleft {
+  width: 80px;
+  height: 40px;
+  margin-left: 18px;
+}
+.two .twoleft .outer .pingjia .diver .divleft .dive {
+  font-weight: bold;
+}
+.two .twoleft .outer .pingjia .diver .divleft .dic {
+  font-size: 12px;
+  color: #666;
+}
+.two .twoleft .outer .pingjia .diver .divright {
+  margin-right: 20px;
+}
+.two .twoleft .knowmore {
+  margin-top: 100px;
+}
+.two .twoleft .knowmore .jia {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  border: 3px solid #000;
+  border-radius: 23px;
+  text-align: center;
+  line-height: 40px;
+  font-size: 20px;
+  font-weight: bold;
+}
+.two .twoleft .knowmore .jia:hover {
+  background-color: #000;
+  color: #fff;
+}
+.two .twoleft .knowmore .more {
+  font-size: 12px;
+  margin-left: 10px;
+}
+.two .twoleft .knowmore .yuyue {
+  display: inline-block;
+  height: 40px;
+  width: 120px;
+  border: 3px solid #000;
+  line-height: 40px;
+  text-align: center;
+  border-radius: 25px;
+  font-size: 12px;
+  margin-left: 20px;
+}
+.two .twoleft .knowmore .yuyue:hover {
+  background-color: #000;
+  color: #fff;
+}
+.two .tworight {
+  width: 75%;
+  overflow: hidden;
+  position: relative;
+}
+.two .tworight img {
+  width: 130%;
+  height: 766px;
+  position: relative;
+  left: -242px;
+  top: 0px;
+}
+.two .tworight .shuoming .dianxian {
+  width: 2px;
+  height: 3x;
+  background-color: #000;
+  position: absolute;
+  top: 125px;
+  left: 305px;
+  z-index: 2;
+  padding-top: 280px;
+}
+.two .tworight .shuoming .dian {
+  position: absolute;
+  left: 301px;
+  top: 396px;
+}
+.two .tworight .shuoming .xian {
+  position: absolute;
+  left: 227px;
+  top: 117px;
+}
+.two .tworight .shuoming .celine {
+  top: 64.4px;
+  left: 570.7px;
+  padding-top: 150px;
+}
+.two .tworight .shuoming .cedianji {
+  left: 566px;
+  top: 207px;
+}
+.two .tworight .shuoming .ceprevent {
+  left: 497px;
+  top: 48px;
+}
+.two .tworight .shuoming .jdline {
+  top: 471.4px;
+  left: 640.7px;
+  padding-top: 120px;
+}
+.two .tworight .shuoming .jddianji {
+  left: 636.3px;
+  top: 456.6px;
+}
+.two .tworight .shuoming .jdprevent {
+  left: 647px;
+  top: 584px;
+}
+.three {
+  height: 766px;
+}
+.three .shang {
+  height: 550px;
+  background: url(../images/hero@2_2.jpg) center;
+  background-size: cover;
+  position: relative;
+}
+.three .shang .shuoming {
+  width: 100%;
+  height: 110px;
+  position: absolute;
+  bottom: 0px;
+  padding-top: 20px;
+}
+.three .shang .shuoming .thleft {
+  padding-top: 15px ;
+  width: 330px;
+  height: 80px;
+  margin-left: 267px;
+  border-right: 1px solid #000;
+}
+.three .shang .shuoming .thleft .sheng {
+  font-size: 32px;
+}
+.three .shang .shuoming .thleft .shenghou {
+  font-size: 20px;
+}
+.three .shang .shuoming .thleft .bijiao {
+  font-size: 12px;
+  margin-top: 10px;
+}
+.three .shang .shuoming .thmid {
+  width: 310px;
+  height: 80px;
+  padding-top: 15px;
+  padding-left: 20px;
+  border-right: 1px solid #000;
+}
+.three .shang .shuoming .thmid .tubiao {
+  font-size: 35px;
+}
+.three .shang .shuoming .thmid .qi {
+  font-size: 30px;
+  margin-left: 10px;
+}
+.three .shang .shuoming .thmid .jianju {
+  font-size: 12px;
+  margin-top: 10px;
+}
+.three .shang .shuoming .thright {
+  width: 310px;
+  height: 80px;
+  padding-top: 15px;
+  padding-left: 20px;
+}
+.three .shang .shuoming .thright img {
+  width: 37px;
+}
+.three .shang .shuoming .thright span {
+  font-size: 12px;
+  margin-left: 10px;
+}
+.three .shang .shuoming .thright p {
+  font-size: 12px;
+  margin-top: 10px;
+}
+.three .xia .xialeft {
+  width: 342px;
+  height: 209px;
+  margin-left: 209px;
+}
+.three .xia .xialeft .shiyong {
+  font-size: 18px;
+  margin-top: 40px;
+}
+.three .xia .xialeft .kuanchang {
+  font-size: 35px;
+}
+.three .xia .xialeft .jiaha {
+  display: inline-block;
+  height: 40px;
+  width: 40px;
+  border-radius: 25px;
+  border: 3px solid #000;
+  text-align: center;
+  line-height: 40px;
+  font-weight: bold;
+  font-size: 19px;
+  margin-top: 25px;
+}
+.three .xia .xialeft .liaojie {
+  font-size: 12px;
+  margin-left: 10px;
+  margin-top: 25px;
+}
+.three .xia .xialeft .shijia {
+  display: inline-block;
+  width: 120px;
+  height: 40px;
+  border: 3px solid #000;
+  border-radius: 25px;
+  text-align: center;
+  line-height: 40px;
+  font-size: 12px;
+  margin-left: 15px;
+  margin-top: 25px;
+}
+.three .xia .xiaright {
+  width: 822px;
+  height: 179px;
+  padding-top: 30px;
+  float: left;
+}
+.four {
+  height: 766px;
+}
+.four .fourtop {
+  overflow: hidden;
+  height: 550px;
+  background-color: #fff;
+}
+.four .fourtop .toptwo,
+.four .fourtop .topthree,
+.four .fourtop .topone {
+  width: 300px;
+  height: 66px;
+  margin-left: 100px;
+  padding: 25px 0;
+}
+.four .fourtop .topone {
+  margin-top: 100px;
+  position: relative;
+}
+.four .fourtop .topone .shiye {
+  font-size: 30px;
+}
+.four .fourtop .topone .qianzhi {
+  font-size: 12px;
+  margin-top: 10px;
+}
+.four .fourtop .topone .line {
+  height: 0.5px;
+  width: 60px;
+  background-color: #000;
+  position: absolute;
+  bottom: 0px;
+}
+.four .fourtop .toptwo {
+  position: relative;
+}
+.four .fourtop .toptwo .mishu {
+  font-size: 30px;
+}
+.four .fourtop .toptwo .mishu .mi {
+  font-size: 20px;
+}
+.four .fourtop .toptwo .juli {
+  font-size: 12px;
+  margin-top: 10px;
+}
+.four .fourtop .toptwo .line {
+  height: 0.5px;
+  width: 60px;
+  background-color: #000;
+  position: absolute;
+  bottom: 0px;
+}
+.four .fourtop .topthree {
+  overflow: hidden;
+  position: relative;
+}
+.four .fourtop .topthree .shier {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  border: 2px solid #000;
+  border-radius: 25px;
+  font-size: 20px;
+  text-align: center;
+  line-height: 40px;
+  position: absolute;
+  top: 20px;
+}
+.four .fourtop .topthree .chaosheng {
+  display: inline-block;
+  width: 40px;
+  height: 42px;
+  font-size: 12px;
+  position: absolute;
+  top: 25px;
+  left: 50px;
+}
+.four .fourtop .topthree .tance {
+  font-size: 12px;
+  margin-top: 10px;
+  position: absolute;
+  left: 0px;
+  top: 70px;
+}
+.four .fourbottom .bottomleft {
+  width: 342px;
+  height: 209px;
+  margin-left: 209px;
+}
+.four .fourbottom .bottomleft .zidong {
+  font-size: 18px;
+  margin-top: 40px;
+}
+.four .fourbottom .bottomleft .weilai {
+  font-size: 35px;
+}
+.four .fourbottom .bottomleft .jiaha {
+  display: inline-block;
+  height: 40px;
+  width: 40px;
+  border-radius: 25px;
+  border: 3px solid #000;
+  text-align: center;
+  line-height: 40px;
+  font-weight: bold;
+  font-size: 19px;
+  margin-top: 25px;
+}
+.four .fourbottom .bottomleft .liaojie {
+  font-size: 12px;
+  margin-left: 10px;
+  margin-top: 25px;
+}
+.four .fourbottom .bottomleft .shijia {
+  display: inline-block;
+  width: 120px;
+  height: 40px;
+  border: 3px solid #000;
+  border-radius: 25px;
+  text-align: center;
+  line-height: 40px;
+  font-size: 12px;
+  margin-left: 15px;
+  margin-top: 25px;
+}
+.four .fourbottom .bottomright {
+  width: 822px;
+  height: 179px;
+  padding-top: 30px;
+  float: left;
+}
+.xxx {
+  height: 756px;
+  width: 100%;
+}
+.xxx .five {
+  display: inline-block;
+  position: relative;
+  top: 10px;
+  left: 50px;
+}
+.xxx .five .v1 {
+  width: 1000px ;
+  height: auto;
+}
+.xxx .gongneng {
+  display: inline-block;
+  width: 400px;
+  padding-left: 100px;
+}
+.xxx .gongneng .fuzhu {
+  font-size: 30px;
+  margin-top: 80px;
+}
+.xxx .gongneng .huanrao {
+  margin-top: 30px;
+  line-height: 30px;
+}
+.xxx .gong {
+  padding-left: 200px;
+}
+.xxx .gong .fuzhu {
+  font-size: 30px;
+  margin-top: 30px;
+}
+.xxx .gong .huanrao {
+  margin-top: 10px;
+  line-height: 30px;
+}
+.six {
+  height: 760px;
+  background-color: #000;
+}
+.six .sixtwo,
+.six .sixthree,
+.six .sixfour,
+.six .sixone {
+  width: 600px;
+  height: 350px;
+}
+.six .sixone {
+  margin-left: 150px;
+  margin-top: 50px;
+}
+.six .sixone .v2 {
+  width: 100%;
+}
+.six .sixtwo {
+  margin-top: 50px;
+  width: 580px;
+  padding-left: 20px;
+}
+.six .sixtwo .chunjing {
+  color: #fff;
+  font-weight: bold;
+  margin-top: 80px;
+}
+.six .sixtwo .hepa {
+  color: #fff;
+  margin-top: 20px;
+}
+.six .sixthree {
+  margin-left: 150px;
+  width: 550px;
+  padding-left: 50px;
+  overflow: hidden;
+}
+.six .sixthree .chunjing {
+  color: #fff;
+  font-weight: bold;
+  margin-top: 60px;
+}
+.six .sixthree .hepa {
+  color: #fff;
+  margin-top: 20px;
+}
+.six .sixfour {
+  margin-top: 15px;
+}
+.six .sixfour img {
+  width: 100%;
+  height: 345px;
+}
+.seven {
+  height: 770px;
+  width: 100%;
+  background: #000 url(../images/MX-specs-desktop.jpg) left center no-repeat;
+  background-size: 800px;
+  border: 1px solid #000;
+  margin-top: -20px;
+}
+.seven .dinggou {
+  width: 300px;
+  height: 200px;
+  margin-top: 270px;
+  margin-left: 920px;
+  text-align: center;
+  position: relative;
+}
+.seven .dinggou p {
+  font-size: 34px;
+  color: aliceblue;
+}
+.seven .dinggou span {
+  display: block;
+  width: 140px;
+  height: 40px;
+  border: 3px solid #fff;
+  text-align: center;
+  line-height: 40px;
+  border-radius: 28px;
+  position: absolute;
+  left: 50%;
+  top: 80px;
+  transform: translate(-50%);
+  color: #fff;
+  background-color: #000;
+}
+.seven .dinggou span:hover {
+  background-color: #fff;
+  color: #000;
+}
+.daohang {
+  position: fixed;
+  left: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+}

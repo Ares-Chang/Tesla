@@ -1,0 +1,177 @@
+body {
+    width: 100%;
+    /* text-align: center; */
+    background-color: #fff;
+    display: auto;
+    min-width: 1240px;
+    height: 1050px;
+    /* overflow: hidden; */
+}
+
+
+/* header开始 */
+
+header {
+    width: 100%;
+    background-color: #222;
+    height: 52px;
+    position: relative;
+    margin-bottom: 44px;
+}
+
+header .content {
+    padding-left: 20px;
+    padding-right: 20px;
+    height: 52px;
+    align-content: center;
+}
+
+.headerleft {
+    display: inline-block;
+    width: 31.3%;
+    float: left;
+}
+
+.headerleft span {
+    font-size: 18px;
+    line-height: 52px;
+    color: #fff;
+}
+
+.headercenter {
+    line-height: 52px;
+    float: left;
+    /* width: 40%; */
+}
+
+.headercenter a {
+    margin-right: 17px;
+    color: #fff;
+    font-weight: 700;
+    font-size: 13px;
+}
+
+.headerright {
+    float: right;
+}
+
+.headerright span {
+    line-height: 52px;
+    color: #fff;
+    font-size: 13px;
+    margin-left: 19px;
+}
+
+
+/* header结束 */
+
+
+/* wrapper开始 */
+
+.wrapper {
+    width: 75.5%;
+    margin: 0 auto;
+    min-height: 38px;
+    /* background-color: red; */
+    border-bottom: 1px solid rgb(221, 219, 219);
+    padding-bottom: 28px;
+}
+
+.wrapper>span:first-child {
+    font-size: 29px;
+    float: left;
+    /* color: #ccc; */
+}
+
+.wrapper span {
+    font-size: 12px;
+    line-height: 38px;
+    float: right;
+    /* margin-left: 14px; */
+    margin-right: 18px;
+}
+
+.wrapper a {
+    color: #333;
+}
+.wrapper a :hover {
+    color: rgb(160, 6, 6);
+}
+
+.wrapper input {
+    border: solid 1px #ccc;
+    border-radius: 50%;
+    float: right;
+    width: 8px;
+    height: 26px;
+    margin-top: 4px;
+    margin-right: 20px;
+    padding-right: 20px;
+    text-align: center;
+    /* background-color: red; */
+    /* display: none; */
+    /* box-sizing: border-box; */
+}
+
+
+/* wrapper结束 */
+
+/* Carimage开始 */
+.Carimage{
+    width: 75.5%;
+    margin: 0 auto;
+}
+.Carimage_longth_one img{
+    border: 1px solid #ccc;
+    margin-top: 30px;
+    width: 100%;
+}
+.Carimage_longth {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.Carimage_longth_one{
+    width: 24%;
+}
+.Carimage_longth_one span{
+    font-size: 16px;
+}
+
+.Carimage_longth_one p {
+    margin-top: 10px;
+    margin-bottom: 40px;
+    color: rgb(141, 139, 139);
+    font-size: 12px;
+}
+
+
+.viewmouthright_3_btn {
+    width: 100%;
+    /* padding-right: 220px; */
+    text-align: center;
+}
+
+.viewmouthright_3_btn input{
+    border: none;
+    background-color: #fff;
+    color: red;
+    display: inline-block;
+}
+
+.viewmouthright_3_btn input:hover{
+    color: red;
+}
+
+.viewmouthright_3_btn img{
+    /* display: none; */
+    display: none;
+    color: #fff;
+    background-color: #fff;
+}
+
+
+.dis{
+    display:none
+}

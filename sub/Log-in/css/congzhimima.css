@@ -1,0 +1,116 @@
+.stick-nav-right {
+  width: 160px;
+}
+.aaa {
+  height: 50px;
+}
+.bigbox {
+  background: url(../images/login_spokes.jpg) no-repeat;
+  background-size: 100%;
+  height: 680px;
+  position: relative;
+}
+.bigbox .congzhikuang {
+  width: 375px;
+  height: 403px;
+  position: absolute;
+  top: 80px;
+  right: 250px;
+  background: #fff;
+}
+.bigbox .congzhikuang .text {
+  width: 285px;
+  height: 49px;
+  font-size: 30px;
+  border-bottom: 1px solid #ccc;
+  margin: 15px auto;
+  text-align: center;
+  line-height: 49px;
+  font-weight: 700;
+}
+.bigbox .congzhikuang .tishi {
+  width: 285px;
+  height: 35px;
+  margin: 10px auto;
+  font-family: 'heiti';
+}
+.bigbox .congzhikuang .youxiang {
+  width: 285px;
+  height: 39px;
+  margin: 10px auto;
+  text-align: center;
+  line-height: 39px;
+  border: 1px solid #ccc;
+}
+.bigbox .congzhikuang .youxiang input {
+  width: 260px;
+  outline-style: none;
+  border: none;
+}
+.bigbox .congzhikuang .yanzheng {
+  width: 285px;
+  font-size: 16px;
+  margin: 0 auto;
+  font-family: 'heiti';
+}
+.bigbox .congzhikuang img {
+  width: 285px;
+  margin: 0 auto;
+  display: block;
+}
+.bigbox .congzhikuang .huan {
+  width: 285px;
+  margin: 0 auto;
+  font-size: 16px;
+  font-family: 'heiti';
+}
+.bigbox .congzhikuang .huan a {
+  font-size: 12px;
+  color: red;
+}
+.bigbox .congzhikuang .queren {
+  width: 285px;
+  height: 38px;
+  margin: 10px auto;
+  text-align: center;
+  line-height: 39px;
+  background-color: red;
+}
+.bigbox .congzhikuang .queren input {
+  width: 285px;
+  outline-style: none;
+  border: none;
+  height: 38px ;
+  background: red;
+  color: #fff;
+}
+.bigbox .congzhikuang .queren input:hover {
+  cursor: pointer;
+}
+.bigbox .dibian {
+  height: 40px;
+  width: 100%;
+  border: 1px solid ren ;
+  position: absolute;
+  left: 200px;
+  bottom: 0;
+}
+.bigbox .dibian li {
+  height: 10px;
+  margin: 0 10px;
+  float: left;
+  line-height: 10px;
+}
+.bigbox .dibian li a {
+  color: #fff;
+  font-size: 14px;
+}
+.bigbox .dibian span {
+  height: 10px;
+  float: left;
+  color: #fff;
+  line-height: 10px;
+}
+.dianji {
+  border: 2px solid  blue;
+}

@@ -1,0 +1,258 @@
+/* 地图区域 */
+
+.ditu {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.ditu img {
+    width: 100%;
+}
+
+.ditu .sousuo {
+    position: absolute;
+    top: 30px;
+    left: 50px;
+    display: flex;
+}
+
+.ditu .sousuo .shuru {
+    width: 350px;
+    height: 30px;
+    font-size: 20px;
+    padding-left: 10px;
+    color: #a4a4a4;
+}
+
+.ditu .sousuo .f_dajing {
+    width: 80px;
+    height: 34px;
+    background: url(../images/下载.png) no-repeat;
+    background-size: 20px;
+    background-position: 25px 6px;
+    background-color: #cc0000;
+    border: none;
+}
+
+
+/* 操作地图区域 */
+
+.dj_ditu {
+    position: absolute;
+    top: 70px;
+    right: 10px;
+}
+
+.dj_ditu .l_dianji {
+    width: 37px;
+    height: 20px;
+    font-size: 13px;
+    padding-left: 4px;
+    margin-right: -6px;
+    background-color: #8ea8e0;
+    color: #fff;
+    border: none;
+}
+
+.dj_ditu .r_dianji {
+    width: 37px;
+    height: 20px;
+    font-size: 13px;
+    padding-left: 4px;
+    background-color: #fff;
+    border: none;
+}
+
+.fangxiang {
+    position: absolute;
+    top: 97px;
+    right: 22px;
+}
+
+.fangxiang a {
+    display: block;
+    width: 44px;
+    height: 44px;
+    background: url(../images/mapctrls2d0.png) no-repeat;
+    background-position: -1px 1px;
+}
+
+
+/* .a_fangxiang {
+    display: none;
+}
+
+.a_fangxiang a {
+    display: none;
+}
+
+.b_fangxiang {
+    display: none;
+}
+
+.b_fangxiang a {
+    display: none;
+}
+
+.c_fangxiang {
+    display: none;
+}
+
+.c_fangxiang a {
+    display: none;
+}
+
+.d_fangxiang {
+    display: none;
+}
+
+.d_fangxiang a {
+    display: none;
+}
+
+.e_fangxiang {
+    display: none;
+}
+
+.e_fangxiang a {
+    display: none;
+} */
+
+
+/* 放大拉伸条 */
+
+.f_da {
+    width: 62px;
+    height: 129px;
+    position: absolute;
+    top: 145px;
+    right: 10px;
+}
+
+.f_da .jia_fangda {
+    display: block;
+    width: 18px;
+    height: 18px;
+    margin-left: 20px;
+}
+
+.f_da .jia_fangda a {
+    display: block;
+    width: 22px;
+    height: 22px;
+    background: url(../images/mapctrls2d0.png) no-repeat;
+    background-position: -1px -218px;
+}
+
+.f_da .c_fangda {
+    width: 7px;
+    height: 100px;
+    margin-left: 26px;
+    margin-top: 3px;
+}
+
+.f_da .c_fangda a {
+    display: block;
+    width: 7px;
+    height: 98px;
+    background: url(../images/mapctrls2d0.png) no-repeat;
+    background-position: -24px -255px;
+}
+
+.f_da .jian_fangda {
+    display: block;
+    width: 18px;
+    height: 18px;
+    margin-left: 20px;
+    margin-top: -3px;
+}
+
+.f_da .jian_fangda a {
+    display: block;
+    width: 22px;
+    height: 22px;
+    background: url(../images/mapctrls2d0.png) no-repeat;
+    background-position: -1px -264px;
+}
+
+.f_da .la_fangda {
+    display: block;
+    width: 18px;
+    height: 15px;
+    margin-left: 20px;
+    margin-top: -3px;
+}
+
+.f_da .la_fangda a {
+    display: block;
+    width: 22px;
+    height: 15px;
+    background: url(../images/mapctrls2d0.png) no-repeat;
+    background-position: 0px -307px;
+}
+
+.ty_dian {
+    display: block;
+    width: 100%;
+    height: 65px;
+    position: absolute;
+    bottom: 40px;
+}
+
+.ty_dian .a_ty_dian {
+    display: block;
+    width: 20%;
+    height: 65px;
+    border-bottom: 3px solid #cc0000;
+    position: absolute;
+    bottom: 40px;
+    background-color: #fff;
+    position: relative;
+}
+
+.ty_dian .a_ty_dian img {
+    display: inline-block;
+    width: 30px;
+    height: 35px;
+    margin-left: 15px;
+    margin-top: 13px;
+}
+
+.ty_dian .a_ty_dian span {
+    display: inline-block;
+    font-size: 20px;
+}
+
+.ty_dian .a_ty_dian input {
+    border: none;
+    position: absolute;
+    top: 0;
+    right: 0px;
+    background-color: #fff;
+    font-size: 25px;
+}
+
+.ty_dian>div:nth-child(1) {
+    position: absolute;
+    top: 0;
+    left: 120px;
+}
+
+.ty_dian>div:nth-child(2) {
+    position: absolute;
+    top: 0;
+    left: 450px;
+}
+
+.ty_dian>div:nth-child(3) {
+    position: absolute;
+    top: 0;
+    left: 780px;
+}
+
+.ty_dian>div:nth-child(4) {
+    position: absolute;
+    top: 0;
+    left: 1110px;
+}
